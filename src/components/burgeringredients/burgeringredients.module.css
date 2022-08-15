@@ -1,0 +1,17 @@
+.ingredients {
+    width: 600px;
+    height: 750px;
+    padding-left: 24px;
+}
+
+.list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0px;
+    list-style: none;
+    height: 456px;
+}
+
+.menu {
+    display: flex;
+}
