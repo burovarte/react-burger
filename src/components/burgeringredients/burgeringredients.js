@@ -1,14 +1,14 @@
 import React, {useState, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import style from'./burgeringredients.module.css';
+import style from './burgeringredients.module.css';
 import Group from '../group/group';
 import PropTypes from "prop-types";
 
-function Burgeringredients({dataBurgers,openModal}) {
-    const [selected,setSelected] = useState("bun")
-    const bun = dataBurgers.filter((i) => i.type==="bun")
-    const main = dataBurgers.filter((i) => i.type==='main')
-    const sauce = dataBurgers.filter((i) => i.type==='sauce')
+function Burgeringredients({dataBurgers, openModal}) {
+    const [selected, setSelected] = useState("bun")
+    const bun = dataBurgers.filter((i) => i.type === "bun")
+    const main = dataBurgers.filter((i) => i.type === 'main')
+    const sauce = dataBurgers.filter((i) => i.type === 'sauce')
 
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -20,28 +20,28 @@ function Burgeringredients({dataBurgers,openModal}) {
 
     console.log(dataBurgers)
 
-    return(
+    return (
         <div className={`${style.ingredients} pt-10`}>
             <h1 className="text text_type_main-large">Соберите бургер</h1>
             <div className={`${style.menu} mt-5 mb-10`}>
                 <Tab
                     value="bun"
                     active={selected === "bun"}
-                    onClick={(e) => twoFunction(e,bunRef)}
+                    onClick={(e) => twoFunction(e, bunRef)}
                 >
                     Булки
                 </Tab>
                 <Tab
                     value="sauce"
                     active={selected === "sauce"}
-                    onClick={(e) => twoFunction(e,sauceRef)}
+                    onClick={(e) => twoFunction(e, sauceRef)}
                 >
                     Соусы
                 </Tab>
                 <Tab
                     value="main"
                     active={selected === "main"}
-                    onClick={(e) => twoFunction(e,mainRef)}
+                    onClick={(e) => twoFunction(e, mainRef)}
                 >
                     Начинки
                 </Tab>
@@ -76,8 +76,8 @@ function Burgeringredients({dataBurgers,openModal}) {
     )
 }
 
-Burgeringredients.propTypes ={
-    dataBurgers: PropTypes.arrayOf.isRequired,
+Burgeringredients.propTypes = {
+    dataBurgers: PropTypes.array.isRequired,
     openModal: PropTypes.func.isRequired
 }
 

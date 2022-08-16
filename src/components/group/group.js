@@ -12,13 +12,13 @@ function Group({title,type,butref,openModal}) {
             </h1>
         </div>
         <div className={style.main}>
-            {type.map((i) => (
+            {type.map((ingredient) => (
                 <Item
-                key={i._id}
-                id={i._id}
-                image={i.image}
-                name={i.name}
-                price={i.price}
+                key={ingredient._id}
+                id={ingredient._id}
+                image={ingredient.image}
+                name={ingredient.name}
+                price={ingredient.price}
                 openModal={openModal}
                 />
                 ))}
@@ -27,10 +27,10 @@ function Group({title,type,butref,openModal}) {
 }
 
 Group.propTypes = {
-    title: PropTypes.string,
-    type: PropTypes.string,
-    butref: PropTypes.object,
-    openModal: PropTypes.func
+    title: PropTypes.string.isRequired,
+    type: PropTypes.array.isRequired,
+    butref: PropTypes.object.isRequired,
+    openModal: PropTypes.func.isRequired
 };
 
 export default Group;
