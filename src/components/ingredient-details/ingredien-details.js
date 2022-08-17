@@ -1,4 +1,4 @@
-import style from "./ingredientdetails.module.css";
+import style from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
 
 function IngredientDetails({ingredient}) {

@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from "react";
 import style from './app.module.css';
-import Appheader from "../appheader/appheader";
-import BurgerIngredients from '../burgeringredients/burgeringredients';
-import BurgerConstructor from '../burgerconstructor/burgerconstructor';
+import Appheader from "../app-header/app-header";
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal'
-import IngredientDetail from '../ingredientdetails/ingrediendetails';
-import OrderDetails from "../orderdetails/orderdetails";
+import IngredientDetail from '../ingredient-details/ingredien-details';
+import OrderDetails from "../order-details/order-details";
 
 function App() {
     const [state, setState] = useState({

@@ -1,10 +1,10 @@
 import React, {useState, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import style from './burgeringredients.module.css';
+import style from './burger-ingredients.module.css';
 import Group from '../group/group';
 import PropTypes from "prop-types";
 
-function Burgeringredients({dataBurgers, openModal}) {
+function BurgerIngredients({dataBurgers, openModal}) {
     const [selected, setSelected] = useState("bun")
     const bun = dataBurgers.filter((i) => i.type === "bun")
     const main = dataBurgers.filter((i) => i.type === 'main')
@@ -76,9 +76,9 @@ function Burgeringredients({dataBurgers, openModal}) {
     )
 }
 
-Burgeringredients.propTypes = {
+BurgerIngredients.propTypes = {
     dataBurgers: PropTypes.array.isRequired,
     openModal: PropTypes.func.isRequired
 }
 
-export default Burgeringredients;
+export default BurgerIngredients;

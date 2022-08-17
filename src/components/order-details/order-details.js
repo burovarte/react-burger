@@ -1,6 +1,6 @@
 import React from "react";
 import img from '../../image/img.svg';
-import style from './orderdetails.module.css';
+import style from './order-details.module.css';
 
 function OrderDetails() {
     return (

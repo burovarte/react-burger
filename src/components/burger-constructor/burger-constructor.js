@@ -1,9 +1,9 @@
 import React from "react";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
-import style from './burgerconstructor.module.css';
+import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 
-function Burgerconstructor({dataBurgers, openModal}) {
+function BurgerConstructor({dataBurgers, openModal}) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
@@ -62,8 +62,8 @@ function Burgerconstructor({dataBurgers, openModal}) {
     )
 }
 
-Burgerconstructor.propTypes = {
+BurgerConstructor.propTypes = {
     dataBurgers: PropTypes.array.isRequired,
     openModal: PropTypes.func.isRequired
 }
-export default Burgerconstructor;
+export default BurgerConstructor;
