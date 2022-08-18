@@ -1,0 +1,48 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 700px;
+    width: 600px;
+}
+
+.item_top {
+    padding: 0px 16px 10px 44px;
+}
+
+.items_mainAndSauce{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 16px 0px;
+    gap: 10px;
+    height: calc(100vh - 300px);
+    overflow-y: scroll;
+}
+
+.item_mainAndSauce{
+    display: flex;
+    align-items: center;
+}
+
+.item_buttom {
+    padding: 10px 16px 0px 44px;
+}
+
+.price_main{
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: flex-end;
+    margin-top: 40px;
+}
+
+.price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.price svg{
+    margin-left: 10px;
+    margin-right: 40px;
+}

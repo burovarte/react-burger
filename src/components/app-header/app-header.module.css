@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    display: grid;
+    width: 1200px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.logoBurger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    justify-content:flex-start ;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.menu_right svg {
+    padding-right: 8px;
+}
+
+.menu_left svg {
+    padding-right: 8px;
+}
