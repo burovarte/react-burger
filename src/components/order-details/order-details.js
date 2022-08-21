@@ -1,13 +1,16 @@
 import React from "react";
 import img from '../../image/img.svg';
 import style from './order-details.module.css';
+import {useContext} from "react";
+import {OrderNumber} from "../../app-context/app-context";
 
 function OrderDetails() {
+    const {orderNumber} = useContext(OrderNumber)
     return (
         <div className={`${style.main} pt-30 pb-25`}>
             <div className="mb-8">
                 <p className={`${style.order} text text_type_digits-large`}>
-                    034536
+                    {orderNumber}
                 </p>
             </div>
             <p className="text text_type_main-medium">Идентификатор заказа</p>

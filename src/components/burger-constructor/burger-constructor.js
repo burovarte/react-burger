@@ -1,15 +1,52 @@
-import React from "react";
+import React, {useState} from "react";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
+import {DataApp, OrderNumber} from '../../app-context/app-context';
+import {useContext} from "react";
 
-function BurgerConstructor({dataBurgers, openModal}) {
+
+function BurgerConstructor({openModal}) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
 
+    const dataBurgers = useContext(DataApp);
+    console.log("Ингридиент", dataBurgers)
+    const {orderNumber, setOrderNumber} = useContext(OrderNumber);
+    console.log("Номер заказа ", orderNumber)
+
+    const orderHandler = () => {
+        const url = "https://norma.nomoreparties.space/api/orders";
+        const idIndridient = dataBurgers.map((ingredient) => {
+            return ingredient._id
+        });
+
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ingredients: idIndridient}),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка ${res.status}`);
+            })
+            .then((data) => setOrderNumber(data.order.number))
+        openModalOrder()
+    }
+
     const bun = dataBurgers.find((i) => i.type === "bun")
     const mainAndSauce = dataBurgers.filter((i) => i.type !== "bun")
+
+    const totalPrice = mainAndSauce.reduce(
+        (previousValue, {price}) => previousValue + price,
+        0
+    ) + bun?.price * 2;
+
     return (
         <section className={`${style.main} pt-25`}>
             {bun && (
@@ -51,19 +88,20 @@ function BurgerConstructor({dataBurgers, openModal}) {
                 </div>)}
             <div className={style.price_main}>
                 <div className={style.price}>
-                    <p className="text text_type_digits-medium mr-2">610</p>
+                    <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button type="primary" size="large" onClick={openModalOrder}>
+                <Button type="primary" size="large" onClick={orderHandler}>
                     Оформить заказ
                 </Button>
             </div>
+
         </section>
     )
 }
 
 BurgerConstructor.propTypes = {
-    dataBurgers: PropTypes.array.isRequired,
     openModal: PropTypes.func.isRequired
 }
+
 export default BurgerConstructor;
