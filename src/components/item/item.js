@@ -4,7 +4,7 @@ import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/
 import style from './item.module.css';
 import PropTypes from "prop-types";
 
-function Item({id, image, name, price, openModal}) {
+function Item({id, ingredient, openModal}) {
     function onClick() {
         openModal({typeOfModal: "details", Id: id})
     }
@@ -12,12 +12,12 @@ function Item({id, image, name, price, openModal}) {
     return (
         <div className={style.main}>
             <div className={style.item} onClick={onClick}>
-                <img className={style.image} src={image} alt={`${name}`}/>
+                <img className={style.image} src={ingredient.image} alt={`${ingredient.name}`}/>
                 <p className={`${style.price} text_type_digits-default`}>
-                    {price}
+                    {ingredient.price}
                     <CurrencyIcon type={'primary'}/>
                 </p>
-                <p className="text text_type_main-default">{name}</p>
+                <p className="text text_type_main-default">{ingredient.name}</p>
                 <Counter count={1} size='small'/>
             </div>
         </div>)
@@ -25,9 +25,7 @@ function Item({id, image, name, price, openModal}) {
 
 Item.propTypes = {
     id: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    ingredient: PropTypes.object.isRequired,
     openModal: PropTypes.func.isRequired
 }
 

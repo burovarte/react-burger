@@ -20,7 +20,7 @@ function BurgerIngredients({openModal}) {
     const bunRef = useRef(null);
     const twoFunction = (e, ref) => {
         setSelected(e);
-        ref.current.scrollIntoView({behavior: "auto"})
+        ref.current.scrollIntoView({behavior: "smooth"})
     }
 
     return (

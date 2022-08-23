@@ -16,9 +16,7 @@ function Group({title,type,butref,openModal}) {
                 <Item
                 key={ingredient._id}
                 id={ingredient._id}
-                image={ingredient.image}
-                name={ingredient.name}
-                price={ingredient.price}
+                ingredient={ingredient}
                 openModal={openModal}
                 />
                 ))}

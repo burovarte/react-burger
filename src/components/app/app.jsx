@@ -7,6 +7,8 @@ import Modal from '../modal/modal'
 import IngredientDetail from '../ingredient-details/ingredien-details';
 import OrderDetails from "../order-details/order-details";
 import {DataApp, OrderNumber} from '../../app-context/app-context';
+import {baseUrl} from "../../utils/base-url";
+import {checkResponse} from "../../utils/check-response";
 
 function App() {
     const [state, setState] = useState({
@@ -17,16 +19,11 @@ function App() {
 
     const [orderNumber, setOrderNumber] = useState();
 
-    const url = 'https://norma.nomoreparties.space/api/ingredients ';
+    const url = `${baseUrl}ingredients`;
 
     useEffect(() => {
         fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
-            })
+            .then(checkResponse)
             .then((res) => {
                 setState((state) => ({
                     ...state,
@@ -34,7 +31,8 @@ function App() {
                     ingredientsForBurger: res.data,
                 }));
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(error)
                 setState((state) => ({
                     ...state,
                     isLoading: false,
@@ -66,10 +64,10 @@ function App() {
             <OrderNumber.Provider value={{orderNumber, setOrderNumber}}>
                 <DataApp.Provider value={state.ingredientsForBurger}>
                     <Appheader/>
-                    <div className={style.items}>
+                    <main className={style.items}>
                         <BurgerIngredients openModal={openModal}/>
                         <BurgerConstructor openModal={openModal}/>
-                    </div>
+                    </main>
                 </DataApp.Provider>
                 {isOpenModalIngedients && (
                     <Modal onClose={closeModal} title={'Детали ингредиента'}>

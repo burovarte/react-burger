@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 import {ConstructorElement, Button, CurrencyIcon, DragIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import {DataApp, OrderNumber} from '../../app-context/app-context';
 import {useContext} from "react";
+import {baseUrl} from "../../utils/base-url";
+import {checkResponse} from "../../utils/check-response";
 
 
 function BurgerConstructor({openModal}) {
@@ -12,12 +14,10 @@ function BurgerConstructor({openModal}) {
     }
 
     const dataBurgers = useContext(DataApp);
-    console.log("Ингридиент", dataBurgers)
     const {orderNumber, setOrderNumber} = useContext(OrderNumber);
-    console.log("Номер заказа ", orderNumber)
 
     const orderHandler = () => {
-        const url = "https://norma.nomoreparties.space/api/orders";
+        const url = `${baseUrl}orders`;
         const idIndridient = dataBurgers.map((ingredient) => {
             return ingredient._id
         });
@@ -29,23 +29,20 @@ function BurgerConstructor({openModal}) {
                 'Content-Type': 'application/json;charset=utf-8'
             }
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
-            })
+            .then(checkResponse)
             .then((data) => setOrderNumber(data.order.number))
+            .catch((error) => {
+                console.log(error)
+            })
         openModalOrder()
     }
 
-    const bun = dataBurgers.find((i) => i.type === "bun")
-    const mainAndSauce = dataBurgers.filter((i) => i.type !== "bun")
+    const bun = useMemo(() => dataBurgers.find((i) => i.type === "bun"), [dataBurgers])
+    const mainAndSauce = useMemo(() => dataBurgers.filter((i) => i.type !== "bun"), [dataBurgers])
 
-    const totalPrice = mainAndSauce.reduce(
-        (previousValue, {price}) => previousValue + price,
-        0
-    ) + bun?.price * 2;
+    const totalPrice = useMemo(() => (mainAndSauce.reduce(
+        (previousValue, {price}) => previousValue + price, 0
+    ) + bun?.price * 2), [mainAndSauce])
 
     return (
         <section className={`${style.main} pt-25`}>
@@ -88,7 +85,7 @@ function BurgerConstructor({openModal}) {
                 </div>)}
             <div className={style.price_main}>
                 <div className={style.price}>
-                    <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+                    <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice:0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
                 <Button type="primary" size="large" onClick={orderHandler}>
