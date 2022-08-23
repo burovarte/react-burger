@@ -1,10 +1,15 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useContext} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-ingredients.module.css';
 import Group from '../group/group';
 import PropTypes from "prop-types";
+import {DataApp} from '../../app-context/app-context';
 
-function BurgerIngredients({dataBurgers, openModal}) {
+function BurgerIngredients({openModal}) {
+    const dataBurgers = useContext(DataApp);
+    console.log(dataBurgers)
+
+
     const [selected, setSelected] = useState("bun")
     const bun = dataBurgers.filter((i) => i.type === "bun")
     const main = dataBurgers.filter((i) => i.type === 'main')
@@ -15,10 +20,8 @@ function BurgerIngredients({dataBurgers, openModal}) {
     const bunRef = useRef(null);
     const twoFunction = (e, ref) => {
         setSelected(e);
-        ref.current.scrollIntoView({behavior: "auto"})
+        ref.current.scrollIntoView({behavior: "smooth"})
     }
-
-    console.log(dataBurgers)
 
     return (
         <div className={`${style.ingredients} pt-10`}>
@@ -77,7 +80,6 @@ function BurgerIngredients({dataBurgers, openModal}) {
 }
 
 BurgerIngredients.propTypes = {
-    dataBurgers: PropTypes.array.isRequired,
     openModal: PropTypes.func.isRequired
 }
 

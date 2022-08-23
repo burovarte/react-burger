@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import style from './app.module.css';
 import Appheader from "../app-header/app-header";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -6,6 +6,9 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal'
 import IngredientDetail from '../ingredient-details/ingredien-details';
 import OrderDetails from "../order-details/order-details";
+import {DataApp, OrderNumber} from '../../app-context/app-context';
+import {baseUrl} from "../../utils/base-url";
+import {checkResponse} from "../../utils/check-response";
 
 function App() {
     const [state, setState] = useState({
@@ -14,16 +17,13 @@ function App() {
         hasError: false
     })
 
-    const url = 'https://norma.nomoreparties.space/api/ingredients ';
+    const [orderNumber, setOrderNumber] = useState();
+
+    const url = `${baseUrl}ingredients`;
 
     useEffect(() => {
         fetch(url)
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка ${res.status}`);
-            })
+            .then(checkResponse)
             .then((res) => {
                 setState((state) => ({
                     ...state,
@@ -31,7 +31,8 @@ function App() {
                     ingredientsForBurger: res.data,
                 }));
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log(error)
                 setState((state) => ({
                     ...state,
                     isLoading: false,
@@ -51,7 +52,6 @@ function App() {
         } else {
             setIsOpenModalOrder(true)
         }
-        console.log(modalIngedients)
     }
 
     function closeModal() {
@@ -59,25 +59,25 @@ function App() {
         setIsOpenModalOrder(false)
     }
 
-    console.log(state)
-    console.log("kuk" + modalIngedients)
-
     return (
         <div className={style.App}>
-            <Appheader/>
-            <div className={style.items}>
-                <BurgerIngredients dataBurgers={state.ingredientsForBurger} openModal={openModal}/>
-                <BurgerConstructor dataBurgers={state.ingredientsForBurger} openModal={openModal}/>
-            </div>
-            {isOpenModalIngedients && (
-                <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                    <IngredientDetail ingredient={modalIngedients} />
-                </Modal>
-            )}
-            {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
+            <OrderNumber.Provider value={{orderNumber, setOrderNumber}}>
+                <DataApp.Provider value={state.ingredientsForBurger}>
+                    <Appheader/>
+                    <main className={style.items}>
+                        <BurgerIngredients openModal={openModal}/>
+                        <BurgerConstructor openModal={openModal}/>
+                    </main>
+                </DataApp.Provider>
+                {isOpenModalIngedients && (
+                    <Modal onClose={closeModal} title={'Детали ингредиента'}>
+                        <IngredientDetail ingredient={modalIngedients}/>
+                    </Modal>
+                )}
+                {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
+            </OrderNumber.Provider>
         </div>
     )
-
 }
 
 export default App;
