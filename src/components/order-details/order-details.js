@@ -3,9 +3,10 @@ import img from '../../image/img.svg';
 import style from './order-details.module.css';
 import {useContext} from "react";
 import {OrderNumber} from "../../app-context/app-context";
+import {useSelector} from "react-redux";
 
 function OrderDetails() {
-    const {orderNumber} = useContext(OrderNumber)
+    const orderNumber = useSelector((store) => store.mainReducer.order)
     return (
         <div className={`${style.main} pt-30 pb-25`}>
             <div className="mb-8">

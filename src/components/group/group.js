@@ -12,7 +12,7 @@ function Group({title,type,butref,openModal}) {
             </h1>
         </div>
         <div className={style.main}>
-            {type.map((ingredient) => (
+            {type?.map((ingredient) => (
                 <Item
                 key={ingredient._id}
                 id={ingredient._id}
