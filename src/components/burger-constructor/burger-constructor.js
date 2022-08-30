@@ -7,12 +7,12 @@ import {useContext} from "react";
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
-import {ORDER_NUMBER, ADD_INGREDIENT, CHANGE_INGREDIENT, DELETE_INGREDIENT} from "../../services/action";
+import {ORDER_NUMBER,DELETE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
 import {addIngredient} from '../../services/action/main'
 
 
-function BurgerConstructor({openModal},props) {
+function BurgerConstructor({openModal}, props) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
@@ -69,18 +69,28 @@ function BurgerConstructor({openModal},props) {
             const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
             let amount = 1;
             let selectedBun = Object.values(dataBurgers).find((el) => el.type === 'bun');
-
+            if (item.type === 'bun') {
+                amount++;
+                if (selectedBun) {
+                    dispatch({
+                        type: DELETE_INGREDIENT,
+                        item: selectedBun,
+                        amount: amount
+                    })
+                }
+            }
             dispatch(addIngredient(item, uniqueId, amount))
-
-            // dispatch({
-            //     type: ADD_INGREDIENT,
-            //     item: item,
-            //      id: uniqueId,
-            //      amount: amount,
-            // });
         }
     });
 
+    function deleteIngredeint(item){
+        console.log(item)
+        dispatch({
+            type: DELETE_INGREDIENT,
+            item: item,
+            amount: 1
+        })
+    }
 
     return (
         <section ref={dropTarget} className={`${style.main} pt-25`}>
@@ -106,6 +116,7 @@ function BurgerConstructor({openModal},props) {
                                 text={item.name}
                                 price={item.price}
                                 thumbnail={item.image}
+                                handleClose={()=>deleteIngredeint(item)}
                             />
                         </div>
                     ))}

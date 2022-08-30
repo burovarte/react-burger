@@ -26,7 +26,7 @@ function Item({id, ingredient, openModal}) {
                     <CurrencyIcon type={'primary'}/>
                 </p>
                 <p className="text text_type_main-default">{ingredient.name}</p>
-                {ingredient.count > 0 && <Counter count={ingredient.count} size='small'/>}
+                {ingredient.amount > 0 && <Counter count={ingredient.amount} size='small'/>}
             </div>
         </div>)
 }
