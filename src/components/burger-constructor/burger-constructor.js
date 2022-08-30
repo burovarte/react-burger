@@ -9,6 +9,7 @@ import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
 import {ORDER_NUMBER, ADD_INGREDIENT, CHANGE_INGREDIENT, DELETE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
+import {addIngredient} from '../../services/action/main'
 
 
 function BurgerConstructor({openModal},props) {
@@ -61,18 +62,22 @@ function BurgerConstructor({openModal},props) {
         (previousValue, {price}) => previousValue + price, 0
     ) + bun?.price * 2), [mainAndSauce])
 
+
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item) {
             const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
             let amount = 1;
             let selectedBun = Object.values(dataBurgers).find((el) => el.type === 'bun');
-            dispatch({
-                type: ADD_INGREDIENT,
-                item: item,
-                id: uniqueId,
-                amount: amount,
-            });
+
+            dispatch(addIngredient(item, uniqueId, amount))
+
+            // dispatch({
+            //     type: ADD_INGREDIENT,
+            //     item: item,
+            //      id: uniqueId,
+            //      amount: amount,
+            // });
         }
     });
 

@@ -9,12 +9,12 @@ import {
     ORDER_CLEAR
 } from "../action";
 
-const initialState = [{
+const initialState = {
     ingredients: [],
     constructor: [],
     ingredient: {},
     order: 0
-}]
+}
 
 
 export const mainReducer = (state = {initialState}, action) => {
@@ -23,23 +23,31 @@ export const mainReducer = (state = {initialState}, action) => {
             return {
                 ...state,
                 ingredients: action.data.map((element) => {
-                    element['count'] = 0;
+                    element['amount'] = 0;
                     return element;
                 })
             }
         case ADD_INGREDIENT:
             return {
                 ...state,
-                constructor: [
-                    ...state.constructor,
-                    { ...action.item, uniqueId: action.id },
-                ],
-                ingredients: [...state.ingredients].map((item) =>
-                    item._id === action.item._id
-                        ? { ...item, count: item.count + action.amount }
-                        : item
-                ),
+                 //  item: action.item,
+                 // amount: action.amout,
+                 // constructor: [ ...state.constructor, {... action.item, uniqueId: action.id}]
             };
+
+        // case ADD_INGREDIENT:
+        //     return {
+        //         ...state,
+        //         constructor: [
+        //             ...state.constructor,
+        //             { ...action.item, uniqueId: action.id },
+        //         ],
+        //         ingredients: [...state.ingredients].map((item) =>
+        //             item._id === action.item._id
+        //                 ? { ...item, count: item.count + action.amount }
+        //                 : item
+        //         ),
+        //     };
         case LOAD_DETAILS:
             return {
                 ...state,
