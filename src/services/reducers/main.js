@@ -73,6 +73,15 @@ export const mainReducer = (state = initialState, action) => {
                     return item;
                 }),
             };
+        case CHANGE_INGREDIENT:
+            const rebuildConstructor = [...state.constructor];
+            const dragIndex = rebuildConstructor[action.dragIndex];
+            rebuildConstructor.splice(action.dragIndex, 1);
+            rebuildConstructor.splice(action.hoverIndex, 0, dragIndex);
+            return {
+                ...state,
+                constructor: rebuildConstructor,
+            };
         default:
             return state
     }

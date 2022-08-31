@@ -7,9 +7,11 @@ import {useContext} from "react";
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
-import {ORDER_NUMBER,DELETE_INGREDIENT} from "../../services/action";
+import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
 import {addIngredient} from '../../services/action/main'
+import {v4 as uuidv4} from 'uuid';
+import ConstructorItem from "../constructor-item/constructor-item";
 
 
 function BurgerConstructor({openModal}, props) {
@@ -66,7 +68,7 @@ function BurgerConstructor({openModal}, props) {
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item) {
-            const uniqueId = Date.now().toString(36) + Math.random().toString(36).substr(2);
+            const uniqueId = uuidv4();
             let amount = 1;
             let selectedBun = Object.values(dataBurgers).find((el) => el.type === 'bun');
             if (item.type === 'bun') {
@@ -83,14 +85,15 @@ function BurgerConstructor({openModal}, props) {
         }
     });
 
-    function deleteIngredeint(item){
-        console.log(item)
+
+    const dragItem = (dragIndex, hoverIndex) => {
         dispatch({
-            type: DELETE_INGREDIENT,
-            item: item,
-            amount: 1
-        })
+            type: CHANGE_INGREDIENT,
+            dragIndex: dragIndex,
+            hoverIndex: hoverIndex,
+        });
     }
+
 
     return (
         <section ref={dropTarget} className={`${style.main} pt-25`}>
@@ -107,18 +110,8 @@ function BurgerConstructor({openModal}, props) {
             )}
             {mainAndSauce && (
                 <div className={style.items_mainAndSauce}>
-                    {mainAndSauce.map((item) => (
-                        <div className={style.item_mainAndSauce} key={item._id}>
-                            <div className="mr-1">
-                                <DragIcon type="primary"/>
-                            </div>
-                            <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                                handleClose={()=>deleteIngredeint(item)}
-                            />
-                        </div>
+                    {mainAndSauce.map((el, index) => (
+                        <ConstructorItem item={el} key={el.uniqueId} index={index} dragItem={dragItem}/>
                     ))}
                 </div>
             )}
