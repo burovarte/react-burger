@@ -4,8 +4,9 @@ import {useDrag, useDrop} from "react-dnd";
 import style from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DELETE_INGREDIENT} from "../../services/action";
+import PropTypes from "prop-types";
 
-function ConstructorItem({item, key, index, dragItem}) {
+function ConstructorItem({item, index, dragItem}) {
     const dispatch = useDispatch();
     const ref = useRef(null);
 
@@ -16,7 +17,7 @@ function ConstructorItem({item, key, index, dragItem}) {
         }
     })
 
-    const [,dropRef] = useDrop({
+    const [, dropRef] = useDrop({
         accept: 'constructorItem',
         hover: (item, monitor) => {
             if (item.index === index)
@@ -43,6 +44,7 @@ function ConstructorItem({item, key, index, dragItem}) {
             qnt: 1,
         });
     }
+
     return (
         <div ref={ref} className={style.item_mainAndSauce} key={item.uniqueId}>
             <div className="mr-1">
@@ -52,10 +54,16 @@ function ConstructorItem({item, key, index, dragItem}) {
                 text={item.name}
                 price={item.price}
                 thumbnail={item.image}
-                handleClose={()=> deleteIngredient(item)}
+                handleClose={() => deleteIngredient(item)}
             />
         </div>
     )
+}
+
+ConstructorItem.propTypes = {
+    item: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+    dragItem: PropTypes.func.isRequired
 }
 
 export default ConstructorItem;

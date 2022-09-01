@@ -3,11 +3,9 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components/d
 import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 import style from './item.module.css';
 import PropTypes from "prop-types";
-import {useDispatch} from "react-redux";
 import {useDrag} from "react-dnd";
 
 function Item({id, ingredient, openModal}) {
-    const dispatch = useDispatch();
     function onClick() {
         openModal({typeOfModal: "details", Id: id})
     }
@@ -15,7 +13,7 @@ function Item({id, ingredient, openModal}) {
     const [, dragRef] = useDrag({
         type: 'ingredient',
         item: ingredient,
-    });
+    })
 
     return (
         <div   className={style.main}>

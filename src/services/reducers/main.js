@@ -8,7 +8,6 @@ import {
     ORDER_NUMBER,
     ORDER_CLEAR
 } from "../action";
-import item from "../../components/item/item";
 
 const initialState = {
     ingredients: [],
@@ -33,7 +32,7 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 constructor: [...state.constructor, {...action.item, uniqueId: action.uniqueId}],
                 ingredients: [...state.ingredients].map((item) =>
-                item._id === action.item._id ? {...item, amount: item.amount + action.amount} : item)
+                    item._id === action.item._id ? {...item, amount: item.amount + action.amount} : item)
             };
 
         case DELETE_INGREDIENT:
@@ -41,7 +40,7 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 constructor: [...state.constructor].filter((item) => item.uniqueId !== action.item.uniqueId),
                 ingredients: [...state.ingredients].map((item) => item._id === action.item._id
-                    ? { ...item, amount: item.amount - action.amount }
+                    ? {...item, amount: item.amount - action.amount}
                     : item
                 ),
             };
@@ -69,18 +68,18 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 constructor: [],
                 ingredients: [...state.ingredients].map((item) => {
-                    item['count'] = 0;
+                    item['amount'] = 0;
                     return item;
                 }),
             };
         case CHANGE_INGREDIENT:
-            const rebuildConstructor = [...state.constructor];
-            const dragIndex = rebuildConstructor[action.dragIndex];
-            rebuildConstructor.splice(action.dragIndex, 1);
-            rebuildConstructor.splice(action.hoverIndex, 0, dragIndex);
+            const newConstructor = [...state.constructor];
+            const dragIndex = newConstructor[action.dragIndex];
+            newConstructor.splice(action.dragIndex, 1);
+            newConstructor.splice(action.hoverIndex, 0, dragIndex);
             return {
                 ...state,
-                constructor: rebuildConstructor,
+                constructor: newConstructor,
             };
         default:
             return state

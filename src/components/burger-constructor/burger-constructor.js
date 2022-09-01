@@ -7,14 +7,14 @@ import {useContext} from "react";
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
-import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
+import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT, ORDER_CLEAR} from "../../services/action";
 import {useDrop} from "react-dnd";
 import {addIngredient} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 
 
-function BurgerConstructor({openModal}, props) {
+function BurgerConstructor({openModal}) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
@@ -22,8 +22,6 @@ function BurgerConstructor({openModal}, props) {
     const dispatch = useDispatch()
 
     const dataBurgers = useSelector((store) => store.mainReducer.constructor)
-    const a = useSelector((store) => store.mainReducer.constructor)
-    console.log(a)
     const orderNumber = useSelector((store) => store.mainReducer.order)
 
     const orderHandler = () => {
@@ -45,14 +43,11 @@ function BurgerConstructor({openModal}, props) {
                     type: ORDER_NUMBER,
                     number: response.order.number,
                 });
+                dispatch({type: ORDER_CLEAR})
             })
             .catch((error) => {
                 console.log(error)
             })
-        dispatch({
-            type: ORDER_NUMBER,
-            number: orderNumber,
-        });
         openModalOrder()
     }
 
@@ -70,7 +65,7 @@ function BurgerConstructor({openModal}, props) {
         drop(item) {
             const uniqueId = uuidv4();
             let amount = 1;
-            let selectedBun = Object.values(dataBurgers).find((el) => el.type === 'bun');
+            let selectedBun = Object.values(dataBurgers).find((item) => item.type === 'bun');
             if (item.type === 'bun') {
                 amount++;
                 if (selectedBun) {
@@ -85,7 +80,6 @@ function BurgerConstructor({openModal}, props) {
         }
     });
 
-
     const dragItem = (dragIndex, hoverIndex) => {
         dispatch({
             type: CHANGE_INGREDIENT,
@@ -93,7 +87,6 @@ function BurgerConstructor({openModal}, props) {
             hoverIndex: hoverIndex,
         });
     }
-
 
     return (
         <section ref={dropTarget} className={`${style.main} pt-25`}>
@@ -108,13 +101,16 @@ function BurgerConstructor({openModal}, props) {
                     />
                 </div>
             )}
-            {mainAndSauce && (
-                <div className={style.items_mainAndSauce}>
-                    {mainAndSauce.map((el, index) => (
-                        <ConstructorItem item={el} key={el.uniqueId} index={index} dragItem={dragItem}/>
-                    ))}
-                </div>
-            )}
+            <div className={style.items_mainAndSauce}>
+                {dataBurgers.map((item, index) => (
+                    item.type !== 'bun' && (
+                        <ConstructorItem
+                            item={item}
+                            key={item.uniqueId}
+                            index={index}
+                            dragItem={dragItem}/>)
+                ))}
+            </div>
             {bun && (
                 <div className={style.item_buttom}>
                     <ConstructorElement
