@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {LOAD_INGREDIENTS, LOAD_DETAILS, DELETE_DETAILS, ORDER_CLEAR} from "../../services/action";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
+import {loadIngredients} from "../../services/action/main";
 
 function App() {
     const [state, setState] = useState({
@@ -23,28 +24,16 @@ function App() {
     const ingredientsForBurger = useSelector((store) => store.mainReducer.ingredients)
     const [orderNumber, setOrderNumber] = useState();
 
-    const url = `${baseUrl}ingredients`;
+
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        fetch(url)
-            .then(checkResponse)
-            .then((res) => {
-                dispatch({
-                    type: LOAD_INGREDIENTS,
-                    data: res.data,
-                });
-            })
-            .catch((error) => {
-                console.log(error)
-                setState((state) => ({
-                    ...state,
-                    isLoading: false,
-                    hasError: true,
-                }));
-            });
-    }, []);
+    useEffect(()=> {
+        const url = `${baseUrl}ingredients`;
+        // Отправляем экшен-функцию
+        dispatch(loadIngredients(url,setState, dispatch))
+    }, [])
+
 
     const [modalIngedients, setModalIngredients] = useState(null);
     const [isOpenModalIngedients, setIsOpenModalIngedients] = useState(false);

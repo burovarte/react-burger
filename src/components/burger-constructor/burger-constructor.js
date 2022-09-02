@@ -9,7 +9,7 @@ import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
 import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT, ORDER_CLEAR} from "../../services/action";
 import {useDrop} from "react-dnd";
-import {addIngredient} from '../../services/action/main'
+import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 
@@ -24,30 +24,14 @@ function BurgerConstructor({openModal}) {
     const dataBurgers = useSelector((store) => store.mainReducer.constructor)
     const orderNumber = useSelector((store) => store.mainReducer.order)
 
+    const url = `${baseUrl}orders`;
+
     const orderHandler = () => {
         const url = `${baseUrl}orders`;
         const idIndridient = Object.values(dataBurgers).map((ingredient) => {
             return ingredient._id
         });
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({ingredients: idIndridient}),
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            }
-        })
-            .then(checkResponse)
-            .then((response) => {
-                dispatch({
-                    type: ORDER_NUMBER,
-                    number: response.order.number,
-                });
-                dispatch({type: ORDER_CLEAR})
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        dispatch(sendOrder(url, idIndridient, dispatch))
         openModalOrder()
     }
 
@@ -121,15 +105,17 @@ function BurgerConstructor({openModal}) {
                         thumbnail={bun.image}
                     />
                 </div>)}
+            {bun && (
             <div className={style.price_main}>
                 <div className={style.price}>
                     <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice : 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
+
                 <Button type="primary" size="large" onClick={orderHandler}>
                     Оформить заказ
                 </Button>
-            </div>
+            </div>)}
 
         </section>
     )
