@@ -6,6 +6,12 @@ import {DataApp, OrderNumber} from '../../app-context/app-context';
 import {useContext} from "react";
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
+import {useDispatch, useSelector} from "react-redux";
+import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT, ORDER_CLEAR} from "../../services/action";
+import {useDrop} from "react-dnd";
+import {addIngredient, sendOrder} from '../../services/action/main'
+import {v4 as uuidv4} from 'uuid';
+import ConstructorItem from "../constructor-item/constructor-item";
 
 
 function BurgerConstructor({openModal}) {
@@ -13,39 +19,61 @@ function BurgerConstructor({openModal}) {
         openModal({typeOfModal: "order"})
     }
 
-    const dataBurgers = useContext(DataApp);
-    const {orderNumber, setOrderNumber} = useContext(OrderNumber);
+    const dispatch = useDispatch()
+
+    const dataBurgers = useSelector((store) => store.mainReducer.constructor)
+    const orderNumber = useSelector((store) => store.mainReducer.order)
+
+    const url = `${baseUrl}orders`;
 
     const orderHandler = () => {
         const url = `${baseUrl}orders`;
-        const idIndridient = dataBurgers.map((ingredient) => {
+        const idIndridient = Object.values(dataBurgers).map((ingredient) => {
             return ingredient._id
         });
-
-        fetch(url, {
-            method: 'POST',
-            body: JSON.stringify({ingredients: idIndridient}),
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            }
-        })
-            .then(checkResponse)
-            .then((data) => setOrderNumber(data.order.number))
-            .catch((error) => {
-                console.log(error)
-            })
+        dispatch(sendOrder(url, idIndridient, dispatch))
         openModalOrder()
     }
 
-    const bun = useMemo(() => dataBurgers.find((i) => i.type === "bun"), [dataBurgers])
-    const mainAndSauce = useMemo(() => dataBurgers.filter((i) => i.type !== "bun"), [dataBurgers])
+
+    const bun = useMemo(() => Object.values(dataBurgers).find((i) => i.type === "bun"), [dataBurgers])
+    const mainAndSauce = useMemo(() => Object.values(dataBurgers).filter((i) => i.type !== "bun"), [dataBurgers])
 
     const totalPrice = useMemo(() => (mainAndSauce.reduce(
         (previousValue, {price}) => previousValue + price, 0
     ) + bun?.price * 2), [mainAndSauce])
 
+
+    const [, dropTarget] = useDrop({
+        accept: 'ingredient',
+        drop(item) {
+            const uniqueId = uuidv4();
+            let amount = 1;
+            let selectedBun = Object.values(dataBurgers).find((item) => item.type === 'bun');
+            if (item.type === 'bun') {
+                amount++;
+                if (selectedBun) {
+                    dispatch({
+                        type: DELETE_INGREDIENT,
+                        item: selectedBun,
+                        amount: amount
+                    })
+                }
+            }
+            dispatch(addIngredient(item, uniqueId, amount))
+        }
+    });
+
+    const dragItem = (dragIndex, hoverIndex) => {
+        dispatch({
+            type: CHANGE_INGREDIENT,
+            dragIndex: dragIndex,
+            hoverIndex: hoverIndex,
+        });
+    }
+
     return (
-        <section className={`${style.main} pt-25`}>
+        <section ref={dropTarget} className={`${style.main} pt-25`}>
             {bun && (
                 <div className={style.item_top}>
                     <ConstructorElement
@@ -57,22 +85,16 @@ function BurgerConstructor({openModal}) {
                     />
                 </div>
             )}
-            {mainAndSauce && (
-                <div className={style.items_mainAndSauce}>
-                    {mainAndSauce.map((item) => (
-                        <div className={style.item_mainAndSauce} key={item._id}>
-                            <div className="mr-1">
-                                <DragIcon type="primary"/>
-                            </div>
-                            <ConstructorElement
-                                text={item.name}
-                                price={item.price}
-                                thumbnail={item.image}
-                            />
-                        </div>
-                    ))}
-                </div>
-            )}
+            <div className={style.items_mainAndSauce}>
+                {dataBurgers.map((item, index) => (
+                    item.type !== 'bun' && (
+                        <ConstructorItem
+                            item={item}
+                            key={item.uniqueId}
+                            index={index}
+                            dragItem={dragItem}/>)
+                ))}
+            </div>
             {bun && (
                 <div className={style.item_buttom}>
                     <ConstructorElement
@@ -83,15 +105,17 @@ function BurgerConstructor({openModal}) {
                         thumbnail={bun.image}
                     />
                 </div>)}
+            {bun && (
             <div className={style.price_main}>
                 <div className={style.price}>
-                    <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice:0}</p>
+                    <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice : 0}</p>
                     <CurrencyIcon type="primary"/>
                 </div>
+
                 <Button type="primary" size="large" onClick={orderHandler}>
                     Оформить заказ
                 </Button>
-            </div>
+            </div>)}
 
         </section>
     )

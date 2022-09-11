@@ -3,22 +3,28 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components/d
 import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 import style from './item.module.css';
 import PropTypes from "prop-types";
+import {useDrag} from "react-dnd";
 
 function Item({id, ingredient, openModal}) {
     function onClick() {
         openModal({typeOfModal: "details", Id: id})
     }
 
+    const [, dragRef] = useDrag({
+        type: 'ingredient',
+        item: ingredient,
+    })
+
     return (
-        <div className={style.main}>
-            <div className={style.item} onClick={onClick}>
+        <div   className={style.main}>
+            <div ref={dragRef} className={style.item} onClick={onClick}>
                 <img className={style.image} src={ingredient.image} alt={`${ingredient.name}`}/>
                 <p className={`${style.price} text_type_digits-default`}>
                     {ingredient.price}
                     <CurrencyIcon type={'primary'}/>
                 </p>
                 <p className="text text_type_main-default">{ingredient.name}</p>
-                <Counter count={1} size='small'/>
+                {ingredient.amount > 0 && <Counter count={ingredient.amount} size='small'/>}
             </div>
         </div>)
 }
