@@ -1,8 +1,9 @@
+import React from "react";
 import style from "./ingredient-details.module.css";
 import {useSelector} from "react-redux";
 
 function IngredientDetails() {
-    const ing =  useSelector((store) => store.mainReducer.ingredient)
+     const ing = useSelector((store) => store.mainReducer.ingredient)
     return (
         <div className={`${style.main} p-10`}>
             <img className={`${style.foto}`} alt={`${ing.name} `} src={ing.image}/>

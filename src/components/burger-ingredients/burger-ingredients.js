@@ -3,17 +3,11 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-ingredients.module.css';
 import Group from '../group/group';
 import PropTypes from "prop-types";
-import {DataApp} from '../../app-context/app-context';
 import {useSelector} from "react-redux";
 
 
 function BurgerIngredients({openModal}) {
     const dataBurgers = useSelector((store) => store.mainReducer.ingredients)
-    const a = useSelector((store) => store.mainReducer.ingredients)
-    const b = a?.filter((i) => i.type === 'bun')
-
-    console.log(dataBurgers)
-
 
     const [selected, setSelected] = useState("bun")
     const bun = dataBurgers?.filter((i) => i.type === "bun")
