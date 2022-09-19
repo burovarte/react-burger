@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink} from "react-router-dom";
@@ -21,6 +21,9 @@ function Profile() {
         e.preventDefault();
         if (changed) dispatch(updateUser(form));
     }
+    useEffect(() => {
+        setValue(user);
+    }, []);
 
     const cancelClick = (e) => {
         setValue(user);
@@ -63,7 +66,7 @@ function Profile() {
             <form className={`${style.form} mb-20`} onSubmit={onClick}>
                 <div className={'mb-6'}>
                     <Input
-                        value={form.name}
+                        value={form.name || ''}
                         name={'name'}
                         onChange={onChange}
                         placeholder='Имя'/>

@@ -4,10 +4,18 @@ import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/
 import style from './item.module.css';
 import PropTypes from "prop-types";
 import {useDrag} from "react-dnd";
+import { useHistory, useLocation } from 'react-router-dom';
+
 
 function Item({id, ingredient, openModal}) {
+    const history = useHistory();
+    let location = useLocation();
     function onClick() {
         openModal({typeOfModal: "details", Id: id})
+        history.push({
+            pathname: `/ingredients/${ingredient._id}`,
+            state: { background: location },
+        });
     }
 
     const [, dragRef] = useDrag({

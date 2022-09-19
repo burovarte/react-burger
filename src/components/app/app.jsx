@@ -105,10 +105,6 @@ function App() {
                         <Appheader />
                         <Profile />
                     </ProtectedRoute>
-                    <Route path="/ingredients/:id">
-                        <Appheader />
-                    </Route>
-
                 </DndProvider>
             </Switch>
         </Router>

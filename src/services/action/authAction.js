@@ -4,9 +4,8 @@ import {baseUrl} from '../../utils/base-url';
 import {checkResponse} from "../../utils/check-response";
 
 export function login(data) {
-    const url = baseUrl
     return function (dispatch) {
-        fetch(`${url}auth/login`, {
+        fetch(`${baseUrl}auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -37,9 +36,8 @@ export function login(data) {
 
 
 export function register(data) {
-    const url = baseUrl
     return function (dispatch) {
-        fetch(`${url}auth/register`, {
+        fetch(`${baseUrl}auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -71,9 +69,8 @@ export function register(data) {
 
 
 export function logout(data) {
-    const url = baseUrl
     return function (dispatch) {
-        fetch(`${url}auth/logout`, {
+        fetch(`${baseUrl}auth/logout`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -102,9 +99,8 @@ export function logout(data) {
 
 
 export function getUser() {
-    const url = baseUrl
     return function (dispatch) {
-        fetchWithRefresh(`${url}auth/user`, {
+        fetchWithRefresh(`${baseUrl}auth/user`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -129,9 +125,8 @@ export function getUser() {
 
 
 export function updateUser(data) {
-    const url = baseUrl
     return function (dispatch) {
-        fetchWithRefresh(`${url}auth/user`, {
+        fetchWithRefresh(`${baseUrl}auth/user`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -161,8 +156,7 @@ export function updateUser(data) {
 
 
 export const refreshToken = () => {
-    const url = baseUrl
-    return fetch(`${url}auth/token`, {
+    return fetch(`${baseUrl}auth/token`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
@@ -173,9 +167,9 @@ export const refreshToken = () => {
     }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (options) => {
     try {
-        const res = await fetch(url, options);
+        const res = await fetch(baseUrl, options);
         return await checkResponse(res);
     } catch (err) {
         if (err.message === 'jwt expired') {
@@ -183,7 +177,7 @@ export const fetchWithRefresh = async (url, options) => {
             localStorage.setItem('refreshToken', refreshData.refreshToken);
             setCookie('accessToken', refreshData.accessToken);
             options.headers.authorization = refreshData.accessToken;
-            const res = await fetch(url, options);
+            const res = await fetch(baseUrl, options);
             return await checkResponse(res);
         } else {
             return Promise.reject(err);

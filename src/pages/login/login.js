@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React, {useState,useCallback} from "react";
 import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import style from './login.module.css';
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../../services/action/authAction";
 
 function Login() {
     const [form, setValue] = useState({email: '', password: ''})
@@ -10,9 +12,29 @@ function Login() {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
+    const dispatch = useDispatch();
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    let location = useLocation();
+
+    const loginUser = useCallback(
+        (e) => {
+            e.preventDefault();
+            dispatch(login(form));
+        },
+        [form]
+    );
+
+    if (auth) {
+        return (
+            <Redirect
+                to={location.state?.from || '/'}
+            />
+        );
+    }
+
     return (
         <div className={style.main}>
-            <form className={`${style.form} mb-20`}>
+            <form className={`${style.form} mb-20`} onSubmit={loginUser}>
                 <h1 сlassName={'text text_type_main-large mb-6'}>
                     Вход
                 </h1>
