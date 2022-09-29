@@ -14,7 +14,7 @@ import {LOAD_INGREDIENTS, LOAD_DETAILS, DELETE_DETAILS, ORDER_CLEAR} from "../..
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {loadIngredients} from "../../services/action/main";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useHistory, useLocation} from 'react-router-dom';
 import Login from '../../pages/login/login'
 import Register from '../../pages/register/register';
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
@@ -66,48 +66,71 @@ function App() {
         setIsOpenModalOrder(false)
     }
 
+
+    const location = useLocation();
+    const history = useHistory(); // для react-router 5
+    let background = location.state && location.state.background;
+
     return (
         <div className={style.App}>
             <Router>
-            <Switch>
-                <DndProvider backend={HTML5Backend}>
-                    <Route path="/" exact={true}>
-                        <Appheader/>
-                        <main className={style.items}>
-                            <BurgerIngredients openModal={openModal}/>
-                            <BurgerConstructor openModal={openModal}/>
-                        </main>
-                        {isOpenModalIngedients && (
+                <Switch location={background || location}>
+                    <DndProvider backend={HTML5Backend}>
+                        <Route path="/" exact={true}>
+                            <Appheader/>
+                            <main className={style.items}>
+                                <BurgerIngredients openModal={openModal}/>
+                                <BurgerConstructor openModal={openModal}/>
+                            </main>
+                            {isOpenModalIngedients && (
+                                <Modal onClose={closeModal} title={'Детали ингредиента'}>
+                                    <IngredientDetail ingredient={modalIngedients}/>
+                                </Modal>
+                            )}
+                            {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
+                        </Route>
+
+                        <Route path="/login">
+                            <Appheader/>
+                            <Login/>
+                        </Route>
+                        <Route path="/register">
+                            <Appheader/>
+                            <Register/>
+                        </Route>
+                        <Route path="/forgot-password">
+                            <Appheader/>
+                            <ForgotPassword/>
+                        </Route>
+                        <Route path="/reset-password">
+                            <Appheader/>
+                            <ResetPassword/>
+                        </Route>
+                        <ProtectedRoute path="/profile">
+                            <Appheader/>
+                            <Profile/>
+                        </ProtectedRoute>
+                    </DndProvider>
+                </Switch>
+                {background && (
+                    <Route
+                        path='/ingredients/:ingredientId'
+                        children={
                             <Modal onClose={closeModal} title={'Детали ингредиента'}>
                                 <IngredientDetail ingredient={modalIngedients}/>
                             </Modal>
-                        )}
-                        {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
-                    </Route>
-
-                    <Route path="/login">
-                        <Appheader />
-                        <Login />
-                    </Route>
-                    <Route path="/register">
-                        <Appheader />
-                        <Register />
-                    </Route>
-                    <Route path="/forgot-password">
-                        <Appheader />
-                        <ForgotPassword />
-                    </Route>
-                    <Route path="/reset-password">
-                        <Appheader />
-                        <ResetPassword />
-                    </Route>
-                    <ProtectedRoute path="/profile">
-                        <Appheader />
-                        <Profile />
-                    </ProtectedRoute>
-                </DndProvider>
-            </Switch>
-        </Router>
+                        }
+                    />
+                )}
+                {background && (
+                    <ProtectedRoute
+                        path='/profile/orders/:orderNumber'
+                        children={
+                            <Modal onClose={closeModal}>
+                                <OrderDetails/>
+                            </Modal>
+                        }/>)}
+            </Router>
         </div>
 
     )
