@@ -1,6 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux';
 import {useEffect, useState} from 'react';
-import {Route, Redirect} from 'react-router-dom';
+import {Route, Navigate} from 'react-router-dom';
 import {getUser} from '../../services/action/authAction';
 
 export function ProtectedRoute({children, ...rest}) {
@@ -17,10 +17,12 @@ export function ProtectedRoute({children, ...rest}) {
         await dispatch(getUser());
         setUserLoaded(true);
     };
-    
+
     if (!isUserLoaded) {
         return null;
     }
+
+
 
     return (
         <Route
@@ -28,13 +30,13 @@ export function ProtectedRoute({children, ...rest}) {
             render={({location}) =>
                 auth ? (
                     children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: '/login',
-                            state: {from: location},
-                        }}
-                    />
+                ) : (<Route path='*' element={<Navigate to='/login' replace/>}/>
+                    // <Redirect
+                    //     to={{
+                    //         pathname: '/login',
+                    //         state: {from: location},
+                    //     }}
+                    // />
                 )
             }
         />

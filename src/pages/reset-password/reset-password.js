@@ -1,18 +1,19 @@
 import React, {useCallback, useState} from "react";
 import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import style from './reset-password.css';
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
 
 function ResetPassword() {
-    const [form, setValue] = useState({password: '',token:''})
+    const [form, setValue] = useState({password: '', token: ''})
 
     const onChange = (e) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-    const history = useHistory();
+    const navigate = useNavigate()
+
 
     const onSubmit = useCallback((e) => {
             const url = `${baseUrl}password-reset/reset`;
@@ -29,14 +30,14 @@ function ResetPassword() {
             }).then(checkResponse)
                 .then((data) => {
                     if (data.success) {
-                        history.replace({pathname: '/'});
+                        navigate.replace({pathname: '/'});
                     }
                 })
                 .catch((err) => {
                     console.log(err.message);
                 });
         },
-        [form, history]
+        [form, navigate]
     )
 
     return (

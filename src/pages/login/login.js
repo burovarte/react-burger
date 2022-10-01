@@ -1,9 +1,10 @@
-import React, {useState,useCallback} from "react";
+import React, {useState, useCallback} from "react";
 import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import {Link, Redirect, useLocation, Navigate} from 'react-router-dom';
 import style from './login.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../services/action/authAction";
+
 
 function Login() {
     const [form, setValue] = useState({email: '', password: ''})
@@ -15,6 +16,7 @@ function Login() {
     const dispatch = useDispatch();
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     let location = useLocation();
+    const from = location.state?.from || "/";
 
     const loginUser = useCallback(
         (e) => {
@@ -26,9 +28,7 @@ function Login() {
 
     if (auth) {
         return (
-            <Redirect
-                to={location.state?.from || '/'}
-            />
+            <Navigate to={from} replace/>
         );
     }
 

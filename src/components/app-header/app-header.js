@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import style from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useRouteMatch} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 function AppHeader() {
     const [active, setActive] = useState('constructor');
-    const {path} = useRouteMatch();
+    const {path} = useLocation();
 
     useEffect(() => {
         switch (path) {

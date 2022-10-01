@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, Fragment} from "react";
 import style from './app.module.css';
 import Appheader from "../app-header/app-header";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -14,13 +14,21 @@ import {LOAD_INGREDIENTS, LOAD_DETAILS, DELETE_DETAILS, ORDER_CLEAR} from "../..
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {loadIngredients} from "../../services/action/main";
-import {BrowserRouter as Router, Route, Switch, useHistory, useLocation} from 'react-router-dom';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Router,
+    useLocation,
+    useNavigate
+} from "react-router-dom";
 import Login from '../../pages/login/login'
 import Register from '../../pages/register/register';
 import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import Profile from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protectedRoute/protectedRoute";
 import ResetPassword from "../../pages/reset-password/reset-password";
+import Constructor from "../../constructor/constructor";
 
 function App() {
     const [state, setState] = useState({
@@ -67,71 +75,135 @@ function App() {
     }
 
 
+
     const location = useLocation();
-    const history = useHistory(); // для react-router 5
-    let background = location.state && location.state.background;
+    const navigate = useNavigate();
+    const background = location.state?.from;
+
+    const closeModalHandler = () => {
+        navigate(-1);
+    };
 
     return (
-        <div className={style.App}>
-            <Router>
-                <Switch location={background || location}>
-                    <DndProvider backend={HTML5Backend}>
-                        <Route path="/" exact={true}>
-                            <Appheader/>
-                            <main className={style.items}>
-                                <BurgerIngredients openModal={openModal}/>
-                                <BurgerConstructor openModal={openModal}/>
-                            </main>
-                            {isOpenModalIngedients && (
-                                <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                                    <IngredientDetail ingredient={modalIngedients}/>
-                                </Modal>
-                            )}
-                            {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
-                        </Route>
+        <Fragment>
+            <div className={style.App}>
+                {/*<DndProvider backend={HTML5Backend}>*/}
+                <Appheader/>
 
-                        <Route path="/login">
-                            <Appheader/>
-                            <Login/>
-                        </Route>
-                        <Route path="/register">
-                            <Appheader/>
-                            <Register/>
-                        </Route>
-                        <Route path="/forgot-password">
-                            <Appheader/>
-                            <ForgotPassword/>
-                        </Route>
-                        <Route path="/reset-password">
-                            <Appheader/>
-                            <ResetPassword/>
-                        </Route>
-                        <ProtectedRoute path="/profile">
-                            <Appheader/>
-                            <Profile/>
-                        </ProtectedRoute>
-                    </DndProvider>
-                </Switch>
-                {background && (
-                    <Route
-                        path='/ingredients/:ingredientId'
-                        children={
-                            <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                                <IngredientDetail ingredient={modalIngedients}/>
-                            </Modal>
-                        }
-                    />
-                )}
-                {background && (
-                    <ProtectedRoute
-                        path='/profile/orders/:orderNumber'
-                        children={
-                            <Modal onClose={closeModal}>
-                                <OrderDetails/>
-                            </Modal>
-                        }/>)}
-            </Router>
-        </div>
+                <Routes location={background || location}>
+                    <Route path="/" element={<Constructor/>}>
+                            {background && (
+                                <Route
+                                    path="order-details"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Modal onClose={closeModalHandler}>
+                                                <OrderDetails />
+                                            </Modal>
+                                        </ProtectedRoute>
+                                    }
+                                ></Route>
+                            )}
+
+                            {background && (
+                                <Route
+                                    path="ingridient/:id"
+                                    element={
+                                        <Modal title="Детали ингредиента" onClose={closeModalHandler}>
+                                            <IngredientDetail />
+                                        </Modal>
+                                    }
+                                ></Route>
+                            )}
+                    </Route>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/register" element={<Register/>}/>
+                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                    <Route path="/reset-password" element={<ResetPassword/>}/>
+                    {/*<Route exact path='/profile' element={<ProtectedRoute/>}>*/}
+                    {/*    <Route exact path='/' element={<Profile/>}/>*/}
+                    {/*</Route>*/}
+                    {/*<Route*/}
+                    {/*    path="/profile"*/}
+                    {/*    element={*/}
+                    {/*        <ProtectedRoute>*/}
+
+                    {/*                <Profile />*/}
+
+                    {/*        </ProtectedRoute>*/}
+                    {/*    } />*/}
+                    <Route path="/profile" element={<Profile/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="*" element={<div> Упс, ошибка</div>} />
+
+                    <Route path="ingridient/:id" element={<IngredientDetail />}></Route>
+
+                    {/*{background && (*/}
+                    {/*<Route*/}
+                    {/*        path='/ingredients/:ingredientId'*/}
+                    {/*        children={*/}
+                    {/*            <Modal onClose={closeModal} title={'Детали ингредиента'}>*/}
+                    {/*                <IngredientDetail ingredient={modalIngedients}/>*/}
+                    {/*            </Modal>*/}
+                    {/*        }*/}
+                    {/*    />}*/}
+
+                    {/*<Route path="/" exact={true}>*/}
+                    {/*    <main className={style.items}>*/}
+                    {/*    <BurgerIngredients openModal={openModal}/>*/}
+                    {/*    <BurgerConstructor openModal={openModal}/>*/}
+                    {/*    </main>*/}
+                    {/*    {isOpenModalIngedients && (*/}
+                    {/*        <Modal onClose={closeModal} title={'Детали ингредиента'}>*/}
+                    {/*            <IngredientDetail ingredient={modalIngedients}/>*/}
+                    {/*        </Modal>*/}
+                    {/*    )}*/}
+                    {/*    {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}*/}
+                    {/*</Route>*/}
+
+                    {/*        <Route path="/login">*/}
+                    {/*            <Appheader/>*/}
+                    {/*            <Login/>*/}
+                    {/*        </Route>*/}
+                    {/*        <Route path="/register">*/}
+                    {/*            <Appheader/>*/}
+                    {/*            <Register/>*/}
+                    {/*        </Route>*/}
+                    {/*        <Route path="/forgot-password">*/}
+                    {/*            <Appheader/>*/}
+                    {/*            <ForgotPassword/>*/}
+                    {/*        </Route>*/}
+                    {/*        <Route path="/reset-password">*/}
+                    {/*            <Appheader/>*/}
+                    {/*            <ResetPassword/>*/}
+                    {/*        </Route>*/}
+                    {/*        <ProtectedRoute path="/profile">*/}
+                    {/*            <Appheader/>*/}
+                    {/*            <Profile/>*/}
+                    {/*        </ProtectedRoute>*/}
+
+                </Routes>
+                {/*</DndProvider>*!/*/}
+                {/*{background && (*/}
+                {/*    <Route*/}
+                {/*        path='/ingredients/:ingredientId'*/}
+                {/*        element={*/}
+                {/*            <Modal onClose={closeModal} title={'Детали ингредиента'}>*/}
+                {/*                <IngredientDetail ingredient={modalIngedients}/>*/}
+                {/*            </Modal>*/}
+                {/*        }*/}
+                {/*    />*/}
+                {/*)}*/}
+                {/*{background && (*/}
+                {/*    <ProtectedRoute*/}
+                {/*        path='/profile/orders/:orderNumber'*/}
+                {/*        element={*/}
+                {/*            <Modal onClose={closeModal}>*/}
+                {/*                <OrderDetails/>*/}
+                {/*            </Modal>*/}
+                {/*        }/>)}*/}
+            </div>
+        </Fragment>
 
     )
 }

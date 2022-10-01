@@ -1,16 +1,18 @@
 import React, {useState, useEffect, useCallback} from "react";
 import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory, Redirect} from "react-router-dom";
+import {Link, Redirect, useLocation, useNavigate, Navigate} from "react-router-dom";
 import style from './register.module.css';
 import {register} from "../../services/action/authAction";
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 
 function Register(props) {
-    const [form, setValue] = useState({email: '', password: '', name:''})
+    const [form, setValue] = useState({email: '', password: '', name: ''})
     const auth = useSelector((store) => store.authReducer.isAuthorized);
-    const history = useHistory();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
+    const location = useLocation();
+    const from = location.state?.from || "/";
     const onChange = (e) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
@@ -24,15 +26,13 @@ function Register(props) {
 
     useEffect(() => {
         if (auth) {
-            history.replace({ pathname: '/' });
+            navigate.replace({pathname: '/'});
         }
     }, [auth]);
 
     if (auth) {
         return (
-            <Redirect
-                to={props.state?.from || '/'}
-            />
+            <Navigate to={from} replace/>
         );
     }
 
