@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {baseUrl} from "../utils/base-url";
 import {loadIngredients} from "../services/action/main";
 import {DELETE_DETAILS, LOAD_DETAILS} from "../services/action";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 function Constructor() {
@@ -49,21 +50,27 @@ function Constructor() {
         }
     }
 
+    const location = useLocation();
+    const navigate = useNavigate();
+    const background = location.state?.from;
+
     function closeModal() {
         dispatch({
             type: DELETE_DETAILS
         });
         setIsOpenModalIngedients(false);
         setIsOpenModalOrder(false)
+        navigate(-1);
     }
     return(<DndProvider backend={HTML5Backend}>
         <main className={style.items}>
             <BurgerIngredients openModal={openModal}/>
             <BurgerConstructor openModal={openModal}/>
         </main>
-        {isOpenModalIngedients && (
+
+        {isOpenModalIngedients &&  (
             <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                <IngredientDetail ingredient={modalIngedients}/>
+                <IngredientDetail />
             </Modal>
         )}
         {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}

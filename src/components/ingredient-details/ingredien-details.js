@@ -14,7 +14,7 @@ function IngredientDetails() {
     console.log ("id:", id)
     console.log("items:", items)
     console.log("item:",item)
-    console.log(item?.name)
+
 
 
 
