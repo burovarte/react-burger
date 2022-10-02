@@ -85,7 +85,6 @@ function App() {
     };
 
     return (
-        <Fragment>
             <div className={style.App}>
                 {/*<DndProvider backend={HTML5Backend}>*/}
                 <Appheader/>
@@ -109,34 +108,42 @@ function App() {
                                 <Route
                                     path="ingridient/:id"
                                     element={
-                                        <Modal title="Детали ингредиента" onClose={closeModalHandler}>
-                                            <IngredientDetail />
-                                        </Modal>
+                                        <Modal onClose={closeModalHandler} title={'Детали ингредиента'}>
+                                             <IngredientDetail />
+                                          </Modal>
                                     }
                                 ></Route>
                             )}
                     </Route>
+                    <Route path="ingridient/:id" element={<IngredientDetail />}></Route>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/forgot-password" element={<ForgotPassword/>}/>
                     <Route path="/reset-password" element={<ResetPassword/>}/>
-                    {/*<Route exact path='/profile' element={<ProtectedRoute/>}>*/}
-                    {/*    <Route exact path='/' element={<Profile/>}/>*/}
-                    {/*</Route>*/}
+                    {/*<ProtectedRoute path="/profile">*/}
+                    {/*    <Profile/>*/}
+                    {/*</ProtectedRoute>*/}
+
+                    <Route exact path='/profile' element={<ProtectedRoute path="/profile">
+                        <Profile />
+                    </ProtectedRoute>}/>
+
+
+
+
                     {/*<Route*/}
                     {/*    path="/profile"*/}
                     {/*    element={*/}
                     {/*        <ProtectedRoute>*/}
-
-                    {/*                <Profile />*/}
-
+                    {/*            <Profile />*/}
                     {/*        </ProtectedRoute>*/}
-                    {/*    } />*/}
-                    <Route path="/profile" element={<Profile/>}/>
+                    {/*    }*/}
+                    {/*/>*/}
+                    {/*<Route path="/profile" element={<Profile/>}/>*/}
                     <Route path="/login" element={<Login/>}/>
                     <Route path="*" element={<div> Упс, ошибка</div>} />
 
-                    <Route path="ingridient/:id" element={<IngredientDetail />}></Route>
+
 
                     {/*{background && (*/}
                     {/*<Route*/}
@@ -203,8 +210,6 @@ function App() {
                 {/*            </Modal>*/}
                 {/*        }/>)}*/}
             </div>
-        </Fragment>
-
     )
 }
 
