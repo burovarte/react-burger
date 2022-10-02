@@ -124,9 +124,13 @@ function App() {
                     {/*    <Profile/>*/}
                     {/*</ProtectedRoute>*/}
 
-                    <Route exact path='/profile' element={<ProtectedRoute path="/profile">
-                        <Profile />
-                    </ProtectedRoute>}/>
+                    {/*<Route exact path='/profile' element={<ProtectedRoute path="/profile">*/}
+                    {/*    <Profile />*/}
+                    {/*</ProtectedRoute>}/>*/}
+
+                    <Route element={<ProtectedRoute />}>
+                        <Route element={<Profile />} path='/profile' exact/>
+                    </Route>
 
 
 
