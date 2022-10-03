@@ -13,9 +13,18 @@ function Item({id, ingredient, openModal}) {
     const location = useLocation()
     const ingredientId = ingredient['_id'];
 
+    // function onClick() {
+    //     openModal({typeOfModal: "details", Id: id});
+    //     navigate(`/ingridient/${ingredientId}`, {
+    //         state: { background: location },
+    //     });
+    // }
+
     function onClick() {
-        openModal({typeOfModal: "details", Id: id});
-        navigate(`/ingridient/${ingredientId}`, {state: {from: location.pathname}});
+        openModal({ typeOfModal: 'details', Id: id });
+        navigate(`/ingridient/${ingredientId}`, {
+            state: { from: location.pathname, background: location },
+        });
     }
 
     const [, dragRef] = useDrag({

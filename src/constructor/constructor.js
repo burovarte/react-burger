@@ -68,12 +68,12 @@ function Constructor() {
             <BurgerConstructor openModal={openModal}/>
         </main>
 
-        {isOpenModalIngedients &&  (
-            <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                <IngredientDetail />
-            </Modal>
-        )}
-        {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
+        {/*{isOpenModalIngedients &&  (*/}
+        {/*    <Modal onClose={closeModal} title={'Детали ингредиента'}>*/}
+        {/*        <IngredientDetail />*/}
+        {/*    </Modal>*/}
+        {/*)}*/}
+        {/*{isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}*/}
     </DndProvider>)
 }
 

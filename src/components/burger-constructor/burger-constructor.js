@@ -12,6 +12,7 @@ import {useDrop} from "react-dnd";
 import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 function BurgerConstructor({openModal}) {
@@ -26,6 +27,9 @@ function BurgerConstructor({openModal}) {
 
     const url = `${baseUrl}orders`;
 
+    const navigate = useNavigate();
+    const location = useLocation()
+
     const orderHandler = () => {
         const url = `${baseUrl}orders`;
         const idIndridient = Object.values(dataBurgers).map((ingredient) => {
@@ -33,6 +37,7 @@ function BurgerConstructor({openModal}) {
         });
         dispatch(sendOrder(url, idIndridient, dispatch))
         openModalOrder()
+        navigate('/order-details');
     }
 
 
