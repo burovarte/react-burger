@@ -1,28 +1,19 @@
 import React, {useCallback, useState} from "react";
 import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useNavigate} from "react-router-dom";
-import style from './reset-password.css';
+import {Link, useNavigate, Navigate, useLocation} from "react-router-dom";
+import style from './reset-password.module.css'
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
 import {resetPassword} from "../../utils/auth";
 
 function ResetPassword() {
-    const [form, setValue] = useState({ code: '', password: '' });
-    const navigate = useNavigate()
-
-    let permission = false;
-    if (navigate.action === 'PUSH' || navigate.action === 'REPLACE') {
-        if (navigate.location.pathname === '/reset-password') {
-
-            permission = true;
-        }
-    }
-    if (!permission) {
-        navigate.replace({ pathname: '/' });
-    }
+    const [form, setValue] = useState({password: '', code: ''})
     const onChange = (e) => {
         setValue({ ...form, [e.target.name]: e.target.value });
     };
+
+    const navigate = useNavigate()
+
 
     const passwordCreate = useCallback(
         (e) => {
@@ -30,7 +21,7 @@ function ResetPassword() {
             resetPassword(form.password, form.code)
                 .then((data) => {
                     if (data.success) {
-                        navigate.replace({ pathname: '/' });
+                        navigate({ pathname: '/' });
                     }
                 })
                 .catch((err) => {
@@ -40,10 +31,19 @@ function ResetPassword() {
         [form, navigate]
     );
 
+    const location = useLocation();
+
+    let locationState = location.state;
+    console.log(location)
+    // if (location?.state?.from !== "/forgot-password") {
+    //     return <Navigate to="/" replace />;
+    // }
+
     return (
+
         <div className={style.main}>
-            <form className={`${style.form} mb-20`} onSumbit={passwordCreate}>
-                <h1 сlassName={'text text_type_main-large mb-6'}>
+            <form className={`${style.form} mb-20`} onSubmit={passwordCreate}>
+                <h1 сlassname={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
@@ -71,6 +71,8 @@ function ResetPassword() {
             </div>
         </div>
     )
+
+
 }
 
 export default ResetPassword;

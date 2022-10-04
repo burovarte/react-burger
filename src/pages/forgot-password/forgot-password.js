@@ -35,20 +35,21 @@ function ForgotPassword() {
         [form, navigate]
     );
 
+
     if (auth) {
         return <Navigate to={'/'} />;
     }
 
     return (
         <div className={style.main}>
-            <form className={`${style.form} mb-20`} onSumbit={onSubmit}>
+            <form className={`${style.form} mb-20`}>
                 <h1 сlassName={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
                     <EmailInput value={form.email} name={'email'} onChange={onChange} placeholder='Укажите e-mail'/>
                 </div>
-                <Button type='primary'>Восстановить</Button>
+                <Button type='primary' onClick={onSubmit}>Восстановить</Button>
             </form>
             <div className={style.line}>
                 <p сlassName={` text text_type_main-default text_color_inactive `}>

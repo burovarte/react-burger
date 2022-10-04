@@ -6,8 +6,11 @@ const authURL = new URL('auth/', baseUrl );
 const forgotPasswordURL = new URL('password-reset/', baseUrl );
 const resetPasswordURL = new URL('reset', forgotPasswordURL );
 
+console.log(forgotPasswordURL)
+
 export const forgotPassword = (email) => {
-    return fetch(forgotPasswordURL, {
+    console.log(forgotPasswordURL)
+    return fetch(`${baseUrl}password-reset`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
@@ -20,7 +23,7 @@ export const forgotPassword = (email) => {
 };
 
 export const resetPassword = (password, code) => {
-    return fetch(resetPasswordURL, {
+    return fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
