@@ -4,30 +4,28 @@ import {Link,  useNavigate} from "react-router-dom";
 import style from './forgot-password.module.css';
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
+import {useSelector} from "react-redux";
+import { forgotPassword } from '../../utils/auth'
+import {Navigate} from "react-router-dom";
+
 
 function ForgotPassword() {
     const [form, setValue] = useState({email: ''})
+    const navigate = useNavigate()
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
 
     const onChange = (e) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
-    const navigate = useNavigate()
 
-    const onSubmit = useCallback((e) => {
-            const url = `${baseUrl}password-reset.`;
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: form.email,
-                }),
-            }).then(checkResponse)
+
+    const onSubmit = useCallback(
+        (e) => {
+            e.preventDefault();
+            forgotPassword(form.email)
                 .then((data) => {
                     if (data.success) {
-                        navigate.replace({pathname: '/reset-password'});
+                        navigate({ pathname: '/reset-password' });
                     }
                 })
                 .catch((err) => {
@@ -35,7 +33,11 @@ function ForgotPassword() {
                 });
         },
         [form, navigate]
-    )
+    );
+
+    if (auth) {
+        return <Navigate to={'/'} />;
+    }
 
     return (
         <div className={style.main}>

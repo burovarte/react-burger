@@ -4,45 +4,45 @@ import {Link, useNavigate} from "react-router-dom";
 import style from './reset-password.css';
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
+import {resetPassword} from "../../utils/auth";
 
 function ResetPassword() {
-    const [form, setValue] = useState({password: '', token: ''})
-
-    const onChange = (e) => {
-        setValue({...form, [e.target.name]: e.target.value});
-    };
-
+    const [form, setValue] = useState({ code: '', password: '' });
     const navigate = useNavigate()
 
+    let permission = false;
+    if (navigate.action === 'PUSH' || navigate.action === 'REPLACE') {
+        if (navigate.location.pathname === '/reset-password') {
 
-    const onSubmit = useCallback((e) => {
-            const url = `${baseUrl}password-reset/reset`;
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    password: form.password,
-                    token: form.token
-                }),
-            }).then(checkResponse)
+            permission = true;
+        }
+    }
+    if (!permission) {
+        navigate.replace({ pathname: '/' });
+    }
+    const onChange = (e) => {
+        setValue({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const passwordCreate = useCallback(
+        (e) => {
+            e.preventDefault();
+            resetPassword(form.password, form.code)
                 .then((data) => {
                     if (data.success) {
-                        navigate.replace({pathname: '/'});
+                        navigate.replace({ pathname: '/' });
                     }
                 })
                 .catch((err) => {
-                    console.log(err.message);
+                    console.log(err);
                 });
         },
         [form, navigate]
-    )
+    );
 
     return (
         <div className={style.main}>
-            <form className={`${style.form} mb-20`} onSumbit={onSubmit}>
+            <form className={`${style.form} mb-20`} onSumbit={passwordCreate}>
                 <h1 сlassName={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
@@ -55,7 +55,7 @@ function ResetPassword() {
                 </div>
                 <div className={'mb-6'}>
                     <Input
-                        value={form.token}
+                        value={form.code}
                         name={'code'}
                         onChange={onChange}
                         placeholder='Введите код из письма'/>

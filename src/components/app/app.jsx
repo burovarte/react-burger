@@ -36,9 +36,6 @@ function App() {
         isLoading: false,
         hasError: false
     })
-    // const ingredientsForBurger = useSelector((store) => store.mainReducer.ingredients)
-    // const [orderNumber, setOrderNumber] = useState();
-
 
     const dispatch = useDispatch();
 
@@ -48,31 +45,7 @@ function App() {
         dispatch(loadIngredients(url, setState, dispatch))
     }, [])
 
-    //
-    // const [modalIngedients, setModalIngredients] = useState(null);
-    // const [isOpenModalIngedients, setIsOpenModalIngedients] = useState(false);
-    // const [isOpenModalOrder, setIsOpenModalOrder] = useState(false)
 
-    // function openModal({typeOfModal, Id}) {
-    //     if (typeOfModal === "details") {
-    //         setIsOpenModalIngedients(true);
-    //         dispatch({
-    //             type: LOAD_DETAILS,
-    //             item: ingredientsForBurger.find((i) => i._id === Id),
-    //         });
-    //         setModalIngredients(ingredientsForBurger.find((i) => i._id === Id))
-    //     } else {
-    //         setIsOpenModalOrder(true)
-    //     }
-    // }
-
-    // function closeModal() {
-    //     dispatch({
-    //         type: DELETE_DETAILS
-    //     });
-    //     setIsOpenModalIngedients(false);
-    //     setIsOpenModalOrder(false)
-    // }
     const location = useLocation();
     const navigate = useNavigate();
     let locationState = location.state;
@@ -84,25 +57,25 @@ function App() {
     return (
         <div className={style.App}>
             {/*<DndProvider backend={HTML5Backend}>*/}
-            <Appheader />
+            <Appheader/>
             <Routes location={locationState?.background || location}>
-                <Route path="/" element={<Constructor />}></Route>
+                <Route path="/" element={<Constructor/>}/>
 
-                <Route path="/ingridient/:id" element={<IngredientDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route element={<ProtectedRoute />}>
-                    <Route element={<Profile />} path="/profile" exact />
+                <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
+                <Route path="/login" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                <Route path="/reset-password" element={<ResetPassword/>}/>
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<Profile/>} path="/profile" exact/>
                 </Route>
-                <Route path="/login" element={<Login />} />
-                <Route element={<ProtectedRoute />}>
+                <Route path="/login" element={<Login/>}/>
+                <Route element={<ProtectedRoute/>}>
                     <Route element={<Modal onClose={closeModal}>
-                        <OrderDetails />
-                    </Modal>} path="/order-details" exact />
+                        <OrderDetails/>
+                    </Modal>} path="/order-details" exact/>
                 </Route>
-                <Route path="*" element={<div> Упс, ошибка</div>} />
+                <Route path="*" element={<div> Упс, ошибка</div>}/>
             </Routes>
             {locationState?.background && (
                 <Routes>
@@ -110,77 +83,26 @@ function App() {
                         path="/order-details"
                         element={
 
-                                <Modal onClose={closeModal}>
-                                    <OrderDetails />
-                                </Modal>
+                            <Modal onClose={closeModal}>
+                                <OrderDetails/>
+                            </Modal>
                         }
                         exact
-                    ></Route>
+                    />
                     <Route
                         path="/ingridient/:id"
                         element={
                             <Modal onClose={closeModal} title={'Детали ингредиента'}>
-                                <IngredientDetail />
+                                <IngredientDetail/>
                             </Modal>
                         }
-                    ></Route>
+                    />
                 </Routes>
             )}
         </div>
     );
 
-    // const location = useLocation();
-    // const navigate = useNavigate();
-    // let background = location.state && location.state.background;
-    //
-    // const closeModal = () => {
-    //     navigate(-1);
-    // };
-    //
-    // return (
-    //     <div className={style.App}>
-    //         {/*<DndProvider backend={HTML5Backend}>*/}
-    //         <Appheader/>
-    //         <Routes location={background || location}>
-    //             <Route path="/" element={<Constructor/>}>
-    //                 {background && (
-    //                     <Route
-    //                         path="order-details"
-    //                         element={
-    //                             <ProtectedRoute>
-    //                                 <Modal onClose={closeModal}>
-    //                                     <OrderDetails/>
-    //                                 </Modal>
-    //                             </ProtectedRoute>
-    //                         } exact
-    //                     ></Route>
-    //                 )}
-    //
-    //                 {background && (
-    //                     <Route
-    //                         path="/ingridient/:id"
-    //                         element={
-    //                             <Modal onClose={closeModal} title={'Детали ингредиента'}>
-    //                                 <IngredientDetail/>
-    //                             </Modal>}
-    //
-    //                         exact></Route>
-    //                 )}
-    //             </Route>
-    //
-    //             <Route path="ingridient/:id" element={<IngredientDetail/>}></Route>
-    //             <Route path="/login" element={<Login/>}/>
-    //             <Route path="/register" element={<Register/>}/>
-    //             <Route path="/forgot-password" element={<ForgotPassword/>}/>
-    //             <Route path="/reset-password" element={<ResetPassword/>}/>
-    //             <Route element={<ProtectedRoute/>}>
-    //                 <Route element={<Profile/>} path='/profile' exact/>
-    //             </Route>
-    //             <Route path="/login" element={<Login/>}/>
-    //             <Route path="*" element={<div> Упс, ошибка</div>}/>
-    //         </Routes>
-    //     </div>
-    // )
+
 }
 
 export default App;

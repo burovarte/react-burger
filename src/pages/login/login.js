@@ -15,8 +15,8 @@ function Login() {
 
     const dispatch = useDispatch();
     const auth = useSelector((store) => store.authReducer.isAuthorized);
-    let location = useLocation();
-    const from = location.state?.from || "/";
+    const location = useLocation();
+
 
     const loginUser = useCallback(
         (e) => {
@@ -26,11 +26,14 @@ function Login() {
         [form]
     );
 
+
     if (auth) {
         return (
-            <Navigate to={from} replace/>
+            <Navigate to={location.state?.from || '/'} />
         );
     }
+
+
 
     return (
         <div className={style.main}>
@@ -42,7 +45,10 @@ function Login() {
                     <EmailInput value={form.email} name={'email'} onChange={onChange}/>
                 </div>
                 <div className={'mb-6'}>
-                    <PasswordInput value={form.password} name={'password'} onChange={onChange}/>
+                    <PasswordInput
+                        value={form.password}
+                        name={'password'}
+                        onChange={onChange}/>
                 </div>
                 <Button type='primary'>Войти</Button>
             </form>

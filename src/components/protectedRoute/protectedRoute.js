@@ -9,14 +9,16 @@ export function ProtectedRoute() {
     const [isUserLoaded, setUserLoaded] = useState(false);
     const auth = useSelector((store) => store.authReducer.isAuthorized);
 
-    useEffect(() => {
-        init();
-    }, []);
+
 
     const init = async () => {
         await dispatch(getUser());
         setUserLoaded(true);
     };
+
+    useEffect(() => {
+        init();
+    }, []);
 
     if (!isUserLoaded) {
         return null;
