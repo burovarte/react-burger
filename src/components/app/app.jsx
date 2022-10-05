@@ -79,16 +79,16 @@ function App() {
             </Routes>
             {locationState?.background && (
                 <Routes>
-                    <Route
-                        path="/order-details"
-                        element={
+                    {/*<Route*/}
+                    {/*    path="/order-details"*/}
+                    {/*    element={*/}
 
-                            <Modal onClose={closeModal}>
-                                <OrderDetails/>
-                            </Modal>
-                        }
-                        exact
-                    />
+                    {/*        <Modal onClose={closeModal}>*/}
+                    {/*            <OrderDetails/>*/}
+                    {/*        </Modal>*/}
+                    {/*    }*/}
+                    {/*    exact*/}
+                    {/*/>*/}
                     <Route
                         path="/ingridient/:id"
                         element={

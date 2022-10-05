@@ -35,9 +35,9 @@ function ResetPassword() {
 
     let locationState = location.state;
     console.log(location)
-    // if (location?.state?.from !== "/forgot-password") {
-    //     return <Navigate to="/" replace />;
-    // }
+    if (locationState !== "/forgot-password") {
+        return <Navigate to="/" replace />;
+    }
 
     return (
 

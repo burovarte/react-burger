@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from "react";
 import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link,  useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import style from './forgot-password.module.css';
 import {baseUrl} from "../../utils/base-url";
 import {checkResponse} from "../../utils/check-response";
@@ -13,19 +13,19 @@ function ForgotPassword() {
     const [form, setValue] = useState({email: ''})
     const navigate = useNavigate()
     const auth = useSelector((store) => store.authReducer.isAuthorized);
-
+    const location = useLocation()
     const onChange = (e) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-
+console.log(location.pathname)
     const onSubmit = useCallback(
         (e) => {
             e.preventDefault();
             forgotPassword(form.email)
                 .then((data) => {
                     if (data.success) {
-                        navigate({ pathname: '/reset-password' });
+                        navigate('/reset-password', {state: location.pathname})
                     }
                 })
                 .catch((err) => {
