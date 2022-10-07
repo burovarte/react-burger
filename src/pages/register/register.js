@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from "react";
 import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect, useLocation, useNavigate, Navigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
 import style from './register.module.css';
 import {register} from "../../services/action/authAction";
 import {useSelector, useDispatch} from 'react-redux';
@@ -26,7 +26,7 @@ function Register(props) {
 
     useEffect(() => {
         if (auth) {
-            navigate.replace({pathname: '/'});
+            navigate({pathname: '/'});
         }
     }, [auth]);
 
@@ -39,7 +39,7 @@ function Register(props) {
     return (
         <div className={style.main}>
             <form className={`${style.form} mb-20`} onSubmit={registerNewUser}>
-                <h1 сlassName={'text text_type_main-large mb-6'}>
+                <h1 className={'text text_type_main-large mb-6'}>
                     Регистрация
                 </h1>
                 <div className={'mb-6'}>
@@ -59,7 +59,7 @@ function Register(props) {
                 <Button type='primary'>Зарегистрироваться</Button>
             </form>
             <div className={style.line}>
-                <p сlassName={` text text_type_main-default text_color_inactive `}>
+                <p className={` text text_type_main-default text_color_inactive `}>
                     Уже зарегистрированы?
                 </p>
                 <Link to='/login'

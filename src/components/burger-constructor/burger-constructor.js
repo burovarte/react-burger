@@ -1,44 +1,40 @@
-import React, {useMemo, useState} from "react";
-import {ConstructorElement, Button, CurrencyIcon, DragIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {useMemo} from "react";
+import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
-import {DataApp, OrderNumber} from '../../app-context/app-context';
-import {useContext} from "react";
 import {baseUrl} from "../../utils/base-url";
-import {checkResponse} from "../../utils/check-response";
 import {useDispatch, useSelector} from "react-redux";
-import {ORDER_NUMBER, DELETE_INGREDIENT, CHANGE_INGREDIENT, ORDER_CLEAR} from "../../services/action";
+import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
 import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 function BurgerConstructor({openModal}) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
+
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     const dispatch = useDispatch()
 
     const dataBurgers = useSelector((store) => store.mainReducer.constructor)
-    const orderNumber = useSelector((store) => store.mainReducer.order)
-
-    const url = `${baseUrl}orders`;
 
     const navigate = useNavigate();
-    const location = useLocation()
 
     const orderHandler = () => {
-        if (auth){
-        const url = `${baseUrl}orders`;
-        const idIndridient = Object.values(dataBurgers).map((ingredient) => {
-            return ingredient._id
-        });
-        dispatch(sendOrder(url, idIndridient, dispatch))
-        openModalOrder()}
-        else{ navigate('/profile')}
+        if (auth) {
+            const url = `${baseUrl}orders`;
+            const idIndridient = Object.values(dataBurgers).map((ingredient) => {
+                return ingredient._id
+            });
+            dispatch(sendOrder(url, idIndridient, dispatch))
+            openModalOrder()
+        } else {
+            navigate('/profile')
+        }
     }
 
 
@@ -112,16 +108,16 @@ function BurgerConstructor({openModal}) {
                     />
                 </div>)}
             {bun && (
-            <div className={style.price_main}>
-                <div className={style.price}>
-                    <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice : 0}</p>
-                    <CurrencyIcon type="primary"/>
-                </div>
+                <div className={style.price_main}>
+                    <div className={style.price}>
+                        <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice : 0}</p>
+                        <CurrencyIcon type="primary"/>
+                    </div>
 
-                <Button type="primary" size="large" onClick={orderHandler}>
-                    Оформить заказ
-                </Button>
-            </div>)}
+                    <Button type="primary" size="large" onClick={orderHandler}>
+                        Оформить заказ
+                    </Button>
+                </div>)}
 
         </section>
     )

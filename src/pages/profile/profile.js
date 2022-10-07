@@ -23,7 +23,7 @@ function Profile() {
     }
     useEffect(() => {
         setValue(user);
-    }, []);
+    }, [user]);
 
     const cancelClick = (e) => {
         setValue(user);
@@ -40,14 +40,14 @@ function Profile() {
                 <NavLink
                     to={{pathname: '/profile'}}
                     className={`${style.link} text text_type_main-medium `}
-                    activeClassName={`${style.activeLink} text text_type_main-medium `}
+                    activeclassname={`${style.activeLink} text text_type_main-medium `}
                 >
                     Профиль
                 </NavLink>
                 <NavLink
                     to={{pathname: '/profile/orders'}}
                     className={`${style.link} text text_type_main-medium `}
-                    activeClassName={`${style.activeLink} text text_type_main-medium `}
+                    activeclassname={`${style.activeLink} text text_type_main-medium `}
                 >
                     История заказов
                 </NavLink>
@@ -72,10 +72,10 @@ function Profile() {
                         placeholder='Имя'/>
                 </div>
                 <div className={'mb-6'}>
-                    <EmailInput value={form.email} name={'email'} onChange={onChange}/>
+                    <EmailInput value={form.email || ''} name={'email'} onChange={onChange}/>
                 </div>
                 <div className={'mb-6'}>
-                    <PasswordInput value={form.password} name={'password'} onChange={onChange}/>
+                    <PasswordInput value={form.password || ''} name={'password'} onChange={onChange}/>
                 </div>
                 <div className={changed ? style.active : style.unactive}>
                     <Button type="primary" size="medium">

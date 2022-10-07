@@ -1,19 +1,16 @@
 import React, {useCallback, useState} from "react";
-import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate, Navigate, useLocation} from "react-router-dom";
 import style from './reset-password.module.css'
-import {baseUrl} from "../../utils/base-url";
-import {checkResponse} from "../../utils/check-response";
 import {resetPassword} from "../../utils/auth";
 
 function ResetPassword() {
     const [form, setValue] = useState({password: '', code: ''})
     const onChange = (e) => {
-        setValue({ ...form, [e.target.name]: e.target.value });
+        setValue({...form, [e.target.name]: e.target.value});
     };
 
     const navigate = useNavigate()
-
 
     const passwordCreate = useCallback(
         (e) => {
@@ -21,7 +18,7 @@ function ResetPassword() {
             resetPassword(form.password, form.code)
                 .then((data) => {
                     if (data.success) {
-                        navigate({ pathname: '/' });
+                        navigate({pathname: '/'});
                     }
                 })
                 .catch((err) => {
@@ -34,16 +31,16 @@ function ResetPassword() {
     const location = useLocation();
 
     let locationState = location.state;
-    console.log(location)
+
     if (locationState !== "/forgot-password") {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/" replace/>;
     }
 
     return (
 
         <div className={style.main}>
             <form className={`${style.form} mb-20`} onSubmit={passwordCreate}>
-                <h1 сlassname={'text text_type_main-large mb-6'}>
+                <h1 className={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
@@ -63,7 +60,7 @@ function ResetPassword() {
                 <Button type='primary'>Сохранить</Button>
             </form>
             <div className={style.line}>
-                <p сlassName={` text text_type_main-default text_color_inactive `}>
+                <p className={` text text_type_main-default text_color_inactive `}>
                     Вспомнили пароль?
                 </p>
                 <Link to='/login'
@@ -71,8 +68,6 @@ function ResetPassword() {
             </div>
         </div>
     )
-
-
 }
 
 export default ResetPassword;

@@ -2,8 +2,6 @@ import React, {useCallback, useState} from "react";
 import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import style from './forgot-password.module.css';
-import {baseUrl} from "../../utils/base-url";
-import {checkResponse} from "../../utils/check-response";
 import {useSelector} from "react-redux";
 import { forgotPassword } from '../../utils/auth'
 import {Navigate} from "react-router-dom";
@@ -18,7 +16,6 @@ function ForgotPassword() {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-console.log(location.pathname)
     const onSubmit = useCallback(
         (e) => {
             e.preventDefault();
@@ -35,7 +32,6 @@ console.log(location.pathname)
         [form, navigate]
     );
 
-
     if (auth) {
         return <Navigate to={'/'} />;
     }
@@ -43,7 +39,7 @@ console.log(location.pathname)
     return (
         <div className={style.main}>
             <form className={`${style.form} mb-20`}>
-                <h1 сlassName={'text text_type_main-large mb-6'}>
+                <h1 className={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
@@ -52,7 +48,7 @@ console.log(location.pathname)
                 <Button type='primary' onClick={onSubmit}>Восстановить</Button>
             </form>
             <div className={style.line}>
-                <p сlassName={` text text_type_main-default text_color_inactive `}>
+                <p className={` text text_type_main-default text_color_inactive `}>
                     Вспомнили пароль?
                 </p>
                 <Link to='/login'
