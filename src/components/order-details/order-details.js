@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 function OrderDetails() {
     const orderNumber = useSelector((store) => store.mainReducer.order)
     return (
-        <div className={`${style.main} pt-30 pb-25`}>
+        <div className={`${style.mum} pt-30 pb-25`}>
             <div className="mb-8">
                 <p className={`${style.order} text text_type_digits-large`}>
                     {orderNumber}

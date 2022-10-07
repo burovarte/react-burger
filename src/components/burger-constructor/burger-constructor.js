@@ -19,7 +19,7 @@ function BurgerConstructor({openModal}) {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
-
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
     const dispatch = useDispatch()
 
     const dataBurgers = useSelector((store) => store.mainReducer.constructor)
@@ -31,13 +31,14 @@ function BurgerConstructor({openModal}) {
     const location = useLocation()
 
     const orderHandler = () => {
+        if (auth){
         const url = `${baseUrl}orders`;
         const idIndridient = Object.values(dataBurgers).map((ingredient) => {
             return ingredient._id
         });
         dispatch(sendOrder(url, idIndridient, dispatch))
-        openModalOrder()
-        navigate('/order-details');
+        openModalOrder()}
+        else{ navigate('/profile')}
     }
 
 
@@ -78,7 +79,7 @@ function BurgerConstructor({openModal}) {
     }
 
     return (
-        <section ref={dropTarget} className={`${style.main} pt-25`}>
+        <section ref={dropTarget} className={`${style.ui} pt-25`}>
             {bun && (
                 <div className={style.item_top}>
                     <ConstructorElement

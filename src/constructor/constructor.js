@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, Fragment} from "react";
-import style from '../components/app/app.module.css';
+import style from './constructor.module.css';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import IngredientDetail from '../components/ingredient-details/ingredien-details';
@@ -60,20 +60,22 @@ function Constructor() {
         });
         setIsOpenModalIngedients(false);
         setIsOpenModalOrder(false)
-        navigate(-1);
+
     }
     return(<DndProvider backend={HTML5Backend}>
-        <main className={style.items}>
+        <div className={style.App}>
+        <div className={style.items}>
             <BurgerIngredients openModal={openModal}/>
             <BurgerConstructor openModal={openModal}/>
-        </main>
+        </div>
+        </div>
 
         {/*{isOpenModalIngedients &&  (*/}
         {/*    <Modal onClose={closeModal} title={'Детали ингредиента'}>*/}
         {/*        <IngredientDetail />*/}
         {/*    </Modal>*/}
         {/*)}*/}
-        {/*{isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}*/}
+        {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}
     </DndProvider>)
 }
 

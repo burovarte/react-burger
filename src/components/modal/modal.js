@@ -20,7 +20,7 @@ function Modal({onClose, title, children}) {
 
     return createPortal(
         <>
-            <div className={`${style.main}`}>
+            <div className={`${style.mom}`}>
                 <div className={`${style.content} mt-10 mr-10 ml-10`}>
                     <p className="text text_type_main-large">
                         {title}

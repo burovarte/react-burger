@@ -50,12 +50,14 @@ function App() {
     const navigate = useNavigate();
     let locationState = location.state;
 
+    console.log(location)
+
     const closeModal = () => {
         navigate(-1);
     };
 
     return (
-        <div className={style.App}>
+        <div className={style}>
             {/*<DndProvider backend={HTML5Backend}>*/}
             <Appheader/>
             <Routes location={locationState?.background || location}>
@@ -70,11 +72,20 @@ function App() {
                     <Route element={<Profile/>} path="/profile" exact/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route element={<Modal onClose={closeModal}>
-                        <OrderDetails/>
-                    </Modal>} path="/order-details" exact/>
-                </Route>
+                {/*<Route element={<ProtectedRoute/>}>*/}
+                {/*    <Route element={<Modal onClose={closeModal}>*/}
+                {/*        <OrderDetails/>*/}
+                {/*    </Modal>} path="/order-details" exact/>*/}
+                {/*</Route>*/}
+
+                {/*<Route*/}
+                {/*    path="/order-details"*/}
+                {/*    element={*/}
+                {/*        <Modal onClose={closeModal} >*/}
+                {/*            <OrderDetails/>*/}
+                {/*        </Modal>*/}
+                {/*    }*/}
+                {/*/>*/}
                 <Route path="*" element={<div> Упс, ошибка</div>}/>
             </Routes>
             {locationState?.background && (
