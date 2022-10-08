@@ -38,14 +38,14 @@ function ForgotPassword() {
 
     return (
         <div className={style.main}>
-            <form className={`${style.form} mb-20`}>
+            <form className={`${style.form} mb-20`} onSubmit={onSubmit}>
                 <h1 className={'text text_type_main-large mb-6'}>
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
                     <EmailInput value={form.email} name={'email'} onChange={onChange} placeholder='Укажите e-mail'/>
                 </div>
-                <Button type='primary' onClick={onSubmit}>Восстановить</Button>
+                <Button type='primary'>Восстановить</Button>
             </form>
             <div className={style.line}>
                 <p className={` text text_type_main-default text_color_inactive `}>

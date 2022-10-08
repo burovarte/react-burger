@@ -45,11 +45,9 @@ function Constructor() {
     }
 
     return (<DndProvider backend={HTML5Backend}>
-        <div className={style.App}>
-            <div className={style.items}>
-                <BurgerIngredients openModal={openModal}/>
-                <BurgerConstructor openModal={openModal}/>
-            </div>
+        <div className={style.items}>
+            <BurgerIngredients openModal={openModal}/>
+            <BurgerConstructor openModal={openModal}/>
         </div>
 
         {isOpenModalOrder && (<Modal onClose={closeModal}><OrderDetails/></Modal>)}

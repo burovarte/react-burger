@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink, useLocation} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {updateUser, logout} from "../../services/action/authAction";
 
@@ -21,6 +21,7 @@ function Profile() {
         e.preventDefault();
         if (changed) dispatch(updateUser(form));
     }
+
     useEffect(() => {
         setValue(user);
     }, [user]);
@@ -28,7 +29,7 @@ function Profile() {
     const cancelClick = (e) => {
         setValue(user);
         setChanged(false);
-    };
+    }
 
     function Exit(e) {
         dispatch(logout(form));

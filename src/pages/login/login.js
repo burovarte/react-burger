@@ -24,10 +24,9 @@ function Login() {
         },
         [form, dispatch]
     );
-
     if (auth) {
         return (
-            <Navigate to={location.state?.from || '/'}/>
+            <Navigate to={location.state?.from || '/profile'}/>
         );
     }
 

@@ -44,7 +44,7 @@ function App() {
     };
 
     return (
-        <div className={style}>
+        <div className={style.app}>
             <Appheader/>
             <Routes location={locationState?.background || location}>
                 <Route path="/" element={<Constructor/>}/>
