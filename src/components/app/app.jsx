@@ -50,8 +50,12 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path="/register" element={<Register/>}/>
-                <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<Register/>} path="/register" exact/>
+                </Route>
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<ForgotPassword/>} path="/forgot-password" exact/>
+                </Route>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
                 <Route element={<ProtectedRoute/>}>
                     <Route element={<Profile/>} path="/profile" exact/>

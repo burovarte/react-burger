@@ -9,7 +9,7 @@ import {useDrop} from "react-dnd";
 import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 function BurgerConstructor({openModal}) {
@@ -23,6 +23,9 @@ function BurgerConstructor({openModal}) {
     const dataBurgers = useSelector((store) => store.mainReducer.constructor)
 
     const navigate = useNavigate();
+    const location  = useLocation()
+
+
 
     const orderHandler = () => {
         if (auth) {
@@ -33,7 +36,7 @@ function BurgerConstructor({openModal}) {
             dispatch(sendOrder(url, idIndridient, dispatch))
             openModalOrder()
         } else {
-            navigate('/profile')
+            navigate('/login',{state: {from: location.pathname}})
         }
     }
 
