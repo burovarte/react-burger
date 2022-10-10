@@ -6,3 +6,7 @@ export const LOAD_DETAILS = 'LOAD_DETAILS';
 export const DELETE_DETAILS = 'DELETE_DETAILS';
 export const ORDER_NUMBER = 'ORDER_NUMBER';
 export const ORDER_CLEAR = 'ORDER_CLEAR';
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const REGISTER_USER = 'REGISTER_USER';
+export const CHEK_TOKEN = 'CHEK_TOKEN';

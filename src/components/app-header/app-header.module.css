@@ -24,7 +24,7 @@
 .left {
     display: flex;
     align-items: center;
-    justify-content:flex-start ;
+    justify-content: flex-start;
 }
 
 .right {
@@ -39,4 +39,10 @@
 
 .menu_left svg {
     padding-right: 8px;
+}
+
+.active {
+    color: #F2F2F3;
+    display: flex;
+    align-items: center;
 }

@@ -1,33 +1,65 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import style from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link, useLocation} from 'react-router-dom';
 
 function AppHeader() {
+    const [active, setActive] = useState('constructor');
+    const {path} = useLocation();
+
+    useEffect(() => {
+        switch (path) {
+            case '/ordering':
+                setActive('ordering');
+                break;
+            case '/profile':
+                setActive('profile');
+                break;
+            case '/':
+                setActive('constructor');
+                break;
+            default:
+                setActive('constructor');
+        }
+    }, [path]);
+
     return (
         <header className={style.header}>
             <div className={style.box}>
                 <nav className={style.left}>
-                    <a className={`${style.buttons} pt-4 pb-4 pl-5 pr-5`}>
+                    <Link to="/"
+                          className={
+                              active === 'constructor'
+                                  ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
+                                  : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
                         <BurgerIcon type="primary"/>
                         <p className="text text_type_main-default pl-2">Конструктор</p>
-                    </a>
-                    <a className={`${style.buttons} pt-4 pb-4 pl-5 pr-5`}>
+                    </Link>
+                    <Link to="/"
+                          className={
+                              active === 'order'
+                                  ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
+                                  : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
                         <ListIcon type="secondary"/>
                         <p className="text text_type_main-default text_color_inactive pl-2">
                             Лента заказов
                         </p>
-                    </a>
+                    </Link>
                 </nav>
-                <a className={style.logoBurger}>
+                <Link to="/" className={style.logoBurger}>
                     <Logo/>
-                </a>
+                </Link>
                 <nav className={style.right}>
-                    <a className={`${style.buttons} pt-4 pb-4 pl-5 pr-5`}>
+                    <Link to="/profile"
+                          className={
+                              active === 'constructor'
+                                  ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
+                                  : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
                         <ProfileIcon type="secondary"/>
                         <p className="text text_type_main-default text_color_inactive pl-2">
                             Личный кабинет
                         </p>
-                    </a>
+                    </Link>
                 </nav>
             </div>
         </header>
