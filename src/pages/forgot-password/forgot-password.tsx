@@ -10,7 +10,7 @@ import {Navigate} from "react-router-dom";
 function ForgotPassword() {
     const [form, setValue] = useState({email: ''})
     const navigate = useNavigate()
-    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
+    const auth:any = useSelector((store:any) => store.authReducer.isAuthorized);
     const location = useLocation()
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});

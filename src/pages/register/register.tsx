@@ -37,7 +37,7 @@ const Register: FC<RegisterProps> = (props) => {
 
     if (auth) {
         return (
-            <Navigate to={from} replace/>
+            <Navigate to={'/profile'}/>
         );
     }
 

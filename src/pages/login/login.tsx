@@ -14,7 +14,7 @@ function Login() {
     };
 
     const dispatch = useDispatch<any>();
-    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
+    const auth = useSelector((store: any) => store.authReducer.isAuthorized);
     const location = useLocation();
 
     const loginUser = useCallback(

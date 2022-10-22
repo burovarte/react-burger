@@ -21,9 +21,8 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
 
 
-
 function App() {
-    const [state, setState] = useState<{ingredientsForBurger: never[], isLoading: boolean, hasError: boolean}>({
+    const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
         ingredientsForBurger: [],
         isLoading: false,
         hasError: false
@@ -46,8 +45,6 @@ function App() {
     };
 
 
-
-
     return (
         <div className={style.app}>
             <Appheader/>
@@ -56,15 +53,9 @@ function App() {
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
                 {/* @ts-ignore */}
-                <Route element={<ProtectedRoute/>}>
-                    {/* @ts-ignore */}
-                    <Route element={<Register/>} path="/register" exact/>
-                </Route>
+                <Route element={<Register/>} path="/register" exact/>
                 {/* @ts-ignore */}
-                <Route element={<ProtectedRoute/>}>
-                    {/* @ts-ignore */}
-                    <Route element={<ForgotPassword/>} path="/forgot-password" exact/>
-                </Route>
+                <Route element={<ForgotPassword/>} path="/forgot-password" exact/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
                 {/* @ts-ignore */}
                 <Route element={<ProtectedRoute/>}>
