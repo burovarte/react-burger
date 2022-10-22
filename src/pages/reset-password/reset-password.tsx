@@ -1,8 +1,9 @@
 import React, {useCallback, useState} from "react";
-import {PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {PasswordInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate, Navigate, useLocation} from "react-router-dom";
 import style from './reset-password.module.css'
 import {resetPassword} from "../../utils/auth";
+import {Button} from '../../utils/buttons'
 
 function ResetPassword() {
     const [form, setValue] = useState({password: '', code: ''})
@@ -48,8 +49,7 @@ function ResetPassword() {
                         value={form.password}
                         name={'password'}
                         onChange={onChange}
-                        /* @ts-ignore */
-                        placeholder='Введите новый пароль'/>
+                       />
                 </div>
                 <div className={'mb-6'}>
                     <Input
@@ -58,7 +58,6 @@ function ResetPassword() {
                         onChange={onChange}
                         placeholder='Введите код из письма'/>
                 </div>
-                { /* @ts-ignore */}
                 <Button type='primary'>Сохранить</Button>
             </form>
             <div className={style.line}>

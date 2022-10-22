@@ -1,8 +1,6 @@
 import React from "react";
 import img from '../../image/img.svg';
 import style from './order-details.module.css';
-import {useContext} from "react";
-import {OrderNumber} from "../../app-context/app-context";
 import {useSelector} from "react-redux";
 
 

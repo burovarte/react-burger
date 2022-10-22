@@ -1,8 +1,7 @@
 import React, {ComponentProps, FC, PropsWithChildren, useMemo} from "react";
-import {ConstructorElement,  Button as _Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-
+import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from '../../utils/buttons'
 import style from './burger-constructor.module.css';
-import PropTypes from 'prop-types';
 import {baseUrl} from "../../utils/base-url";
 import {useDispatch, useSelector} from "react-redux";
 import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
@@ -12,7 +11,6 @@ import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
 
-const Button = _Button as FC<PropsWithChildren<ComponentProps<typeof _Button>>>
 export type Ingredient = {
     _id: string;
     name: string;
@@ -141,7 +139,6 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
                         <p className="text text_type_digits-medium mr-2">{totalPrice ? totalPrice : 0}</p>
                         <CurrencyIcon type="primary"/>
                     </div>
-
                     <Button type="primary" size="large" onClick={orderHandler}>
                         Оформить заказ
                     </Button>

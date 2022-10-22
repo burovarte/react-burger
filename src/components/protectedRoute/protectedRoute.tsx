@@ -4,7 +4,8 @@ import {Navigate, Outlet, useLocation} from 'react-router-dom';
 import {getUser} from '../../services/action/authAction';
 
 
-export function ProtectedRoute(anonymous = false) {
+
+export function ProtectedRoute() {
     const dispatch: any = useDispatch();
     const [isUserLoaded, setUserLoaded] = useState(false);
     const location = useLocation();

@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 type ModalProps = {
     title?: string;
-    children: ReactNode | ''| Element;
+    children: ReactNode | '';
     onClose: () => void;
 
 }
@@ -16,7 +16,7 @@ type ModalProps = {
 const Modal: FC<ModalProps> = ({onClose, title, children}) => {
 
     useEffect(() => {
-        const closeModal = (e: { key: string }) => {
+        const closeModal = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose()
         };
         document.addEventListener("keydown", closeModal);
@@ -34,7 +34,6 @@ const Modal: FC<ModalProps> = ({onClose, title, children}) => {
 
     return createPortal(
         <>
-            { /* @ts-ignore */}
             <div className={`${style.mom}`}>
                 <div className={`${style.content} mt-10 mr-10 ml-10`}>
                     <p className="text text_type_main-large">

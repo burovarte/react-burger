@@ -1,8 +1,7 @@
 import React, {useState, useRef, useContext, useEffect, FunctionComponent, ReactNode, FC, ComponentProps} from "react";
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import style from './burger-ingredients.module.css';
 import Group from '../group/group';
-import PropTypes from "prop-types";
+import {Tab} from '../../utils/buttons'
 import {useSelector} from "react-redux";
 
 
@@ -25,12 +24,10 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
 
     const twoFunction = (e: React.SetStateAction<string>, ref: React.RefObject<HTMLInputElement>) => {
         setSelected(e);
-        // @ts-ignore
-        ref.current.scrollIntoView({behavior: "smooth"})
+        ref?.current?.scrollIntoView({behavior: "smooth"})
     }
 
-    function scroll(ingredient: { target: { scrollTop: number; }; }) {
-        console.log(ingredient.target)
+    function scroll(ingredient: { target: { scrollTop: number; }}) {
         if (ingredient.target.scrollTop > 0 && ingredient.target.scrollTop < 300) {
             setSelected('bun');
         } else if (ingredient.target.scrollTop > 300 && ingredient.target.scrollTop < 900) {
@@ -41,12 +38,11 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
     }
 
 
-    // @ts-ignore
+
     return (
         <div className={`${style.ingredients} pt-10`}>
             <h1 className="text text_type_main-large">Соберите бургер</h1>
             <div className={`${style.menu} mt-5 mb-10`}>
-                {/* @ts-ignore */}
                 <Tab
                     value="bun"
                     active={selected === "bun"}
@@ -54,7 +50,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
                 >
                     Булки
                 </Tab>
-                {/* @ts-ignore */}
                 <Tab
                     value="sauce"
                     active={selected === "sauce"}
@@ -62,7 +57,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
                 >
                     Соусы
                 </Tab>
-                {/* @ts-ignore */}
                 <Tab
                     value="main"
                     active={selected === "main"}
@@ -74,9 +68,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
             {/* @ts-ignore */}
             <ul className={`${style.list} pt-25`} id="ingredients" onScroll={scroll}>
                 <li>
-
                     <Group
-                        /* @ts-ignore */
                         id='bun'
                         title={"Булки"}
                         type={bun}
@@ -86,7 +78,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
                 </li>
                 <li>
                     <Group
-                        /* @ts-ignore */
                         id='sauce'
                         title={"Соусы"}
                         type={sauce}
@@ -96,7 +87,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
                 </li>
                 <li>
                     <Group
-                        /* @ts-ignore */
                         id='main'
                         title={"Начинки"}
                         type={main}
@@ -105,7 +95,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
                     />
                 </li>
             </ul>
-
         </div>
     )
 }

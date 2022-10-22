@@ -45,6 +45,7 @@ function App() {
     };
 
 
+
     return (
         <div className={style.app}>
             <Appheader/>
@@ -52,15 +53,11 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                {/* @ts-ignore */}
-                <Route element={<Register/>} path="/register" exact/>
-                {/* @ts-ignore */}
-                <Route element={<ForgotPassword/>} path="/forgot-password" exact/>
+                <Route element={<Register/>} path="/register" />
+                <Route element={<ForgotPassword/>} path="/forgot-password" />
                 <Route path="/reset-password" element={<ResetPassword/>}/>
-                {/* @ts-ignore */}
-                <Route element={<ProtectedRoute/>}>
-                    {/* @ts-ignore */}
-                    <Route element={<Profile/>} path="/profile" exact/>
+                <Route element={<ProtectedRoute />}>
+                    <Route element={<Profile/>} path="/profile" />
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>

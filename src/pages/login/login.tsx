@@ -1,9 +1,10 @@
 import React, {useState, useCallback} from "react";
-import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, Navigate} from 'react-router-dom';
 import style from './login.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../services/action/authAction";
+import {Button} from '../../utils/buttons'
 
 
 function Login() {
@@ -45,7 +46,6 @@ function Login() {
                         name={'password'}
                         onChange={onChange}/>
                 </div>
-                {/* @ts-ignore */}
                 <Button type='primary'>Войти</Button>
             </form>
             <div className={style.line}>

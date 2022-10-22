@@ -19,6 +19,8 @@ function Constructor() {
     const ingredientsForBurger: any= useSelector<any>((store) => store.mainReducer.ingredients)
     console.log(ingredientsForBurger)
     const dispatch = useDispatch<any>();
+    const auth = useSelector((store: any) => store.authReducer.isAuthorized);
+    console.log("главная страница: ", auth)
 
     const [modalIngedients, setModalIngredients] = useState<null>(null);
     const [isOpenModalIngedients, setIsOpenModalIngedients] = useState<boolean>(false);

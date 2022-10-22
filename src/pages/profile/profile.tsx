@@ -1,9 +1,10 @@
 import React, {useState, useEffect, FormEvent, SyntheticEvent} from "react";
 import style from './profile.module.css';
-import {Input, PasswordInput, EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Input, PasswordInput, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Navigate, NavLink, useLocation} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {updateUser, logout} from "../../services/action/authAction";
+import {Button} from '../../utils/buttons'
 
 type Form = {
     name: string;
@@ -14,7 +15,7 @@ type Form = {
 function Profile() {
     const [form, setValue] = useState<Form>({email: "", name: "", password: ""});
     const [changed, setChanged] = useState(false);
-
+    const auth = useSelector((store:any) => store.authReducer.isAuthorized);
     const dispatch = useDispatch<any>();
     const user: any = useSelector<any>((store) => store.authReducer.user)
 
@@ -37,11 +38,11 @@ function Profile() {
         setChanged(false);
     }
 
-    function Exit(e: MouseEvent) {
+    function Exit() {
         dispatch(logout(form));
     }
 
-
+    console.log("страница профайла: ", auth)
 
     return (
         <div className={style.main}>
@@ -64,7 +65,6 @@ function Profile() {
                 </NavLink>
                 <div
                     className={`${style.exit} text text_type_main-medium `}
-                    /* @ts-ignore */
                     onClick={Exit}
                 >
                     Выход
@@ -90,11 +90,9 @@ function Profile() {
                     <PasswordInput value={form.password || ''} name={'password'} onChange={onChange}/>
                 </div>
                 <div className={changed ? style.active : style.unactive}>
-                    {/* @ts-ignore */}
                     <Button type="primary" size="medium">
                         Сохранить
                     </Button>
-                    {/* @ts-ignore */}
                     <Button onClick={cancelClick} type="secondary">
                         Отмена
                     </Button>

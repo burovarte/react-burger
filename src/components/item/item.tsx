@@ -1,10 +1,9 @@
 import React, {FC} from "react";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/currency-icon";
-import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
+import {Counter} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 import style from './item.module.css';
-import PropTypes from "prop-types";
 import {useDrag} from "react-dnd";
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {Ingredient} from "../burger-constructor/burger-constructor";
 
 type ItemProps = {
