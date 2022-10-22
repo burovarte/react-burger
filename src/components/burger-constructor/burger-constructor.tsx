@@ -1,5 +1,6 @@
-import React, {useMemo} from "react";
-import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {ComponentProps, FC, PropsWithChildren, useMemo} from "react";
+import {ConstructorElement,  Button as _Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+
 import style from './burger-constructor.module.css';
 import PropTypes from 'prop-types';
 import {baseUrl} from "../../utils/base-url";
@@ -11,50 +12,73 @@ import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
 
+const Button = _Button as FC<PropsWithChildren<ComponentProps<typeof _Button>>>
+export type Ingredient = {
+    _id: string;
+    name: string;
+    type: string;
+    proteins: number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    uniqueId?: number;
+    index: number;
+    count: number;
+    _v: string;
+    amount: number;
+}
 
-function BurgerConstructor({openModal}) {
+type BurgerConstructorProps = {
+    openModal: (modalInfo: { typeOfModal: string }) => void
+}
+const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
     function openModalOrder() {
         openModal({typeOfModal: "order"})
     }
 
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
-    const dispatch = useDispatch()
+    const auth: any = useSelector<any>((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch<any>()
 
-    const dataBurgers = useSelector((store) => store.mainReducer.constructor)
+    const dataBurgers: Ingredient[] = useSelector<any>((store) => store.mainReducer.constructor) as any
 
     const navigate = useNavigate();
-    const location  = useLocation()
+    const location = useLocation()
 
 
 
     const orderHandler = () => {
         if (auth) {
-            const url = `${baseUrl}orders`;
-            const idIndridient = Object.values(dataBurgers).map((ingredient) => {
+            const url: string = `${baseUrl}orders`;
+            const idIndridient = dataBurgers.map((ingredient) => {
                 return ingredient._id
             });
             dispatch(sendOrder(url, idIndridient, dispatch))
             openModalOrder()
         } else {
-            navigate('/login',{state: {from: location.pathname}})
+            navigate('/login', {state: {from: location.pathname}})
         }
     }
 
 
-    const bun = useMemo(() => Object.values(dataBurgers).find((i) => i.type === "bun"), [dataBurgers])
-    const mainAndSauce = useMemo(() => Object.values(dataBurgers).filter((i) => i.type !== "bun"), [dataBurgers])
+    const bun = useMemo(() => dataBurgers.find((i) => i.type === "bun"), [dataBurgers])
+    const mainAndSauce = useMemo(() => dataBurgers.filter((i) => i.type !== "bun"), [dataBurgers])
+    console.log('mainAndSauce', mainAndSauce)
 
     const totalPrice = useMemo(() => (mainAndSauce.reduce(
         (previousValue, {price}) => previousValue + price, 0
-    ) + bun?.price * 2), [mainAndSauce])
+    ) + (bun?.price ?? 0) * 2), [mainAndSauce])
 
 
-    const [, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop<Ingredient>({
         accept: 'ingredient',
         drop(item) {
             const uniqueId = uuidv4();
             let amount = 1;
-            let selectedBun = Object.values(dataBurgers).find((item) => item.type === 'bun');
+            let selectedBun = dataBurgers.find((item) => item.type === 'bun');
             if (item.type === 'bun') {
                 amount++;
                 if (selectedBun) {
@@ -69,7 +93,7 @@ function BurgerConstructor({openModal}) {
         }
     });
 
-    const dragItem = (dragIndex, hoverIndex) => {
+    const dragItem = (dragIndex: number, hoverIndex: number) => {
         dispatch({
             type: CHANGE_INGREDIENT,
             dragIndex: dragIndex,
@@ -91,6 +115,7 @@ function BurgerConstructor({openModal}) {
                 </div>
             )}
             <div className={style.items_mainAndSauce}>
+
                 {dataBurgers.map((item, index) => (
                     item.type !== 'bun' && (
                         <ConstructorItem
@@ -126,8 +151,5 @@ function BurgerConstructor({openModal}) {
     )
 }
 
-BurgerConstructor.propTypes = {
-    openModal: PropTypes.func.isRequired
-}
 
 export default BurgerConstructor;

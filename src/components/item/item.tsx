@@ -1,29 +1,28 @@
-import React from "react";
+import React, {FC} from "react";
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/currency-icon";
 import {Counter,} from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/counter";
 import style from './item.module.css';
 import PropTypes from "prop-types";
 import {useDrag} from "react-dnd";
-import {Link, useHistory, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Ingredient} from "../burger-constructor/burger-constructor";
 
+type ItemProps = {
+    id: string;
+    ingredient: Ingredient;
+    openModal: (modalInfo: { typeOfModal: string; Id: string }) => void
+}
 
-function Item({id, ingredient, openModal}) {
+const Item: FC<ItemProps> = ({id, ingredient, openModal}) => {
 
     const navigate = useNavigate();
     const location = useLocation()
     const ingredientId = ingredient['_id'];
 
-    // function onClick() {
-    //     openModal({typeOfModal: "details", Id: id});
-    //     navigate(`/ingridient/${ingredientId}`, {
-    //         state: { background: location },
-    //     });
-    // }
-
     function onClick() {
-        openModal({ typeOfModal: 'details', Id: id });
+        openModal({typeOfModal: 'details', Id: id});
         navigate(`/ingridient/${ingredientId}`, {
-            state: { from: location.pathname, background: location },
+            state: {from: location.pathname, background: location},
         });
     }
 
@@ -32,21 +31,7 @@ function Item({id, ingredient, openModal}) {
         item: ingredient,
     })
 
-
-
-
-
-
     return (
-        // <Link
-        //     key={ingredientId}
-        //     to={{
-        //         // Тут мы формируем динамический путь для нашего ингредиента
-        //         // а также сохраняем в свойство background роут, на котором была открыта наша модалка.
-        //         pathname: `/ingredients/${ingredientId}`,
-        //         state: {background: location},
-        //     }}
-        // >
         <div className={style.main}>
             <div ref={dragRef} className={style.item} onClick={onClick}>
                 <img className={style.image} src={ingredient.image} alt={`${ingredient.name}`}/>
@@ -58,14 +43,7 @@ function Item({id, ingredient, openModal}) {
                 {ingredient.amount > 0 && <Counter count={ingredient.amount} size='small'/>}
             </div>
         </div>
-// </Link>
-)
-}
-
-Item.propTypes = {
-    id: PropTypes.string.isRequired,
-    ingredient: PropTypes.object.isRequired,
-    openModal: PropTypes.func.isRequired
+    )
 }
 
 export default Item;

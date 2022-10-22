@@ -6,14 +6,14 @@ import {resetPassword} from "../../utils/auth";
 
 function ResetPassword() {
     const [form, setValue] = useState({password: '', code: ''})
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
     const navigate = useNavigate()
 
     const passwordCreate = useCallback(
-        (e) => {
+        (e: React.ChangeEvent<HTMLFormElement>) => {
             e.preventDefault();
             resetPassword(form.password, form.code)
                 .then((data) => {
@@ -48,6 +48,7 @@ function ResetPassword() {
                         value={form.password}
                         name={'password'}
                         onChange={onChange}
+                        /* @ts-ignore */
                         placeholder='Введите новый пароль'/>
                 </div>
                 <div className={'mb-6'}>
@@ -57,6 +58,7 @@ function ResetPassword() {
                         onChange={onChange}
                         placeholder='Введите код из письма'/>
                 </div>
+                { /* @ts-ignore */}
                 <Button type='primary'>Сохранить</Button>
             </form>
             <div className={style.line}>

@@ -9,16 +9,16 @@ import {login} from "../../services/action/authAction";
 function Login() {
     const [form, setValue] = useState({email: '', password: ''})
 
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-    const dispatch = useDispatch();
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch<any>();
+    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
     const location = useLocation();
 
     const loginUser = useCallback(
-        (e) => {
+        (e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             dispatch(login(form));
         },
@@ -45,6 +45,7 @@ function Login() {
                         name={'password'}
                         onChange={onChange}/>
                 </div>
+                {/* @ts-ignore */}
                 <Button type='primary'>Войти</Button>
             </form>
             <div className={style.line}>

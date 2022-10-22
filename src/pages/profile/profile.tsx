@@ -1,23 +1,29 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, FormEvent, SyntheticEvent} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Navigate, NavLink, useLocation} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import {updateUser, logout} from "../../services/action/authAction";
 
+type Form = {
+    name: string;
+    email: string;
+    password: string;
+}
+
 function Profile() {
-    const [form, setValue] = useState({});
+    const [form, setValue] = useState<Form>({email: "", name: "", password: ""});
     const [changed, setChanged] = useState(false);
 
-    const dispatch = useDispatch();
-    const user = useSelector((store) => store.authReducer.user)
+    const dispatch = useDispatch<any>();
+    const user: any = useSelector<any>((store) => store.authReducer.user)
 
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
         setChanged(true);
     };
 
-    function onClick(e) {
+    function onClick(e: FormEvent) {
         e.preventDefault();
         if (changed) dispatch(updateUser(form));
     }
@@ -26,14 +32,16 @@ function Profile() {
         setValue(user);
     }, [user]);
 
-    const cancelClick = (e) => {
+    const cancelClick = (e: SyntheticEvent<Element, Event>) => {
         setValue(user);
         setChanged(false);
     }
 
-    function Exit(e) {
+    function Exit(e: MouseEvent) {
         dispatch(logout(form));
     }
+
+
 
     return (
         <div className={style.main}>
@@ -41,6 +49,7 @@ function Profile() {
                 <NavLink
                     to={{pathname: '/profile'}}
                     className={`${style.link} text text_type_main-medium `}
+                    /* @ts-ignore */
                     activeclassname={`${style.activeLink} text text_type_main-medium `}
                 >
                     Профиль
@@ -48,12 +57,14 @@ function Profile() {
                 <NavLink
                     to={{pathname: '/profile/orders'}}
                     className={`${style.link} text text_type_main-medium `}
+                    /* @ts-ignore */
                     activeclassname={`${style.activeLink} text text_type_main-medium `}
                 >
                     История заказов
                 </NavLink>
                 <div
                     className={`${style.exit} text text_type_main-medium `}
+                    /* @ts-ignore */
                     onClick={Exit}
                 >
                     Выход
@@ -79,9 +90,11 @@ function Profile() {
                     <PasswordInput value={form.password || ''} name={'password'} onChange={onChange}/>
                 </div>
                 <div className={changed ? style.active : style.unactive}>
+                    {/* @ts-ignore */}
                     <Button type="primary" size="medium">
                         Сохранить
                     </Button>
+                    {/* @ts-ignore */}
                     <Button onClick={cancelClick} type="secondary">
                         Отмена
                     </Button>

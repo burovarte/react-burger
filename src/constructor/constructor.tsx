@@ -10,24 +10,28 @@ import {useDispatch, useSelector} from "react-redux";
 import {DELETE_DETAILS, LOAD_DETAILS} from "../services/action";
 import {useLocation, useNavigate} from "react-router-dom";
 
+interface IOpenModal {
+    typeOfModal: string;
+    Id?: string
+}
 
 function Constructor() {
-    const ingredientsForBurger = useSelector((store) => store.mainReducer.ingredients)
+    const ingredientsForBurger: any= useSelector<any>((store) => store.mainReducer.ingredients)
+    console.log(ingredientsForBurger)
+    const dispatch = useDispatch<any>();
 
-    const dispatch = useDispatch();
+    const [modalIngedients, setModalIngredients] = useState<null>(null);
+    const [isOpenModalIngedients, setIsOpenModalIngedients] = useState<boolean>(false);
+    const [isOpenModalOrder, setIsOpenModalOrder] = useState<boolean>(false)
 
-    const [modalIngedients, setModalIngredients] = useState(null);
-    const [isOpenModalIngedients, setIsOpenModalIngedients] = useState(false);
-    const [isOpenModalOrder, setIsOpenModalOrder] = useState(false)
-
-    function openModal({typeOfModal, Id}) {
+    function openModal({typeOfModal, Id}: IOpenModal) {
         if (typeOfModal === "details") {
             setIsOpenModalIngedients(true);
             dispatch({
                 type: LOAD_DETAILS,
-                item: ingredientsForBurger.find((i) => i._id === Id),
+                item: ingredientsForBurger.find((i: { _id: string; }) => i._id === Id),
             });
-            setModalIngredients(ingredientsForBurger.find((i) => i._id === Id))
+            setModalIngredients: void(ingredientsForBurger.find((i: { _id: string; }) => i._id === Id))
         } else {
             setIsOpenModalOrder(true)
         }

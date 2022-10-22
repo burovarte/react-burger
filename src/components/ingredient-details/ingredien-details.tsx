@@ -4,19 +4,11 @@ import {useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
 
 function IngredientDetails() {
-     const ing = useSelector((store) => store.mainReducer.ingredient)
+    const ing: any = useSelector<any>((store) => store.mainReducer.ingredient)
 
-
-
-    const { id } = useParams();
-    const items = useSelector((store) => store.mainReducer.ingredients);
-    const item = items?.find((el) => el._id === id);
-    console.log ("id:", id)
-    console.log("items:", items)
-    console.log("item:",item)
-
-
-
+    const {id} = useParams();
+    const items: any = useSelector<any>((store) => store.mainReducer.ingredients);
+    const item = items?.find((el: { _id: string }) => el._id === id);
 
     return (
         <div className={`${style.main} p-10`}>

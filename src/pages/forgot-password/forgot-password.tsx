@@ -10,14 +10,14 @@ import {Navigate} from "react-router-dom";
 function ForgotPassword() {
     const [form, setValue] = useState({email: ''})
     const navigate = useNavigate()
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
     const location = useLocation()
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
     const onSubmit = useCallback(
-        (e) => {
+        (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             forgotPassword(form.email)
                 .then((data) => {
@@ -36,6 +36,7 @@ function ForgotPassword() {
         return <Navigate to={'/'} />;
     }
 
+
     return (
         <div className={style.main}>
             <form className={`${style.form} mb-20`} onSubmit={onSubmit}>
@@ -43,8 +44,9 @@ function ForgotPassword() {
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
-                    <EmailInput value={form.email} name={'email'} onChange={onChange} placeholder='Укажите e-mail'/>
+                    <EmailInput value={form.email} name={'email'} onChange={onChange} />
                 </div>
+                {/* @ts-ignore */}
                 <Button type='primary'>Восстановить</Button>
             </form>
             <div className={style.line}>

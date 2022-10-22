@@ -1,23 +1,28 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useState, useEffect, useCallback, FC} from "react";
 import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
 import style from './register.module.css';
 import {register} from "../../services/action/authAction";
 import {useSelector, useDispatch} from 'react-redux';
 
+type RegisterProps = {
+    state?: {
+        from: Location;
+    }
+}
 
-function Register(props) {
+const Register: FC<RegisterProps> = (props) => {
     const [form, setValue] = useState({email: '', password: '', name: ''})
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
     const navigate = useNavigate()
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const location = useLocation();
     const from = location.state?.from || "/";
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
     const registerNewUser = useCallback(
-        (e) => {
+        (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             dispatch(register(form));
         },
@@ -56,6 +61,7 @@ function Register(props) {
                 <div className={'mb-6'}>
                     <PasswordInput value={form.password} name={'password'} onChange={onChange}/>
                 </div>
+                {/* @ts-ignore */}
                 <Button type='primary'>Зарегистрироваться</Button>
             </form>
             <div className={style.line}>

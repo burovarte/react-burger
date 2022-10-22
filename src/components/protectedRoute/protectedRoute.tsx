@@ -5,10 +5,10 @@ import {getUser} from '../../services/action/authAction';
 
 
 export function ProtectedRoute(anonymous = false) {
-    const dispatch = useDispatch();
+    const dispatch: any = useDispatch();
     const [isUserLoaded, setUserLoaded] = useState(false);
     const location = useLocation();
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
     const init = async () => {
         await dispatch(getUser());
         setUserLoaded(true);
@@ -18,7 +18,9 @@ export function ProtectedRoute(anonymous = false) {
         init();
     }, []);
 
+
     return (
+         // @ts-ignore
         auth ? <Outlet/> : <Navigate to={{pathname: "/login", state: {from: location}}}/>
     )
 }

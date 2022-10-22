@@ -1,14 +1,21 @@
-import React, {useRef} from "react";
+import React, {FC, RefObject, useRef} from "react";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import style from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DELETE_INGREDIENT} from "../../services/action";
 import PropTypes from "prop-types";
+import {Ingredient} from "../burger-constructor/burger-constructor";
 
-function ConstructorItem({item, index, dragItem}) {
+type ConstructorItemProps = {
+    item: Ingredient;
+    index: number;
+    dragItem:  (dragIndex: number, hoverIndex: number) => void
+}
+
+const ConstructorItem: FC<ConstructorItemProps> = ({item, index, dragItem}) => {
     const dispatch = useDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLInputElement>(null);
 
     const [, dragRef] = useDrag({
         type: 'constructorItem',
@@ -19,15 +26,23 @@ function ConstructorItem({item, index, dragItem}) {
 
     const [, dropRef] = useDrop({
         accept: 'constructorItem',
-        hover: (item, monitor) => {
+        hover: (item: Ingredient, monitor) => {
             if (item.index === index)
                 return;
+            console.log("ref: ", ref)
 
+            if (!ref.current) return;
             let hoverMiddleY = (ref.current.getBoundingClientRect().bottom - ref.current.getBoundingClientRect().top) / 2;
-            let hoverClientY = monitor.getClientOffset().y - ref.current.getBoundingClientRect().top;
+
+            const getClientOffset = monitor.getClientOffset();
+            if (!getClientOffset) return;
+
+            let hoverClientY = getClientOffset.y - ref.current.getBoundingClientRect().top;
+
 
             if (item.index < index && hoverClientY < hoverMiddleY)
                 return;
+
             if (item.index > index && hoverClientY > hoverMiddleY)
                 return;
             dragItem(item.index, index);
@@ -37,7 +52,7 @@ function ConstructorItem({item, index, dragItem}) {
 
     dragRef(dropRef(ref));
 
-    function deleteIngredient(item) {
+    function deleteIngredient(item: Ingredient) {
         dispatch({
             type: DELETE_INGREDIENT,
             item: item,
@@ -60,10 +75,5 @@ function ConstructorItem({item, index, dragItem}) {
     )
 }
 
-ConstructorItem.propTypes = {
-    item: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
-    dragItem: PropTypes.func.isRequired
-}
 
 export default ConstructorItem;
