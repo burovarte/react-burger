@@ -1,5 +1,6 @@
 import React, {useCallback, useState} from "react";
-import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button} from '../../utils/buttons'
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import style from './forgot-password.module.css';
 import {useSelector} from "react-redux";
@@ -10,14 +11,14 @@ import {Navigate} from "react-router-dom";
 function ForgotPassword() {
     const [form, setValue] = useState({email: ''})
     const navigate = useNavigate()
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const auth = useSelector((store:any) => store.authReducer.isAuthorized);
     const location = useLocation()
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
     const onSubmit = useCallback(
-        (e) => {
+        (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             forgotPassword(form.email)
                 .then((data) => {
@@ -36,6 +37,7 @@ function ForgotPassword() {
         return <Navigate to={'/'} />;
     }
 
+
     return (
         <div className={style.main}>
             <form className={`${style.form} mb-20`} onSubmit={onSubmit}>
@@ -43,7 +45,7 @@ function ForgotPassword() {
                     Восстановление пароля
                 </h1>
                 <div className={'mb-6'}>
-                    <EmailInput value={form.email} name={'email'} onChange={onChange} placeholder='Укажите e-mail'/>
+                    <EmailInput value={form.email} name={'email'} onChange={onChange} />
                 </div>
                 <Button type='primary'>Восстановить</Button>
             </form>

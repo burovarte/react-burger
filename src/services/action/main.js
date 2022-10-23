@@ -12,7 +12,7 @@ export const addIngredient = (item, uniqueId, amount) => {
     };
 };
 
-export const loadIngredients = (url) => {
+export const loadIngredients = (url, setState, dispatch) => {
     return function (dispatch) {
         fetch(url)
             .then(checkResponse)
@@ -28,7 +28,7 @@ export const loadIngredients = (url) => {
     }
 }
 
-export const sendOrder = (url,idIndridient) => {
+export const sendOrder = (url, idIndridient, dispatch) => {
     return function (dispatch) {
         fetch(url, {
             method: 'POST',

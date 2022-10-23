@@ -1,7 +1,7 @@
 import {baseUrl} from './base-url';
 import {checkResponse} from "./check-response";
 
-export const forgotPassword = (email) => {
+export const forgotPassword = (email: string) => {
     return fetch(`${baseUrl}password-reset`, {
         method: 'POST',
         headers: {
@@ -14,7 +14,7 @@ export const forgotPassword = (email) => {
     }).then(checkResponse);
 };
 
-export const resetPassword = (password, code) => {
+export const resetPassword = (password: string, code:string) => {
     return fetch(`${baseUrl}password-reset/reset`, {
         method: 'POST',
         headers: {

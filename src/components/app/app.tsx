@@ -20,14 +20,15 @@ import {ProtectedRoute} from "../protectedRoute/protectedRoute";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
 
+
 function App() {
-    const [state, setState] = useState({
+    const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
         ingredientsForBurger: [],
         isLoading: false,
         hasError: false
     })
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     useEffect(() => {
         const url = `${baseUrl}ingredients`;
@@ -43,6 +44,8 @@ function App() {
         navigate(-1);
     };
 
+
+
     return (
         <div className={style.app}>
             <Appheader/>
@@ -50,15 +53,11 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route element={<Register/>} path="/register" exact/>
-                </Route>
-                <Route element={<ProtectedRoute/>}>
-                    <Route element={<ForgotPassword/>} path="/forgot-password" exact/>
-                </Route>
+                <Route element={<Register/>} path="/register" />
+                <Route element={<ForgotPassword/>} path="/forgot-password" />
                 <Route path="/reset-password" element={<ResetPassword/>}/>
-                <Route element={<ProtectedRoute/>}>
-                    <Route element={<Profile/>} path="/profile" exact/>
+                <Route element={<ProtectedRoute />}>
+                    <Route element={<Profile/>} path="/profile" />
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>

@@ -3,12 +3,13 @@ import style from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation} from 'react-router-dom';
 
+
 function AppHeader() {
-    const [active, setActive] = useState('constructor');
-    const {path} = useLocation();
+    const [active, setActive] = useState<string>('constructor');
+    const {pathname} = useLocation();
 
     useEffect(() => {
-        switch (path) {
+        switch (pathname) {
             case '/ordering':
                 setActive('ordering');
                 break;
@@ -21,7 +22,7 @@ function AppHeader() {
             default:
                 setActive('constructor');
         }
-    }, [path]);
+    }, [pathname]);
 
     return (
         <header className={style.header}>

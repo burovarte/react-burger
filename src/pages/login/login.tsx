@@ -1,24 +1,25 @@
 import React, {useState, useCallback} from "react";
-import {EmailInput, PasswordInput, Button} from "@ya.praktikum/react-developer-burger-ui-components";
+import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, Navigate} from 'react-router-dom';
 import style from './login.module.css';
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../services/action/authAction";
+import {Button} from '../../utils/buttons'
 
 
 function Login() {
     const [form, setValue] = useState({email: '', password: ''})
 
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-    const dispatch = useDispatch();
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch<any>();
+    const auth = useSelector((store: any) => store.authReducer.isAuthorized);
     const location = useLocation();
 
     const loginUser = useCallback(
-        (e) => {
+        (e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             dispatch(login(form));
         },

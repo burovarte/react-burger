@@ -1,23 +1,29 @@
-import React, {useState, useEffect, useCallback} from "react";
-import {EmailInput, PasswordInput, Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
+import React, {useState, useEffect, useCallback, FC} from "react";
+import {EmailInput, PasswordInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link, useLocation, useNavigate, Navigate, Outlet} from "react-router-dom";
 import style from './register.module.css';
 import {register} from "../../services/action/authAction";
 import {useSelector, useDispatch} from 'react-redux';
+import {Button} from '../../utils/buttons'
 
+type RegisterProps = {
+    state?: {
+        from: Location;
+    }
+}
 
-function Register(props) {
+const Register: FC<RegisterProps> = (props) => {
     const [form, setValue] = useState({email: '', password: '', name: ''})
-    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
     const navigate = useNavigate()
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
     const location = useLocation();
     const from = location.state?.from || "/";
-    const onChange = (e) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
     };
     const registerNewUser = useCallback(
-        (e) => {
+        (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             dispatch(register(form));
         },
@@ -32,11 +38,15 @@ function Register(props) {
 
     if (auth) {
         return (
-            <Navigate to={from} replace/>
+            <Navigate to={'/profile'}/>
         );
     }
 
+    console.log("СТраница регистрации: ",auth)
+
     return (
+
+        auth ?   (<Navigate to={{pathname: "/login"}}/>) : (
         <div className={style.main}>
             <form className={`${style.form} mb-20`} onSubmit={registerNewUser}>
                 <h1 className={'text text_type_main-large mb-6'}>
@@ -65,7 +75,7 @@ function Register(props) {
                 <Link to='/login'
                       className={`${style.link} text text_type_main-default ml-2`}>Войти</Link>
             </div>
-        </div>
+        </div>)
     )
 }
 
