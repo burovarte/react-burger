@@ -54,7 +54,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
             const idIndridient = dataBurgers.map((ingredient) => {
                 return ingredient._id
             });
-            dispatch(sendOrder(url, idIndridient, dispatch))
+            dispatch(sendOrder(url, idIndridient))
             openModalOrder()
         } else {
             navigate('/login', {state: {from: location.pathname}})

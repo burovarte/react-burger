@@ -9,7 +9,17 @@ import {
     ORDER_CLEAR
 } from "../action";
 
-const initialState = {
+import {MainActions} from "../action/main";
+import {Ingredient} from "../../components/burger-constructor/burger-constructor";
+
+type InitialState = {
+    ingredients: Array<Ingredient>;
+    constructor: Array<Ingredient>;
+    ingredient: object | Ingredient;
+    order: number
+}
+
+const initialState: InitialState = {
     ingredients: [],
     constructor: [],
     ingredient: {},
@@ -17,7 +27,7 @@ const initialState = {
 }
 
 
-export const mainReducer = (state = initialState, action) => {
+export const mainReducer = (state = initialState, action: MainActions) => {
     switch (action.type) {
         case LOAD_INGREDIENTS:
             return {

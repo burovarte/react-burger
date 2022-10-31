@@ -32,7 +32,7 @@ function App() {
 
     useEffect(() => {
         const url = `${baseUrl}ingredients`;
-        dispatch(loadIngredients(url, setState, dispatch))
+        dispatch(loadIngredients(url, dispatch))
     }, [dispatch])
 
 
