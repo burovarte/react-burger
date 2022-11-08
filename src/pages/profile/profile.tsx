@@ -39,7 +39,7 @@ function Profile() {
     }
 
     function Exit() {
-        dispatch(logout(form));
+        dispatch(logout());
     }
 
     console.log("страница профайла: ", auth)

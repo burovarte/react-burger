@@ -1,10 +1,33 @@
 import {LOGIN_USER, REGISTER_USER, LOGOUT_USER, CHEK_TOKEN} from './index';
-
 import {baseUrl} from '../../utils/base-url';
 import {checkResponse} from "../../utils/check-response";
+import {TUserData, AppDispatch, AppThunkAction} from "../../utils/types";
 
-export function login(data) {
-    return function (dispatch) {
+export interface ILoginUserAction {
+    readonly type: typeof LOGIN_USER;
+    readonly data: TUserData;
+}
+export interface IRegisterUserAction {
+    readonly type: typeof REGISTER_USER;
+    readonly data: TUserData;
+}
+export interface ILogoutUserAction {
+    readonly type: typeof LOGOUT_USER;
+}
+export interface IChekTokenAction {
+    readonly type: typeof CHEK_TOKEN;
+    readonly data: TUserData;
+}
+
+
+export type TAuthActions =
+    | ILoginUserAction
+    | IRegisterUserAction
+    | ILogoutUserAction
+    | IChekTokenAction;
+
+export function login(data:TUserData):AppThunkAction {
+    return function (dispatch:AppDispatch) {
         fetch(`${baseUrl}auth/login`, {
             method: 'POST',
             headers: {
@@ -35,8 +58,8 @@ export function login(data) {
 }
 
 
-export function register(data) {
-    return function (dispatch) {
+export function register(data: TUserData): AppThunkAction {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}auth/register`, {
             method: 'POST',
             headers: {
@@ -68,8 +91,8 @@ export function register(data) {
 }
 
 
-export function logout(data) {
-    return function (dispatch) {
+export function logout(): AppThunkAction {
+    return function (dispatch: AppDispatch) {
         fetch(`${baseUrl}auth/logout`, {
             method: 'POST',
             headers: {
@@ -98,12 +121,14 @@ export function logout(data) {
 }
 
 
-export function getUser() {
-    return function (dispatch) {
+export function getUser():AppThunkAction {
+    return function (dispatch: AppDispatch) {
+
         fetchWithRefresh(`${baseUrl}auth/user`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+                // @ts-ignore
                 authorization: getCookie('accessToken'),
             },
         })
@@ -124,12 +149,13 @@ export function getUser() {
 }
 
 
-export function updateUser(data) {
-    return function (dispatch) {
+export function updateUser(data:TUserData): AppThunkAction {
+    return function (dispatch: AppDispatch) {
         fetchWithRefresh(`${baseUrl}auth/user`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
+                // @ts-ignore
                 authorization: getCookie('accessToken'),
             },
             body: JSON.stringify({
@@ -167,11 +193,16 @@ export const refreshToken = () => {
     }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
+
+type fetchWithRefreshOptions = Overwrite<RequestInit, {headers: Record<string, string>  }>;
+
+
+export const fetchWithRefresh = async (url: string, options:fetchWithRefreshOptions) => {
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
         if (err.message === 'jwt expired') {
             const refreshData = await refreshToken();
             localStorage.setItem('refreshToken', refreshData.refreshToken);
@@ -185,7 +216,7 @@ export const fetchWithRefresh = async (url, options) => {
     }
 };
 
-export function setCookie(name, value, props) {
+export function setCookie(name: string, value: string, props: any = {}) {
     props = props || {};
     props = {
         path: '/',
@@ -213,7 +244,7 @@ export function setCookie(name, value, props) {
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name:string) {
     const matches = document.cookie.match(
         new RegExp(
             '(?:^|; )' +
@@ -224,7 +255,7 @@ export function getCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-function deleteCookie(name) {
+function deleteCookie(name: string) {
     setCookie(name, '', {
         'max-age': -1,
     });

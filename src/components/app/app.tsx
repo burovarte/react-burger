@@ -4,7 +4,6 @@ import Appheader from "../app-header/app-header";
 import Modal from '../modal/modal'
 import IngredientDetail from '../ingredient-details/ingredien-details';
 import {baseUrl} from "../../utils/base-url";
-import {useDispatch} from 'react-redux';
 import {loadIngredients} from "../../services/action/main";
 import {
     Routes,
@@ -19,7 +18,7 @@ import Profile from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protectedRoute/protectedRoute";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
-
+import {useDispatch} from '../../utils/hooks'
 
 function App() {
     const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
@@ -28,11 +27,11 @@ function App() {
         hasError: false
     })
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const url = `${baseUrl}ingredients`;
-        dispatch(loadIngredients(url, dispatch))
+        dispatch(loadIngredients(url))
     }, [dispatch])
 
 

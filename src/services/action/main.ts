@@ -6,11 +6,9 @@ import {
     CHANGE_INGREDIENT,
 } from "./index";
 import {checkResponse} from "../../utils/check-response";
-import React, {useState, useEffect, useContext} from "react";
 import {Ingredient} from "../../components/burger-constructor/burger-constructor";
-import {store} from "../store";
+import {AppDispatch} from "../../utils/types";
 
-export type AppDispatch = typeof store.dispatch;
 
 export interface IAddIngredient {
     readonly type: typeof ADD_INGREDIENT;
@@ -54,7 +52,7 @@ export interface IChangeingredientAction {
     readonly hoverIndex: number,
 }
 
-export type MainActions =
+export type TMainActions =
     IAddIngredient
     | ILoadIngredients
     | ISendOrder
@@ -75,7 +73,7 @@ export const addIngredient = (item: Ingredient, uniqueId: string, amount: number
     };
 };
 
-export const loadIngredients = (url: string, dispatch: AppDispatch): (dispatch: AppDispatch) => void => {
+export const loadIngredients = (url: string)=> {
     return function (dispatch: AppDispatch) {
         fetch(url)
             .then(checkResponse)

@@ -3,13 +3,15 @@ import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-bu
 import {Button} from '../../utils/buttons'
 import style from './burger-constructor.module.css';
 import {baseUrl} from "../../utils/base-url";
-import {useDispatch, useSelector} from "react-redux";
+// import {useSelector} from "react-redux";
 import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
 import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
+import {useDispatch} from "../../utils/hooks";
+import {useSelector} from "../../utils/hooks";
 
 export type Ingredient = {
     _id: string;
@@ -38,8 +40,8 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
         openModal({typeOfModal: "order"})
     }
 
-    const auth: any = useSelector<any>((store) => store.authReducer.isAuthorized);
-    const dispatch = useDispatch<any>()
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch()
 
     const dataBurgers: Ingredient[] = useSelector<any>((store) => store.mainReducer.constructor) as any
 

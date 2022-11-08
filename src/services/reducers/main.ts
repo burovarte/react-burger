@@ -9,7 +9,7 @@ import {
     ORDER_CLEAR
 } from "../action";
 
-import {MainActions} from "../action/main";
+import {TMainActions} from "../action/main";
 import {Ingredient} from "../../components/burger-constructor/burger-constructor";
 
 type InitialState = {
@@ -27,7 +27,7 @@ const initialState: InitialState = {
 }
 
 
-export const mainReducer = (state = initialState, action: MainActions) => {
+export const mainReducer = (state = initialState, action: TMainActions): InitialState => {
     switch (action.type) {
         case LOAD_INGREDIENTS:
             return {
@@ -38,7 +38,7 @@ export const mainReducer = (state = initialState, action: MainActions) => {
                 })
             }
         case ADD_INGREDIENT:
-            return {
+            return <InitialState>{
                 ...state,
                 constructor: [...state.constructor, {...action.item, uniqueId: action.uniqueId}],
                 ingredients: [...state.ingredients].map((item) =>
