@@ -6,9 +6,9 @@ import OrderDetails from "../components/order-details/order-details";
 import Modal from '../components/modal/modal'
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../utils/hooks";
 import {DELETE_DETAILS, LOAD_DETAILS} from "../services/action";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 interface IOpenModal {
     typeOfModal: string;
@@ -16,10 +16,10 @@ interface IOpenModal {
 }
 
 function Constructor() {
-    const ingredientsForBurger: any= useSelector<any>((store) => store.mainReducer.ingredients)
+    const ingredientsForBurger= useSelector((store) => store.mainReducer.ingredients)
     console.log(ingredientsForBurger)
-    const dispatch = useDispatch<any>();
-    const auth = useSelector((store: any) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch();
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
     console.log("главная страница: ", auth)
 
     const [modalIngedients, setModalIngredients] = useState<null>(null);
@@ -29,10 +29,10 @@ function Constructor() {
     function openModal({typeOfModal, Id}: IOpenModal) {
         if (typeOfModal === "details") {
             setIsOpenModalIngedients(true);
-            dispatch({
-                type: LOAD_DETAILS,
-                item: ingredientsForBurger.find((i: { _id: string; }) => i._id === Id),
-            });
+            // dispatch({
+            //     type: LOAD_DETAILS,
+            //     item: ingredientsForBurger.find((i: { _id: string; }) => i._id === Id),
+            // });
             setModalIngredients: void(ingredientsForBurger.find((i: { _id: string; }) => i._id === Id))
         } else {
             setIsOpenModalOrder(true)

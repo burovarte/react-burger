@@ -35,9 +35,12 @@ export const authReducer = (state = initialState, action: TAuthActions): Tinitia
             };
 
         case LOGOUT_USER:
-            return <TinitialState>{
+            return {
                 ...state,
-                user: {},
+                user: {
+                    email: '',
+                    password: '',
+                },
                 isAuthorized: false,
             };
 

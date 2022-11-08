@@ -10,13 +10,13 @@ import {addIngredient, sendOrder} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useDispatch} from "../../utils/hooks";
-import {useSelector} from "../../utils/hooks";
+import {useDispatch, useSelector} from "../../utils/hooks";
+
 
 export type Ingredient = {
     _id: string;
     name: string;
-    type: string;
+    type: "bun" | "main" | "sauce";
     proteins: number;
     fat: number;
     carbohydrates: number;
@@ -43,12 +43,10 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     const dispatch = useDispatch()
 
-    const dataBurgers: Ingredient[] = useSelector<any>((store) => store.mainReducer.constructor) as any
+    const dataBurgers: Ingredient[] = useSelector((store) => store.mainReducer.constructor)
 
     const navigate = useNavigate();
     const location = useLocation()
-
-
 
     const orderHandler = () => {
         if (auth) {

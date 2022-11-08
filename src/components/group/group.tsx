@@ -5,7 +5,7 @@ import {Ingredient} from "../burger-constructor/burger-constructor";
 
 type GroupProps = {
     title: string;
-    type: [];
+    type: Ingredient[];
     id: string;
     butref: LegacyRef<HTMLDivElement>;
     openModal: (modalInfo: { typeOfModal: string; Id: string }) => void

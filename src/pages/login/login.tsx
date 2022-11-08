@@ -2,7 +2,7 @@ import React, {useState, useCallback} from "react";
 import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, Navigate} from 'react-router-dom';
 import style from './login.module.css';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {login} from "../../services/action/authAction";
 import {Button} from '../../utils/buttons'
 
@@ -14,8 +14,8 @@ function Login() {
         setValue({...form, [e.target.name]: e.target.value});
     };
 
-    const dispatch = useDispatch<any>();
-    const auth = useSelector((store: any) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch();
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
     const location = useLocation();
 
     const loginUser = useCallback(

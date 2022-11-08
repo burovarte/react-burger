@@ -1,11 +1,11 @@
 import React from "react";
 import img from '../../image/img.svg';
 import style from './order-details.module.css';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 
 
 function OrderDetails() {
-    const orderNumber: any = useSelector<any>((store) => store.mainReducer.order)
+    const orderNumber = useSelector((store) => store.mainReducer.order)
     return (
         <div className={`${style.mum} pt-30 pb-25`}>
             <div className="mb-8">

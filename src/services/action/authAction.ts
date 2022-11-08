@@ -2,6 +2,7 @@ import {LOGIN_USER, REGISTER_USER, LOGOUT_USER, CHEK_TOKEN} from './index';
 import {baseUrl} from '../../utils/base-url';
 import {checkResponse} from "../../utils/check-response";
 import {TUserData, AppDispatch, AppThunkAction} from "../../utils/types";
+import {Form} from "react-router-dom";
 
 export interface ILoginUserAction {
     readonly type: typeof LOGIN_USER;
@@ -123,12 +124,10 @@ export function logout(): AppThunkAction {
 
 export function getUser():AppThunkAction {
     return function (dispatch: AppDispatch) {
-
         fetchWithRefresh(`${baseUrl}auth/user`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                // @ts-ignore
                 authorization: getCookie('accessToken'),
             },
         })
@@ -155,7 +154,6 @@ export function updateUser(data:TUserData): AppThunkAction {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
-                // @ts-ignore
                 authorization: getCookie('accessToken'),
             },
             body: JSON.stringify({
@@ -252,7 +250,7 @@ export function getCookie(name:string) {
             '=([^;]*)'
         )
     );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    return matches ? decodeURIComponent(matches[1]) : '';
 }
 
 function deleteCookie(name: string) {

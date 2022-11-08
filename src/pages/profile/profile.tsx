@@ -2,22 +2,24 @@ import React, {useState, useEffect, FormEvent, SyntheticEvent} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Navigate, NavLink, useLocation} from "react-router-dom";
-import {useSelector, useDispatch} from "react-redux";
+// import {useDispatch, useSelector} from "../../utils/hooks";
 import {updateUser, logout} from "../../services/action/authAction";
 import {Button} from '../../utils/buttons'
+import {TUserData} from "../../utils/types";
+import {useDispatch, useSelector} from "react-redux" ;
 
-type Form = {
-    name: string;
-    email: string;
-    password: string;
-}
 
 function Profile() {
-    const [form, setValue] = useState<Form>({email: "", name: "", password: ""});
+    const user = useSelector((store:any) => store.authReducer.user)
+    const [form, setValue] = useState<TUserData>({name: '',
+        password: '',
+        email: '',});
     const [changed, setChanged] = useState(false);
     const auth = useSelector((store:any) => store.authReducer.isAuthorized);
     const dispatch = useDispatch<any>();
-    const user: any = useSelector<any>((store) => store.authReducer.user)
+
+    console.log("получаю данные пользователя из стора : ", user)
+    console.log("получаю данные пользователя из стейт: ", form)
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue({...form, [e.target.name]: e.target.value});
@@ -31,7 +33,7 @@ function Profile() {
 
     useEffect(() => {
         setValue(user);
-    }, [user]);
+    }, []);
 
     const cancelClick = (e: SyntheticEvent<Element, Event>) => {
         setValue(user);
@@ -46,6 +48,7 @@ function Profile() {
 
     return (
         <div className={style.main}>
+            <h1>{form.name}</h1>
             <div className={`${style.menu} mr-15`}>
                 <NavLink
                     to={{pathname: '/profile'}}
@@ -78,8 +81,8 @@ function Profile() {
             <form className={`${style.form} mb-20`} onSubmit={onClick}>
                 <div className={'mb-6'}>
                     <Input
-                        value={form.name || ''}
-                        name={'name'}
+                        value={form.name|| '' }
+                        name='name'
                         onChange={onChange}
                         placeholder='Имя'/>
                 </div>

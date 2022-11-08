@@ -1,4 +1,4 @@
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {useEffect, useState} from 'react';
 import {Navigate, Outlet, useLocation} from 'react-router-dom';
 import {getUser} from '../../services/action/authAction';
@@ -6,10 +6,10 @@ import {getUser} from '../../services/action/authAction';
 
 
 export function ProtectedRoute() {
-    const dispatch: any = useDispatch();
+    const dispatch = useDispatch();
     const [isUserLoaded, setUserLoaded] = useState(false);
     const location = useLocation();
-    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
     const init = async () => {
         await dispatch(getUser());
         setUserLoaded(true);

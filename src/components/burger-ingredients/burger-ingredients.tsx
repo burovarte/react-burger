@@ -2,7 +2,8 @@ import React, {useState, useRef, useContext, useEffect, FunctionComponent, React
 import style from './burger-ingredients.module.css';
 import Group from '../group/group';
 import {Tab} from '../../utils/buttons'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../utils/hooks";
+import {Ingredient} from "../burger-constructor/burger-constructor";
 
 
 type BurgerIngredientsProps = {
@@ -11,12 +12,12 @@ type BurgerIngredientsProps = {
 
 
 const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
-    const dataBurgers: any = useSelector<any>((store) => store.mainReducer.ingredients)
+    const dataBurgers = useSelector((store) => store.mainReducer.ingredients)
 
     const [selected, setSelected] = useState("bun")
-    const bun = dataBurgers?.filter((i: { type: string; }) => i.type === "bun")
-    const main = dataBurgers?.filter((i: { type: string; }) => i.type === 'main')
-    const sauce = dataBurgers?.filter((i: { type: string; }) => i.type === 'sauce')
+    const bun = dataBurgers?.filter((i: Ingredient) => i.type === "bun")
+    const main = dataBurgers?.filter((i: Ingredient) => i.type === 'main')
+    const sauce = dataBurgers?.filter((i: Ingredient) => i.type === 'sauce')
 
     const sauceRef = useRef<HTMLInputElement>(null);
     const mainRef = useRef<HTMLInputElement>(null);
