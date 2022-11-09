@@ -2,21 +2,21 @@ import React, {useState, useEffect, FormEvent, SyntheticEvent} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Navigate, NavLink, useLocation} from "react-router-dom";
-// import {useDispatch, useSelector} from "../../utils/hooks";
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {updateUser, logout} from "../../services/action/authAction";
 import {Button} from '../../utils/buttons'
 import {TUserData} from "../../utils/types";
-import {useDispatch, useSelector} from "react-redux" ;
+// import {useDispatch, useSelector} from "react-redux" ;
 
 
 function Profile() {
-    const user = useSelector((store:any) => store.authReducer.user)
+    const user = useSelector((store) => store.authReducer.user)
     const [form, setValue] = useState<TUserData>({name: '',
         password: '',
         email: '',});
     const [changed, setChanged] = useState(false);
-    const auth = useSelector((store:any) => store.authReducer.isAuthorized);
-    const dispatch = useDispatch<any>();
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch();
 
     console.log("получаю данные пользователя из стора : ", user)
     console.log("получаю данные пользователя из стейт: ", form)
