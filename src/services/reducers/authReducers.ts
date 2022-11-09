@@ -10,6 +10,7 @@ type TinitialState = {
 
 const initialState: TinitialState = {
     user: {
+        name: '',
         email: '',
         password: '',
     },
@@ -21,6 +22,7 @@ export const authReducer = (state = initialState, action: TAuthActions): Tinitia
     switch (action.type) {
 
         case LOGIN_USER:
+            console.log('action_login', action)
             return {
                 ...state,
                 user: action.data,

@@ -41,12 +41,13 @@ export function login(data:TUserData):AppThunkAction {
         })
             .then(checkResponse)
             .then((answer) => {
+                console.log("answer",answer.user)
                 if (answer.success) {
                     setCookie('accessToken', answer.accessToken);
                     localStorage.setItem('refreshToken', answer.refreshToken);
                     dispatch({
                         type: LOGIN_USER,
-                        data: answer,
+                        data: answer.user,
                     });
                 } else {
                     return Promise.reject(`Ошибка данных`);
@@ -135,7 +136,7 @@ export function getUser():AppThunkAction {
                 if (answer.success) {
                     dispatch({
                         type: CHEK_TOKEN,
-                        data: answer,
+                        data: answer.user,
                     });
                 } else {
                     return Promise.reject(`Ошибка данных`);
@@ -166,7 +167,7 @@ export function updateUser(data:TUserData): AppThunkAction {
                 if (answer.success) {
                     dispatch({
                         type: CHEK_TOKEN,
-                        data: answer,
+                        data: answer.user,
                     });
                 } else {
                     return Promise.reject(`Ошибка данных`);

@@ -1,8 +1,10 @@
 
 export type TUserData = {
-    email: string,
-    password: string,
+
     name?: string
+    email?: string,
+    password?: string,
+
 }
 
 import { store } from '../services/store';

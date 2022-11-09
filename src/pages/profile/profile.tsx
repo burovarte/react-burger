@@ -6,14 +6,17 @@ import {useDispatch, useSelector} from "../../utils/hooks";
 import {updateUser, logout} from "../../services/action/authAction";
 import {Button} from '../../utils/buttons'
 import {TUserData} from "../../utils/types";
+
 // import {useDispatch, useSelector} from "react-redux" ;
 
 
 function Profile() {
-    const user = useSelector((store) => store.authReducer.user)
-    const [form, setValue] = useState<TUserData>({name: '',
-        password: '',
-        email: '',});
+    const {user} = useSelector((state) => state.authReducer);
+    const [form, setValue] = useState<TUserData>({
+        name: user ? user.name : "",
+        email: user ? user.email : "",
+        password: "",
+    });
     const [changed, setChanged] = useState(false);
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     const dispatch = useDispatch();
@@ -31,9 +34,9 @@ function Profile() {
         if (changed) dispatch(updateUser(form));
     }
 
-    useEffect(() => {
-        setValue(user);
-    }, []);
+    // useEffect(() => {
+    //     setValue(user);
+    // }, [user]);
 
     const cancelClick = (e: SyntheticEvent<Element, Event>) => {
         setValue(user);
@@ -48,7 +51,7 @@ function Profile() {
 
     return (
         <div className={style.main}>
-            <h1>{form.name}</h1>
+
             <div className={`${style.menu} mr-15`}>
                 <NavLink
                     to={{pathname: '/profile'}}
@@ -81,7 +84,7 @@ function Profile() {
             <form className={`${style.form} mb-20`} onSubmit={onClick}>
                 <div className={'mb-6'}>
                     <Input
-                        value={form.name|| '' }
+                        value={form.name || ''}
                         name='name'
                         onChange={onChange}
                         placeholder='Имя'/>
