@@ -19,6 +19,9 @@ import {ProtectedRoute} from "../protectedRoute/protectedRoute";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
 import {useDispatch} from '../../utils/hooks'
+import Feed from "../../pages/feed/feed";
+import Order from "../order/order";
+import OrderDetails from "../orderDetails/orderDetails";
 
 function App() {
     const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
@@ -52,11 +55,13 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route element={<Register/>} path="/register" />
-                <Route element={<ForgotPassword/>} path="/forgot-password" />
+                <Route path='/feed/:id' element={<OrderDetails></OrderDetails>} />
+                <Route path='/feed' element={<Feed/>}/>
+                <Route element={<Register/>} path="/register"/>
+                <Route element={<ForgotPassword/>} path="/forgot-password"/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
-                <Route element={<ProtectedRoute />}>
-                    <Route element={<Profile/>} path="/profile" />
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<Profile/>} path="/profile"/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>
@@ -68,6 +73,14 @@ function App() {
                         element={
                             <Modal onClose={closeModal} title={'Детали ингредиента'}>
                                 <IngredientDetail/>
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:id"
+                        element={
+                            <Modal onClose={closeModal} >
+                                <OrderDetails/>
                             </Modal>
                         }
                     />

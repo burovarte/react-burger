@@ -36,7 +36,7 @@ function AppHeader() {
                         <BurgerIcon type="primary"/>
                         <p className="text text_type_main-default pl-2">Конструктор</p>
                     </Link>
-                    <Link to="/"
+                    <Link to="/feed"
                           className={
                               active === 'order'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`

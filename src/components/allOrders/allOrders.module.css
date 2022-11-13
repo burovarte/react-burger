@@ -1,0 +1,22 @@
+.orders {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 750px;
+    height: calc(100vh - 250px);
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--offset-base-size) * 4);
+    overflow-y: scroll;
+}
+.order::-webkit-scrollbar {
+    width: 10px;
+    background-color: #2f2f37;
+}
+
+.order::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+}

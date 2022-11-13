@@ -27,3 +27,13 @@ export const resetPassword = (password: string, code:string) => {
         }),
     }).then(checkResponse);
 };
+
+export const getOrder = (number: number) => {
+    return fetch(`${baseUrl}orders/${number}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    }).then(checkResponse);
+};
