@@ -22,6 +22,7 @@ import {useDispatch} from '../../utils/hooks'
 import Feed from "../../pages/feed/feed";
 import Order from "../order/order";
 import OrderDetails from "../orderDetails/orderDetails";
+import ProfileOrders from "../../pages/profileOrders/profileOrders";
 
 function App() {
     const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
@@ -47,7 +48,6 @@ function App() {
     };
 
 
-
     return (
         <div className={style.app}>
             <Appheader/>
@@ -55,7 +55,7 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route path='/feed/:id' element={<OrderDetails></OrderDetails>} />
+                <Route path='/feed/:id' element={<OrderDetails/>}/>
                 <Route path='/feed' element={<Feed/>}/>
                 <Route element={<Register/>} path="/register"/>
                 <Route element={<ForgotPassword/>} path="/forgot-password"/>
@@ -63,6 +63,10 @@ function App() {
                 <Route element={<ProtectedRoute/>}>
                     <Route element={<Profile/>} path="/profile"/>
                 </Route>
+                <Route element={<ProtectedRoute/>}>
+                    <Route path="/profile/orders" element={<ProfileOrders/>}/>
+                </Route>
+                <Route element={<OrderDetails/>} path="/profile/orders/:id"/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>
             </Routes>
@@ -79,7 +83,15 @@ function App() {
                     <Route
                         path="/feed/:id"
                         element={
-                            <Modal onClose={closeModal} >
+                            <Modal onClose={closeModal}>
+                                <OrderDetails/>
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/profile/orders/:id"
+                        element={
+                            <Modal onClose={closeModal}>
                                 <OrderDetails/>
                             </Modal>
                         }

@@ -29,10 +29,6 @@ function Constructor() {
     function openModal({typeOfModal, Id}: IOpenModal) {
         if (typeOfModal === "details") {
             setIsOpenModalIngedients(true);
-            // dispatch({
-            //     type: LOAD_DETAILS,
-            //     item: ingredientsForBurger.find((i: { _id: string; }) => i._id === Id),
-            // });
             setModalIngredients: void(ingredientsForBurger.find((i: { _id: string; }) => i._id === Id))
         } else {
             setIsOpenModalOrder(true)

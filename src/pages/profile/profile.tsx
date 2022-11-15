@@ -1,14 +1,11 @@
 import React, {useState, useEffect, FormEvent, SyntheticEvent} from "react";
 import style from './profile.module.css';
 import {Input, PasswordInput, EmailInput} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Navigate, NavLink, useLocation} from "react-router-dom";
+import {Link, Navigate, NavLink, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "../../utils/hooks";
 import {updateUser, logout} from "../../services/action/authAction";
 import {Button} from '../../utils/buttons'
 import {TUserData} from "../../utils/types";
-
-// import {useDispatch, useSelector} from "react-redux" ;
-
 
 function Profile() {
     const {user} = useSelector((state) => state.authReducer);
@@ -34,10 +31,6 @@ function Profile() {
         if (changed) dispatch(updateUser(form));
     }
 
-    // useEffect(() => {
-    //     setValue(user);
-    // }, [user]);
-
     const cancelClick = (e: SyntheticEvent<Element, Event>) => {
         setValue(user);
         setChanged(false);
@@ -51,33 +44,26 @@ function Profile() {
 
     return (
         <div className={style.main}>
-
-            <div className={`${style.menu} mr-15`}>
-                <NavLink
+            <div className={style.nav + ' mr-15'}>
+                <Link
                     to={{pathname: '/profile'}}
-                    className={`${style.link} text text_type_main-medium `}
-                    /* @ts-ignore */
-                    activeclassname={`${style.activeLink} text text_type_main-medium `}
+                    className={`${style.activeLink}  text text_type_main-medium`}
                 >
                     Профиль
-                </NavLink>
-                <NavLink
+                </Link>
+                <Link
                     to={{pathname: '/profile/orders'}}
-                    className={`${style.link} text text_type_main-medium `}
-                    /* @ts-ignore */
-                    activeclassname={`${style.activeLink} text text_type_main-medium `}
+                    className={`${style.link}  text text_type_main-medium`}
                 >
                     История заказов
-                </NavLink>
+                </Link>
                 <div
-                    className={`${style.exit} text text_type_main-medium `}
+                    className={`${style.exitLink} text text_type_main-medium`}
                     onClick={Exit}
                 >
                     Выход
                 </div>
-                <p
-                    className={`${style.text} text text_type_main-medium mt-20`}
-                >
+                <p className={`${style.text} text text_type_main-default mt-20`}>
                     В этом разделе вы можете изменить свои персональные данные
                 </p>
             </div>

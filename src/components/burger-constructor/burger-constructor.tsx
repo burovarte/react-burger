@@ -6,11 +6,12 @@ import {baseUrl} from "../../utils/base-url";
 // import {useSelector} from "react-redux";
 import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
-import {addIngredient, sendOrder} from '../../services/action/main'
+import {addIngredient, sendOrder, sendOrder2} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "../../utils/hooks";
+
 
 
 export type Ingredient = {
@@ -54,7 +55,8 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
             const idIndridient = dataBurgers.map((ingredient) => {
                 return ingredient._id
             });
-            dispatch(sendOrder(url, idIndridient))
+            // dispatch(sendOrder(url, idIndridient))
+            dispatch(sendOrder2(url, dataBurgers))
             openModalOrder()
         } else {
             navigate('/login', {state: {from: location.pathname}})

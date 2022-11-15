@@ -1,4 +1,4 @@
-import React, {FC, FunctionComponent} from "react";
+import React, {FC} from "react";
 import style from './ordersInfo.module.css';
 import {TOrders} from "../../services/action/wsAction";
 

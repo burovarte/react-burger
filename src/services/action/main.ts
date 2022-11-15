@@ -8,6 +8,7 @@ import {
 import {checkResponse} from "../../utils/check-response";
 import {Ingredient} from "../../components/burger-constructor/burger-constructor";
 import {AppDispatch} from "../../utils/types";
+import {getCookie} from "./authAction";
 
 
 export interface IAddIngredient {
@@ -112,3 +113,27 @@ export const sendOrder = (url: string, idIndridient: string[]) => {
     }
 }
 
+export const sendOrder2 = (url: string, dataBurgers: Ingredient[]) => {
+    const orders = dataBurgers.map((item) => item._id);
+    return function (dispatch: AppDispatch) {
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({ingredients: orders}),
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+                authorization: getCookie('accessToken'),
+            }
+        })
+            .then(checkResponse)
+            .then((response) => {
+                dispatch({
+                    type: ORDER_NUMBER,
+                    number: response.order.number,
+                });
+                dispatch({type: ORDER_CLEAR})
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+}

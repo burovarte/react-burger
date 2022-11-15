@@ -5,22 +5,23 @@ import {Link, useLocation} from 'react-router-dom';
 
 
 function AppHeader() {
-    const [active, setActive] = useState<string>('constructor');
+    const [active, setActive] = useState<string>('profile');
     const {pathname} = useLocation();
 
     useEffect(() => {
         switch (pathname) {
-            case '/ordering':
-                setActive('ordering');
+            case '/':
+                setActive('constructor');
+                break;
+            case '/feed':
+                setActive('feed');
                 break;
             case '/profile':
                 setActive('profile');
                 break;
-            case '/':
-                setActive('constructor');
-                break;
-            default:
-                setActive('constructor');
+
+            // default:
+            //     setActive('constructor');
         }
     }, [pathname]);
 
@@ -33,16 +34,16 @@ function AppHeader() {
                               active === 'constructor'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <BurgerIcon type="primary"/>
+                        <BurgerIcon type= {active === 'constructor'? "primary": "secondary"}/>
                         <p className="text text_type_main-default pl-2">Конструктор</p>
                     </Link>
                     <Link to="/feed"
                           className={
-                              active === 'order'
+                              active === 'feed'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <ListIcon type="secondary"/>
-                        <p className="text text_type_main-default text_color_inactive pl-2">
+                        <ListIcon type= {active === 'feed'? "primary": "secondary"}/>
+                        <p className="text text_type_main-default pl-2">
                             Лента заказов
                         </p>
                     </Link>
@@ -53,11 +54,11 @@ function AppHeader() {
                 <nav className={style.right}>
                     <Link to="/profile"
                           className={
-                              active === 'constructor'
+                              active === 'profile'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <ProfileIcon type="secondary"/>
-                        <p className="text text_type_main-default text_color_inactive pl-2">
+                        <ProfileIcon type= {active === 'profile'? "primary": "secondary"}/>
+                        <p className="text text_type_main-default pl-2">
                             Личный кабинет
                         </p>
                     </Link>
