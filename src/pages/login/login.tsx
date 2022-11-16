@@ -1,6 +1,6 @@
 import React, {useState, useCallback} from "react";
 import {EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useLocation, Navigate} from 'react-router-dom';
+import {Link, useLocation, Navigate, useNavigate} from 'react-router-dom';
 import style from './login.module.css';
 import {useDispatch, useSelector} from "../../utils/hooks";
 import {login} from "../../services/action/authAction";
@@ -25,9 +25,10 @@ function Login() {
         },
         [form, dispatch]
     );
+    const navigate = useNavigate();
     if (auth) {
         return (
-            <Navigate to={location.state?.from || '/profile'}/>
+            <Navigate to={location.state?.from || "/profile"}/>
         );
     }
 

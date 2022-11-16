@@ -4,7 +4,7 @@ import type { AppDispatch, RootState } from '../utils/types';
 import type { TWSActions } from './action/wsAction';
 
 
-export const socketMiddleware = (wsActions:  any): Middleware => {
+export const socketMiddleware = (wsActions:{[key: string]:any}): Middleware => {
     return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
         let socket: WebSocket | null = null;
 

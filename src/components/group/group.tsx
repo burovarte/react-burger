@@ -1,7 +1,7 @@
 import React, {FC, LegacyRef} from "react";
 import Item from '../item/item';
 import style from './group.module.css';
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 
 type GroupProps = {
     title: string;

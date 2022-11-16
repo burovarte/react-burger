@@ -10,7 +10,7 @@ import {
 } from "../action";
 
 import {TMainActions} from "../action/main";
-import {Ingredient} from "../../components/burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 
 type InitialState = {
     ingredients: Array<Ingredient>;
@@ -50,7 +50,7 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
                 ...state,
                 constructor: [...state.constructor].filter((item) => item.uniqueId !== action.item.uniqueId),
                 ingredients: [...state.ingredients].map((item) => item._id === action.item._id
-                    ? {...item, amount: item.amount - action.amount}
+                    ? {...item, amount: item.amount - action.qnt}
                     : item
                 ),
             };

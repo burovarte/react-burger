@@ -1,7 +1,5 @@
 import React, {FC} from 'react';
 import style from './personalOrders.module.css';
-
-
 import {TOrders} from "../../services/action/wsAction";
 import Order from '../personalOrder/personalOrder';
 

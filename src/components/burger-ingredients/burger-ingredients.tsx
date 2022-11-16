@@ -2,8 +2,7 @@ import React, {useState, useRef, useContext, useEffect, FunctionComponent, React
 import style from './burger-ingredients.module.css';
 import Group from '../group/group';
 import {Tab} from '../../utils/buttons'
-import {useDispatch, useSelector} from "../../utils/hooks";
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {useSelector} from "../../utils/hooks";
 
 
 type BurgerIngredientsProps = {
@@ -15,9 +14,9 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
     const dataBurgers = useSelector((store) => store.mainReducer.ingredients)
 
     const [selected, setSelected] = useState("bun")
-    const bun = dataBurgers?.filter((i: Ingredient) => i.type === "bun")
-    const main = dataBurgers?.filter((i: Ingredient) => i.type === 'main')
-    const sauce = dataBurgers?.filter((i: Ingredient) => i.type === 'sauce')
+    const bun = dataBurgers?.filter((i) => i.type === "bun")
+    const main = dataBurgers?.filter((i) => i.type === 'main')
+    const sauce = dataBurgers?.filter((i) => i.type === 'sauce')
 
     const sauceRef = useRef<HTMLInputElement>(null);
     const mainRef = useRef<HTMLInputElement>(null);
@@ -28,7 +27,7 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
         ref?.current?.scrollIntoView({behavior: "smooth"})
     }
 
-    function scroll(ingredient: { target: { scrollTop: number; }}) {
+    function scroll(ingredient: { target: { scrollTop: number; } }) {
         if (ingredient.target.scrollTop > 0 && ingredient.target.scrollTop < 300) {
             setSelected('bun');
         } else if (ingredient.target.scrollTop > 300 && ingredient.target.scrollTop < 900) {
@@ -37,7 +36,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
             setSelected('main');
         }
     }
-
 
 
     return (

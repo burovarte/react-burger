@@ -1,6 +1,6 @@
 import React, {useEffect, MouseEvent, ReactNode} from 'react';
 import style from './profileOrders.module.css'
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {useSelector, useDispatch} from '../../utils/hooks';
 import {logout} from '../../services/action/authAction'
 import {WS_CONNECTION_START, WS_CONNECTION_CLOSE,} from '../../services/action';
@@ -11,7 +11,7 @@ function ProfileOrders () {
     const dispatch = useDispatch();
     const messages = useSelector((store) => store.wsReducer.messages);
     const wsUserApiOrderURL = 'wss://norma.nomoreparties.space/orders'
-
+    let location = useLocation();
     function Exit(e: MouseEvent) {
         dispatch(logout());
     }

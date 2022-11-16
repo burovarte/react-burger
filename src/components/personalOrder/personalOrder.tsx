@@ -1,10 +1,11 @@
 import React, {FC} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import style from './personalOrder.module.css';
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 import {TOrderRow} from '../../services/action/wsAction';
 import {useSelector} from '../../utils/hooks';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import timecard from '../../utils/time'
 
 interface IOrderProps {
     data: TOrderRow;
@@ -49,6 +50,9 @@ const Order: FC<IOrderProps> = ({data}) => {
         >
             <div className={style.number}>
                 <p className={'text text_type_digits-default'}>{'#' + String(data.number).padStart(6, '0')}</p>
+                <p className={'text text_type_main-default'}>
+                    {timecard(data)}
+                </p>
             </div>
             <p className={`${style.burgerName}  text text_type_main-medium mt-6`}>
                 {data.name}

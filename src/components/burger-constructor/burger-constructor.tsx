@@ -3,35 +3,14 @@ import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-bu
 import {Button} from '../../utils/buttons'
 import style from './burger-constructor.module.css';
 import {baseUrl} from "../../utils/base-url";
-// import {useSelector} from "react-redux";
 import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
-import {addIngredient, sendOrder, sendOrder2} from '../../services/action/main'
+import {addIngredient, sendOrder2} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "../../utils/hooks";
-
-
-
-export type Ingredient = {
-    _id: string;
-    name: string;
-    type: "bun" | "main" | "sauce";
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    uniqueId?: number;
-    index: number;
-    count: number;
-    _v: string;
-    amount: number;
-}
+import {Ingredient} from "../../utils/types";
 
 type BurgerConstructorProps = {
     openModal: (modalInfo: { typeOfModal: string }) => void
@@ -85,7 +64,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
                     dispatch({
                         type: DELETE_INGREDIENT,
                         item: selectedBun,
-                        amount: amount
+                        qnt: amount
                     })
                 }
             }

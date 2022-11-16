@@ -5,7 +5,8 @@ import {useSelector} from '../../utils/hooks';
 import {getOrder} from "../../utils/auth";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {useParams} from "react-router-dom";
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
+import timecard from '../../utils/time'
 
 function OrderDetails() {
     let {id} = useParams<{ id?: string }>();
@@ -115,6 +116,7 @@ function OrderDetails() {
                 })}
             </div>
             <div className={`${style.footer}  mb-10`}>
+                <p className={'text text_type_main-default text_color_inactive'}>{timecard(item)}</p>
                 <div className={style.price}>
                     <p className={'text text_type_digits-default mr-2'}>{price}</p>
                     <CurrencyIcon type="primary"/>

@@ -4,7 +4,7 @@ import {Counter} from "@ya.praktikum/react-developer-burger-ui-components/dist/u
 import style from './item.module.css';
 import {useDrag} from "react-dnd";
 import {useLocation, useNavigate} from 'react-router-dom';
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 
 type ItemProps = {
     id: string;

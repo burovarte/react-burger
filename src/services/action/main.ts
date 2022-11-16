@@ -6,7 +6,7 @@ import {
     CHANGE_INGREDIENT,
 } from "./index";
 import {checkResponse} from "../../utils/check-response";
-import {Ingredient} from "../../components/burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 import {AppDispatch} from "../../utils/types";
 import {getCookie} from "./authAction";
 
@@ -44,7 +44,7 @@ export interface IDeleteDetailsAction {
 export interface IDeleteIngredientAction {
     readonly type: typeof DELETE_INGREDIENT;
     readonly item: Ingredient,
-    readonly amount: number,
+    readonly qnt: number,
 }
 
 export interface IChangeingredientAction {

@@ -6,7 +6,7 @@ interface IOrderListProps {
     dataAllOrders: TOrders;
 }
 
-const OrderInfo: FC<IOrderListProps> = ({dataAllOrders}) => {
+const OrdersInfo: FC<IOrderListProps> = ({dataAllOrders}) => {
     console.log(dataAllOrders)
     return (
         <div className={`${style.list}  mt-25 mb-4 pr-4`}>
@@ -56,4 +56,4 @@ const OrderInfo: FC<IOrderListProps> = ({dataAllOrders}) => {
     );
 };
 
-export default OrderInfo;
+export default OrdersInfo;

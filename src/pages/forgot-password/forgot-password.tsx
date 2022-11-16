@@ -6,16 +6,17 @@ import style from './forgot-password.module.css';
 import {useDispatch, useSelector} from "../../utils/hooks";
 import { forgotPassword } from '../../utils/auth'
 import {Navigate} from "react-router-dom";
+import {useForm} from "../../utils/useForm";
 
 
 function ForgotPassword() {
-    const [form, setValue] = useState({email: ''})
+    const {form, onChange, setValue} = useForm({});
     const navigate = useNavigate()
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     const location = useLocation()
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue({...form, [e.target.name]: e.target.value});
-    };
+    // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setValue({...form, [e.target.name]: e.target.value});
+    // };
 
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {
