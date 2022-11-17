@@ -66,10 +66,10 @@ function App() {
                 <Route element={<ProtectedRoute/>}>
                     <Route path="/profile/orders" element={<ProfileOrders/>}/>
                 </Route>
-                <Route element={<OrderDetails/>} path="/profile/orders/:id" />
-                {/*<Route element={<ProtectedRoute/>}>*/}
-                {/*    <Route element={<OrderDetails/>} path="/profile/orders/:id" />*/}
-                {/*</Route>*/}
+                {/*<Route element={<OrderDetails/>} path="/profile/orders/:id" />*/}
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<OrderDetails/>} path="/profile/orders/:id" />
+                </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>
             </Routes>
@@ -91,6 +91,7 @@ function App() {
                             </Modal>
                         }
                     />
+
                     <Route
                         path="/profile/orders/:id"
                         element={

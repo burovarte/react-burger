@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from '../../utils/hooks';
 import {logout} from '../../services/action/authAction'
 import {WS_CONNECTION_START, WS_CONNECTION_CLOSE,} from '../../services/action';
 import {getCookie} from '../../services/action/authAction'
-import FeedContent from '../../components/personalOrders/personalOrders';
+import PersonalOrders from "../../components/personalOrders/personalOrders";
 
 function ProfileOrders () {
     const dispatch = useDispatch();
@@ -56,7 +56,7 @@ function ProfileOrders () {
                 </p>
             </div>
             <div className={style.form + ' mb-20'}>
-                <FeedContent data={messages}/>
+                <PersonalOrders data={messages}/>
             </div>
         </div>
     );
