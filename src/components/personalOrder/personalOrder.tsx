@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {useNavigate, useLocation} from 'react-router-dom';
+import {useNavigate, useLocation, Navigate} from 'react-router-dom';
 import style from './personalOrder.module.css';
 import {Ingredient} from "../../utils/types";
 import {TOrderRow} from '../../services/action/wsAction';
@@ -17,7 +17,7 @@ const Order: FC<IOrderProps> = ({data}) => {
 
     function onClick() {
         navigate(`/profile/orders/${data.number}`, {
-            state: {from: location.pathname, background: location},
+            state: {from: location, background: location},
         });
     }
 

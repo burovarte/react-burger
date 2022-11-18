@@ -4,11 +4,12 @@ import {TOrderRow} from "../../services/action/wsAction";
 import {useSelector} from '../../utils/hooks';
 import {getOrder} from "../../utils/auth";
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {Ingredient} from "../../utils/types";
 import timecard from '../../utils/time'
 
 function OrderDetails() {
+    const location = useLocation()
     let {id} = useParams<{ id?: string }>();
     const [item, setItem] = useState<TOrderRow>();
     const items = useSelector((store) => store.wsReducer.messages.orders);
