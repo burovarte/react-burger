@@ -5,14 +5,14 @@ import {useSelector} from "../../utils/hooks";
 
 
 function OrderDetails() {
-    // const orderNumber = useSelector((store) => store.mainReducer.order)
+    const orderNumber = useSelector((store) => store.mainReducer.order)
     return (
         <div className={`${style.mum} pt-30 pb-25`}>
-            {/*<div className="mb-8">*/}
-            {/*    <p className={`${style.order} text text_type_digits-large`}>*/}
-            {/*        {orderNumber}*/}
-            {/*    </p>*/}
-            {/*</div>*/}
+            <div className="mb-8">
+                <p className={`${style.order} text text_type_digits-large`}>
+                    {orderNumber}
+                </p>
+            </div>
             <p className="text text_type_main-medium">Идентификатор заказа</p>
             <img className={`${style.img} mb-15 mt-15`} src={img} alt="Заказ принят"/>
             <p className="text text_type_main-default">Ваш заказ начали готовить</p>
