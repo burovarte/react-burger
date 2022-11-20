@@ -19,9 +19,6 @@ function AppHeader() {
             case '/profile':
                 setActive('profile');
                 break;
-
-            // default:
-            //     setActive('constructor');
         }
     }, [pathname]);
 
@@ -34,7 +31,7 @@ function AppHeader() {
                               active === 'constructor'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <BurgerIcon type= {active === 'constructor'? "primary": "secondary"}/>
+                        <BurgerIcon type={active === 'constructor' ? "primary" : "secondary"}/>
                         <p className="text text_type_main-default pl-2">Конструктор</p>
                     </Link>
                     <Link to="/feed"
@@ -42,7 +39,7 @@ function AppHeader() {
                               active === 'feed'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <ListIcon type= {active === 'feed'? "primary": "secondary"}/>
+                        <ListIcon type={active === 'feed' ? "primary" : "secondary"}/>
                         <p className="text text_type_main-default pl-2">
                             Лента заказов
                         </p>
@@ -57,7 +54,7 @@ function AppHeader() {
                               active === 'profile'
                                   ? `${style.active} text text_type_main-default pt-4 pb-4 pl-5 pr-5  mr-2`
                                   : `${style.buttons} text text_type_main-default text_color_inactive pt-4 pb-4 pl-5 pr-5  mr-2`}>
-                        <ProfileIcon type= {active === 'profile'? "primary": "secondary"}/>
+                        <ProfileIcon type={active === 'profile' ? "primary" : "secondary"}/>
                         <p className="text text_type_main-default pl-2">
                             Личный кабинет
                         </p>

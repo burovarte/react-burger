@@ -4,11 +4,9 @@ import Group from '../group/group';
 import {Tab} from '../../utils/buttons'
 import {useSelector} from "../../utils/hooks";
 
-
 type BurgerIngredientsProps = {
     openModal: (modalInfo: { typeOfModal: string; Id: string }) => void
 }
-
 
 const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
     const dataBurgers = useSelector((store) => store.mainReducer.ingredients)
@@ -36,7 +34,6 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
             setSelected('main');
         }
     }
-
 
     return (
         <div className={`${style.ingredients} pt-10`}>
@@ -97,6 +94,5 @@ const BurgerIngredients: FC<BurgerIngredientsProps> = ({openModal}) => {
         </div>
     )
 }
-
 
 export default BurgerIngredients;

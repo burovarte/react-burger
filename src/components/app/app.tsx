@@ -20,7 +20,6 @@ import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
 import {useDispatch} from '../../utils/hooks'
 import Feed from "../../pages/feed/feed";
-import Order from "../order/order";
 import OrderDetails from "../orderDetails/orderDetails";
 import ProfileOrders from "../../pages/profileOrders/profileOrders";
 
@@ -66,9 +65,8 @@ function App() {
                 <Route element={<ProtectedRoute/>}>
                     <Route path="/profile/orders" element={<ProfileOrders/>}/>
                 </Route>
-                {/*<Route element={<OrderDetails/>} path="/profile/orders/:id" />*/}
                 <Route element={<ProtectedRoute/>}>
-                    <Route element={<OrderDetails/>} path="/profile/orders/:id" />
+                    <Route element={<OrderDetails/>} path="/profile/orders/:id"/>
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>

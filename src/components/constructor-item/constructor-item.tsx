@@ -74,5 +74,4 @@ const ConstructorItem: FC<ConstructorItemProps> = ({item, index, dragItem}) => {
     )
 }
 
-
 export default ConstructorItem;

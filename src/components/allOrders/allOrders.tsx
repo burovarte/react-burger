@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from 'react';
+import React, {FC} from 'react';
 import style from './allOrders.module.css';
 import {TOrders} from "../../services/action/wsAction";
 import Order from '../order/order'
