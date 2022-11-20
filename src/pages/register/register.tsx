@@ -3,7 +3,7 @@ import {EmailInput, PasswordInput, Input} from "@ya.praktikum/react-developer-bu
 import {Link, useLocation, useNavigate, Navigate, Outlet} from "react-router-dom";
 import style from './register.module.css';
 import {register} from "../../services/action/authAction";
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from "../../utils/hooks";
 import {Button} from '../../utils/buttons'
 
 type RegisterProps = {
@@ -14,9 +14,9 @@ type RegisterProps = {
 
 const Register: FC<RegisterProps> = (props) => {
     const [form, setValue] = useState({email: '', password: '', name: ''})
-    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
     const navigate = useNavigate()
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
     const location = useLocation();
     const from = location.state?.from || "/";
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

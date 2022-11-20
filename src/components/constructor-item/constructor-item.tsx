@@ -1,16 +1,15 @@
 import React, {FC, RefObject, useRef} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch} from "../../utils/hooks";
 import {useDrag, useDrop} from "react-dnd";
 import style from "../burger-constructor/burger-constructor.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DELETE_INGREDIENT} from "../../services/action";
-import PropTypes from "prop-types";
-import {Ingredient} from "../burger-constructor/burger-constructor";
+import {Ingredient} from "../../utils/types";
 
 type ConstructorItemProps = {
     item: Ingredient;
     index: number;
-    dragItem:  (dragIndex: number, hoverIndex: number) => void
+    dragItem: (dragIndex: number, hoverIndex: number) => void
 }
 
 const ConstructorItem: FC<ConstructorItemProps> = ({item, index, dragItem}) => {

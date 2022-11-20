@@ -4,7 +4,6 @@ import Appheader from "../app-header/app-header";
 import Modal from '../modal/modal'
 import IngredientDetail from '../ingredient-details/ingredien-details';
 import {baseUrl} from "../../utils/base-url";
-import {useDispatch} from 'react-redux';
 import {loadIngredients} from "../../services/action/main";
 import {
     Routes,
@@ -19,7 +18,11 @@ import Profile from "../../pages/profile/profile";
 import {ProtectedRoute} from "../protectedRoute/protectedRoute";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import Constructor from "../../constructor/constructor";
-
+import {useDispatch} from '../../utils/hooks'
+import Feed from "../../pages/feed/feed";
+import Order from "../order/order";
+import OrderDetails from "../orderDetails/orderDetails";
+import ProfileOrders from "../../pages/profileOrders/profileOrders";
 
 function App() {
     const [state, setState] = useState<{ ingredientsForBurger: never[], isLoading: boolean, hasError: boolean }>({
@@ -28,11 +31,11 @@ function App() {
         hasError: false
     })
 
-    const dispatch = useDispatch<any>();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const url = `${baseUrl}ingredients`;
-        dispatch(loadIngredients(url, setState, dispatch))
+        dispatch(loadIngredients(url))
     }, [dispatch])
 
 
@@ -45,7 +48,6 @@ function App() {
     };
 
 
-
     return (
         <div className={style.app}>
             <Appheader/>
@@ -53,11 +55,20 @@ function App() {
                 <Route path="/" element={<Constructor/>}/>
                 <Route path="/ingridient/:id" element={<IngredientDetail/>}/>
                 <Route path="/login" element={<Login/>}/>
-                <Route element={<Register/>} path="/register" />
-                <Route element={<ForgotPassword/>} path="/forgot-password" />
+                <Route path='/feed/:id' element={<OrderDetails/>}/>
+                <Route path='/feed' element={<Feed/>}/>
+                <Route element={<Register/>} path="/register"/>
+                <Route element={<ForgotPassword/>} path="/forgot-password"/>
                 <Route path="/reset-password" element={<ResetPassword/>}/>
-                <Route element={<ProtectedRoute />}>
-                    <Route element={<Profile/>} path="/profile" />
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<Profile/>} path="/profile"/>
+                </Route>
+                <Route element={<ProtectedRoute/>}>
+                    <Route path="/profile/orders" element={<ProfileOrders/>}/>
+                </Route>
+                {/*<Route element={<OrderDetails/>} path="/profile/orders/:id" />*/}
+                <Route element={<ProtectedRoute/>}>
+                    <Route element={<OrderDetails/>} path="/profile/orders/:id" />
                 </Route>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="*" element={<div> Упс, ошибка</div>}/>
@@ -69,6 +80,23 @@ function App() {
                         element={
                             <Modal onClose={closeModal} title={'Детали ингредиента'}>
                                 <IngredientDetail/>
+                            </Modal>
+                        }
+                    />
+                    <Route
+                        path="/feed/:id"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderDetails/>
+                            </Modal>
+                        }
+                    />
+
+                    <Route
+                        path="/profile/orders/:id"
+                        element={
+                            <Modal onClose={closeModal}>
+                                <OrderDetails/>
                             </Modal>
                         }
                     />

@@ -3,32 +3,14 @@ import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-bu
 import {Button} from '../../utils/buttons'
 import style from './burger-constructor.module.css';
 import {baseUrl} from "../../utils/base-url";
-import {useDispatch, useSelector} from "react-redux";
 import {DELETE_INGREDIENT, CHANGE_INGREDIENT} from "../../services/action";
 import {useDrop} from "react-dnd";
-import {addIngredient, sendOrder} from '../../services/action/main'
+import {addIngredient, sendOrder2} from '../../services/action/main'
 import {v4 as uuidv4} from 'uuid';
 import ConstructorItem from "../constructor-item/constructor-item";
 import {useLocation, useNavigate} from "react-router-dom";
-
-export type Ingredient = {
-    _id: string;
-    name: string;
-    type: string;
-    proteins: number;
-    fat: number;
-    carbohydrates: number;
-    calories: number;
-    price: number;
-    image: string;
-    image_mobile: string;
-    image_large: string;
-    uniqueId?: number;
-    index: number;
-    count: number;
-    _v: string;
-    amount: number;
-}
+import {useDispatch, useSelector} from "../../utils/hooks";
+import {Ingredient} from "../../utils/types";
 
 type BurgerConstructorProps = {
     openModal: (modalInfo: { typeOfModal: string }) => void
@@ -38,15 +20,13 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
         openModal({typeOfModal: "order"})
     }
 
-    const auth: any = useSelector<any>((store) => store.authReducer.isAuthorized);
-    const dispatch = useDispatch<any>()
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
+    const dispatch = useDispatch()
 
-    const dataBurgers: Ingredient[] = useSelector<any>((store) => store.mainReducer.constructor) as any
+    const dataBurgers: Ingredient[] = useSelector((store) => store.mainReducer.constructor)
 
     const navigate = useNavigate();
     const location = useLocation()
-
-
 
     const orderHandler = () => {
         if (auth) {
@@ -54,7 +34,8 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
             const idIndridient = dataBurgers.map((ingredient) => {
                 return ingredient._id
             });
-            dispatch(sendOrder(url, idIndridient, dispatch))
+            // dispatch(sendOrder(url, idIndridient))
+            dispatch(sendOrder2(url, dataBurgers))
             openModalOrder()
         } else {
             navigate('/login', {state: {from: location.pathname}})
@@ -83,7 +64,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
                     dispatch({
                         type: DELETE_INGREDIENT,
                         item: selectedBun,
-                        amount: amount
+                        qnt: amount
                     })
                 }
             }

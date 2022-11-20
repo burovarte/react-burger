@@ -1,5 +1,4 @@
 import style from "./modal-overlay.module.css";
-import PropTypes from "prop-types";
 import {FC} from "react";
 
 type ModalOverlayProps = {

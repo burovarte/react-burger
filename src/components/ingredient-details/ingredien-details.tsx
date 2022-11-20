@@ -1,13 +1,13 @@
 import React from "react";
 import style from "./ingredient-details.module.css";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../utils/hooks";
 import {useParams} from "react-router-dom";
 
 function IngredientDetails() {
-    const ing: any = useSelector<any>((store) => store.mainReducer.ingredient)
+    const ing = useSelector((store) => store.mainReducer.ingredient)
 
     const {id} = useParams();
-    const items: any = useSelector<any>((store) => store.mainReducer.ingredients);
+    const items = useSelector((store) => store.mainReducer.ingredients);
     const item = items?.find((el: { _id: string }) => el._id === id);
 
     return (

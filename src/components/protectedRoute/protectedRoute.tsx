@@ -1,27 +1,12 @@
-import {useSelector, useDispatch} from 'react-redux';
-import {useEffect, useState} from 'react';
-import {Navigate, Outlet, useLocation} from 'react-router-dom';
-import {getUser} from '../../services/action/authAction';
-
+import {useSelector} from "../../utils/hooks";
+import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 
 export function ProtectedRoute() {
-    const dispatch: any = useDispatch();
-    const [isUserLoaded, setUserLoaded] = useState(false);
     const location = useLocation();
-    const auth = useSelector<any>((store) => store.authReducer.isAuthorized);
-    const init = async () => {
-        await dispatch(getUser());
-        setUserLoaded(true);
-    };
-
-    useEffect(() => {
-        init();
-    }, []);
-
+    const auth = useSelector((store) => store.authReducer.isAuthorized);
 
     return (
-         // @ts-ignore
-        auth ? <Outlet/> : <Navigate to={{pathname: "/login", state: {from: location}}}/>
-    )
+        // @ts-ignore
+        auth ? <Outlet/> : <Navigate to={"/login"} state={{from: location}}/>)
 }

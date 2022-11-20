@@ -9,7 +9,17 @@ import {
     ORDER_CLEAR
 } from "../action";
 
-const initialState = {
+import {TMainActions} from "../action/main";
+import {Ingredient} from "../../utils/types";
+
+type InitialState = {
+    ingredients: Array<Ingredient>;
+    constructor: Array<Ingredient>;
+    ingredient: object | Ingredient;
+    order: number
+}
+
+const initialState: InitialState = {
     ingredients: [],
     constructor: [],
     ingredient: {},
@@ -17,7 +27,7 @@ const initialState = {
 }
 
 
-export const mainReducer = (state = initialState, action) => {
+export const mainReducer = (state = initialState, action: TMainActions): InitialState => {
     switch (action.type) {
         case LOAD_INGREDIENTS:
             return {
@@ -28,7 +38,7 @@ export const mainReducer = (state = initialState, action) => {
                 })
             }
         case ADD_INGREDIENT:
-            return {
+            return <InitialState>{
                 ...state,
                 constructor: [...state.constructor, {...action.item, uniqueId: action.uniqueId}],
                 ingredients: [...state.ingredients].map((item) =>
@@ -40,7 +50,7 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 constructor: [...state.constructor].filter((item) => item.uniqueId !== action.item.uniqueId),
                 ingredients: [...state.ingredients].map((item) => item._id === action.item._id
-                    ? {...item, amount: item.amount - action.amount}
+                    ? {...item, amount: item.amount - action.qnt}
                     : item
                 ),
             };
