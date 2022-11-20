@@ -1,4 +1,4 @@
-import React, {ComponentProps, FC, PropsWithChildren, useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import {ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Button} from '../../utils/buttons'
 import style from './burger-constructor.module.css';
@@ -34,7 +34,6 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
             const idIndridient = dataBurgers.map((ingredient) => {
                 return ingredient._id
             });
-            // dispatch(sendOrder(url, idIndridient))
             dispatch(sendOrder2(url, dataBurgers))
             openModalOrder()
         } else {
@@ -128,6 +127,5 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
         </section>
     )
 }
-
 
 export default BurgerConstructor;
