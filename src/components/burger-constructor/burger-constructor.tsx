@@ -80,7 +80,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
     }
 
     return (
-        <section ref={dropTarget} className={`${style.ui} pt-25`}>
+        <section ref={dropTarget} className={`${style.ui} burger-constructor pt-25`}>
             {bun && (
                 <div className={style.item_top}>
                     <ConstructorElement

@@ -58,12 +58,14 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
             return {
                 ...state,
                 ingredient: action.item,
+
             };
 
         case DELETE_DETAILS:
             return {
                 ...state,
                 ingredient: {},
+                order:0
             };
 
 
