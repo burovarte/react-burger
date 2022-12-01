@@ -397,6 +397,7 @@ describe('MainReducer', () => {
                     item: ingredientsArrayCount[0],
                     id: ingredientsArrayCount[0]._id,
                     qnt: 1,
+                    amount: ingredientsArrayCount[0].amount + ingredientsArrayChange[0].amount
                 }
             )
         ).toEqual({
@@ -404,12 +405,11 @@ describe('MainReducer', () => {
             constructor: [
                 {
                     ...ingredientsArrayCount[0],
-                    uniqueId: ingredientsArrayCount[0].uniqueId,
-
+                    uniqueId: ingredientsArrayCount[0].uniqueId
                 },
             ],
             ingredient: {},
-            order: 0,
+            order: 0
         });
 
         ingredientsArrayChange[1].amount = 2;

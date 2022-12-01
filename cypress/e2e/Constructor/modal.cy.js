@@ -7,7 +7,7 @@ describe('Открытие модального окна', function () {
 
     it('Открытие окна с описанием', function () {
         cy.contains('Краторная булка').click();
-        cy.get('[class^=Modal_modal_]').should('exist');
+        cy.get('[class^=modal_mom_]').should('exist');
         cy.contains('Детали ингредиента');
         cy.contains('Краторная булка N-200i');
         cy.contains('Калории');
@@ -19,8 +19,8 @@ describe('Открытие модального окна', function () {
 
     it('Закрытие окна', function () {
         cy.contains('Краторная булка').click();
-        cy.get('[class^=Modal_closeButton_]').first().as('close');
+        cy.get('[class^=modal_close_]').first().as('close');
         cy.get('@close').click();
-        cy.get('[class^=Modal_modal_]').should('not.exist');
+        cy.get('[class^=modal_mom_]').should('not.exist');
     });
 });
