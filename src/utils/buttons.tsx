@@ -1,6 +1,7 @@
 import { Button as ButtonUI, Tab as TabUI } from "@ya.praktikum/react-developer-burger-ui-components";
 import {FC, SyntheticEvent} from "react";
 
+// @ts-ignore
 export const Button: FC<{
     type?: 'secondary' | 'primary';
     size?: 'small' | 'medium' | 'large';
