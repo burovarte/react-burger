@@ -1,17 +1,12 @@
-# Getting Started with Create React App
+# **Burger React**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Учебный проект по изучению React. 
 
-## Available Scripts
+Далекий космос. Где же поесть? Конечно же, в _**Stellar Burgers**_. C помощью конструктура Вы сможете собрать идеальный для себя бургер. 
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Посетить сайт:
 
 https://react-burger-fmkpawv7w-burartem.vercel.app/ 
+
+------
+

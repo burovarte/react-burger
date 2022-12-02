@@ -56,7 +56,7 @@ export const addedTestMessage = {
     totalToday: 3,
 };
 
-export const ingredientsArray = [
+export const ingrediens = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -100,7 +100,7 @@ export const ingredientsArray = [
         __v: 0,
     },
 ];
-export const ingredientsArrayCount = [
+export const ingrediensCount = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -148,7 +148,7 @@ export const ingredientsArrayCount = [
     },
 ];
 
-export const ingredientsArrayChange = [
+export const ingrediensChange = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -210,7 +210,7 @@ describe('MainReducer', () => {
     it('Must return initialState', () => {
         expect(mainReducer(undefined, {})).toEqual({
             ingredients: [],
-            constructor: [],
+            burgerConstructor: [],
             ingredient: {},
             order: 0,
         });
@@ -221,18 +221,18 @@ describe('MainReducer', () => {
             mainReducer(
                 {
                     ingredients: [],
-                    constructor: [],
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
                 {
                     type: types.LOAD_INGREDIENTS,
-                    data: ingredientsArray,
+                    data: ingrediens,
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [],
+            ingredients: ingrediensCount,
+            burgerConstructor: [],
             ingredient: {},
             order: 0,
         });
@@ -240,19 +240,19 @@ describe('MainReducer', () => {
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [],
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
                 {
                     type: types.LOAD_INGREDIENTS,
-                    data: ingredientsArray,
+                    data: ingrediens,
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [],
+            ingredients: ingrediensCount,
+            burgerConstructor: [],
             ingredient: {},
             order: 0,
         });
@@ -263,39 +263,39 @@ describe('MainReducer', () => {
             mainReducer(
                 {
                     ingredients: [],
-                    constructor: [],
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
                 {
                     type: types.LOAD_DETAILS,
-                    item: ingredientsArrayCount[0],
+                    item: ingrediensCount[0],
                 }
             )
         ).toEqual({
             ingredients: [],
-            constructor: [],
-            ingredient: ingredientsArrayCount[0],
+            burgerConstructor: [],
+            ingredient: ingrediensCount[0],
             order: 0,
         });
 
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [],
-                    ingredient: ingredientsArrayCount[0],
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [],
+                    ingredient: ingrediensCount[0],
                     order: 0,
                 },
                 {
                     type: types.LOAD_DETAILS,
-                    item: ingredientsArrayCount[1],
+                    item: ingrediensCount[1],
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [],
-            ingredient: ingredientsArrayCount[1],
+            ingredients: ingrediensCount,
+            burgerConstructor: [],
+            ingredient: ingrediensCount[1],
             order: 0,
         });
     });
@@ -305,7 +305,7 @@ describe('MainReducer', () => {
             mainReducer(
                 {
                     ingredients: [],
-                    constructor: [],
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
@@ -315,7 +315,7 @@ describe('MainReducer', () => {
             )
         ).toEqual({
             ingredients: [],
-            constructor: [],
+            burgerConstructor: [],
             ingredient: {},
             order: 0,
         });
@@ -323,9 +323,9 @@ describe('MainReducer', () => {
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [],
-                    ingredient: ingredientsArrayCount[0],
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [],
+                    ingredient: ingrediensCount[0],
                     order: 5674,
                 },
                 {
@@ -333,8 +333,8 @@ describe('MainReducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [],
+            ingredients: ingrediensCount,
+            burgerConstructor: [],
             ingredient: {},
             order: 0,
         });
@@ -345,7 +345,7 @@ describe('MainReducer', () => {
             mainReducer(
                 {
                     ingredients: [],
-                    constructor: [],
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
@@ -356,7 +356,7 @@ describe('MainReducer', () => {
             )
         ).toEqual({
             ingredients: [],
-            constructor: [],
+            burgerConstructor: [],
             ingredient: {},
             order: 3489,
         });
@@ -364,9 +364,9 @@ describe('MainReducer', () => {
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [],
-                    ingredient: ingredientsArrayCount[0],
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [],
+                    ingredient: ingrediensCount[0],
                     order: 5674,
                 },
                 {
@@ -375,52 +375,52 @@ describe('MainReducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [],
-            ingredient: ingredientsArrayCount[0],
+            ingredients: ingrediensCount,
+            burgerConstructor: [],
+            ingredient: ingrediensCount[0],
             order: 3489,
         });
     });
 
     it('Must return ADD_INGREDIENT', () => {
-        ingredientsArrayChange[0].amount = 1;
+        ingrediensChange[0].amount = 1;
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [],
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [],
                     ingredient: {},
                     order: 0,
                 },
                 {
                     type: types.ADD_INGREDIENT,
-                    item: ingredientsArrayCount[0],
-                    id: ingredientsArrayCount[0]._id,
-                    qnt: 1
+                    item: ingrediensCount[0],
+                    uniqueId: ingrediensCount[0]._id,
+                    amount: 1
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayChange,
-            constructor: [
+            ingredients: ingrediensChange,
+            burgerConstructor: [
                 {
-                    ...ingredientsArrayCount[0],
-                    uniqueId: ingredientsArrayCount[0].uniqueId
+                    ...ingrediensCount[0],
+                    uniqueId: ingrediensCount[0]._id,
                 },
             ],
             ingredient: {},
             order: 0
         });
 
-        ingredientsArrayChange[1].amount = 2;
-        ingredientsArrayCount[0].amount = 1;
+        ingrediensChange[1].amount = 1;
+        ingrediensCount[0].amount = 1;
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [
                         {
-                            ...ingredientsArrayCount[0],
-                            uniqueId: ingredientsArrayCount[0]._id,
+                            ...ingrediensCount[0],
+                            uniqueId: ingrediensCount[0]._id,
                         },
                     ],
                     ingredient: {},
@@ -428,21 +428,21 @@ describe('MainReducer', () => {
                 },
                 {
                     type: types.ADD_INGREDIENT,
-                    item: ingredientsArrayCount[1],
-                    id: ingredientsArrayCount[1]._id,
-                    qnt: 2,
+                    item: ingrediensCount[1],
+                    uniqueId: ingrediensCount[1]._id,
+                    amount: 1,
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayChange,
-            constructor: [
+            ingredients: ingrediensChange,
+            burgerConstructor: [
                 {
-                    ...ingredientsArrayCount[0],
-                    uniqueId: ingredientsArrayCount[0]._id,
+                    ...ingrediensCount[0],
+                    uniqueId: ingrediensCount[0]._id,
                 },
                 {
-                    ...ingredientsArrayCount[1],
-                    uniqueId: ingredientsArrayCount[1]._id,
+                    ...ingrediensCount[1],
+                    uniqueId: ingrediensCount[1]._id,
                 },
             ],
             ingredient: {},
@@ -451,23 +451,23 @@ describe('MainReducer', () => {
     });
 
     it('Must return DELETE_INGREDIENT', () => {
-        ingredientsArrayCount[1].amount = 2;
-        ingredientsArrayChange[1].amount = 0;
+        ingrediensCount[1].amount = 2;
+        ingrediensChange[1].amount = 0;
         const itemForDelete = {
-            ...ingredientsArrayCount[1],
+            ...ingrediensCount[1],
             uniqueId: 1637997988671,
         };
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [
                         {
-                            ...ingredientsArrayCount[0],
+                            ...ingrediensCount[0],
                             uniqueId: 1637997988670,
                         },
                         {
-                            ...ingredientsArrayCount[1],
+                            ...ingrediensCount[1],
                             uniqueId: 1637997988671,
                         },
                     ],
@@ -477,15 +477,15 @@ describe('MainReducer', () => {
                 {
                     type: types.DELETE_INGREDIENT,
                     item: itemForDelete,
-                    id: ingredientsArrayCount[1]._id,
+                    id: ingrediensCount[1]._id,
                     qnt: 2,
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayChange,
-            constructor: [
+            ingredients: ingrediensChange,
+            burgerConstructor: [
                 {
-                    ...ingredientsArrayCount[0],
+                    ...ingrediensCount[0],
                     uniqueId: 1637997988670,
                 },
             ],
@@ -498,18 +498,18 @@ describe('MainReducer', () => {
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [
                         {
-                            ...ingredientsArrayCount[0],
+                            ...ingrediensCount[0],
                             uniqueId: 1637997988670,
                         },
                         {
-                            ...ingredientsArrayCount[1],
+                            ...ingrediensCount[1],
                             uniqueId: 1637997988671,
                         },
                         {
-                            ...ingredientsArrayCount[2],
+                            ...ingrediensCount[2],
                             uniqueId: 1637997988672,
                         },
                     ],
@@ -523,18 +523,18 @@ describe('MainReducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayCount,
-            constructor: [
+            ingredients: ingrediensCount,
+            burgerConstructor: [
                 {
-                    ...ingredientsArrayCount[1],
+                    ...ingrediensCount[1],
                     uniqueId: 1637997988671,
                 },
                 {
-                    ...ingredientsArrayCount[0],
+                    ...ingrediensCount[0],
                     uniqueId: 1637997988670,
                 },
                 {
-                    ...ingredientsArrayCount[2],
+                    ...ingrediensCount[2],
                     uniqueId: 1637997988672,
                 },
             ],
@@ -544,21 +544,21 @@ describe('MainReducer', () => {
     });
 
     it('Must return ORDER_CLEAR', () => {
-        ingredientsArrayChange[0].amount = 0;
-        ingredientsArrayChange[1].amount = 0;
-        ingredientsArrayCount[0].amount = 1;
-        ingredientsArrayCount[1].amount = 1;
+        ingrediensChange[0].amount = 0;
+        ingrediensChange[1].amount = 0;
+        ingrediensCount[0].amount = 1;
+        ingrediensCount[1].amount = 1;
         expect(
             mainReducer(
                 {
-                    ingredients: ingredientsArrayCount,
-                    constructor: [
+                    ingredients: ingrediensCount,
+                    burgerConstructor: [
                         {
-                            ...ingredientsArrayCount[0],
+                            ...ingrediensCount[0],
                             uniqueId: 1637997988670,
                         },
                         {
-                            ...ingredientsArrayCount[1],
+                            ...ingrediensCount[1],
                             uniqueId: 1637997988671,
                         },
                     ],
@@ -570,8 +570,8 @@ describe('MainReducer', () => {
                 }
             )
         ).toEqual({
-            ingredients: ingredientsArrayChange,
-            constructor: [],
+            ingredients: ingrediensChange,
+            burgerConstructor: [],
             ingredient: {},
             amount: 0,
         });

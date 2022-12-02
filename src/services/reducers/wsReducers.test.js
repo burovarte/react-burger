@@ -56,7 +56,7 @@ export const addedTestMessage = {
     totalToday: 3,
 };
 
-export const ingredientsArray = [
+export const ingrediens = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -100,7 +100,7 @@ export const ingredientsArray = [
         __v: 0,
     },
 ];
-export const ingredientsArrayCount = [
+export const ingrediensCount = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -148,7 +148,7 @@ export const ingredientsArrayCount = [
     },
 ];
 
-export const ingredientsArrayChange = [
+export const ingrediensChange = [
     {
         _id: '60666c42cc7b410027a1a9b1',
         name: 'Краторная булка N-200i',
@@ -205,7 +205,6 @@ export const emailTestSecond = {
     email: 'dskdskld@mail.com',
     password: '123abcd',
 };
-
 
 describe('WsReducer', () => {
     it('Must return initialState', () => {

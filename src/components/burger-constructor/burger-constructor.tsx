@@ -23,7 +23,7 @@ const BurgerConstructor: FC<BurgerConstructorProps> = ({openModal}) => {
     const auth = useSelector((store) => store.authReducer.isAuthorized);
     const dispatch = useDispatch()
 
-    const dataBurgers: Ingredient[] = useSelector((store) => store.mainReducer.constructor)
+    const dataBurgers: Ingredient[] = useSelector((store) => store.mainReducer.burgerConstructor)
 
     const navigate = useNavigate();
     const location = useLocation()
