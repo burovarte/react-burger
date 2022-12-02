@@ -383,7 +383,7 @@ describe('MainReducer', () => {
     });
 
     it('Must return ADD_INGREDIENT', () => {
-        ingredientsArrayChange[1].amount = 0;
+        ingredientsArrayChange[0].amount = 1;
         expect(
             mainReducer(
                 {
@@ -396,8 +396,7 @@ describe('MainReducer', () => {
                     type: types.ADD_INGREDIENT,
                     item: ingredientsArrayCount[0],
                     id: ingredientsArrayCount[0]._id,
-                    qnt: 1,
-                    amount: ingredientsArrayCount[0].amount + ingredientsArrayChange[0].amount
+                    qnt: 1
                 }
             )
         ).toEqual({
