@@ -14,14 +14,14 @@ import {Ingredient} from "../../utils/types";
 
 type InitialState = {
     ingredients: Array<Ingredient>;
-    constructor: Array<Ingredient>;
+    burgerConstructor: Array<Ingredient>;
     ingredient: object | Ingredient;
     order: number
 }
 
 const initialState: InitialState = {
     ingredients: [],
-    constructor: [],
+    burgerConstructor: [],
     ingredient: {},
     order: 0
 }
@@ -40,7 +40,7 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
         case ADD_INGREDIENT:
             return <InitialState>{
                 ...state,
-                constructor: [...state.constructor, {...action.item, uniqueId: action.uniqueId}],
+                burgerConstructor: [...state.burgerConstructor, {...action.item, uniqueId: action.uniqueId}],
                 ingredients: [...state.ingredients].map((item) =>
                     item._id === action.item._id ? {...item, amount: item.amount + action.amount} : item)
             };
@@ -48,7 +48,7 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
         case DELETE_INGREDIENT:
             return {
                 ...state,
-                constructor: [...state.constructor].filter((item) => item.uniqueId !== action.item.uniqueId),
+                burgerConstructor: [...state.burgerConstructor].filter((item) => item.uniqueId !== action.item.uniqueId),
                 ingredients: [...state.ingredients].map((item) => item._id === action.item._id
                     ? {...item, amount: item.amount - action.qnt}
                     : item
@@ -58,12 +58,14 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
             return {
                 ...state,
                 ingredient: action.item,
+
             };
 
         case DELETE_DETAILS:
             return {
                 ...state,
                 ingredient: {},
+                order:0
             };
 
 
@@ -76,20 +78,20 @@ export const mainReducer = (state = initialState, action: TMainActions): Initial
         case ORDER_CLEAR:
             return {
                 ...state,
-                constructor: [],
+                burgerConstructor: [],
                 ingredients: [...state.ingredients].map((item) => {
                     item['amount'] = 0;
                     return item;
                 }),
             };
         case CHANGE_INGREDIENT:
-            const newConstructor = [...state.constructor];
+            const newConstructor = [...state.burgerConstructor];
             const dragIndex = newConstructor[action.dragIndex];
             newConstructor.splice(action.dragIndex, 1);
             newConstructor.splice(action.hoverIndex, 0, dragIndex);
             return {
                 ...state,
-                constructor: newConstructor,
+                burgerConstructor: newConstructor,
             };
         default:
             return state

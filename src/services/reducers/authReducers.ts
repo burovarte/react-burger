@@ -8,14 +8,15 @@ type TinitialState = {
     isAuthorized: boolean;
 }
 
-const initialState: TinitialState = {
+export const initialState: TinitialState = {
+    accessToken: '',
+    isAuthorized: Boolean(getCookie("accessToken")),
     user: {
         name: '',
         email: '',
         password: '',
     },
-    accessToken: '',
-    isAuthorized: Boolean(getCookie("accessToken")),
+
 };
 
 export const authReducer = (state = initialState, action: TAuthActions): TinitialState => {
@@ -41,6 +42,7 @@ export const authReducer = (state = initialState, action: TAuthActions): Tinitia
                 ...state,
                 user: {
                     email: '',
+                    name: "",
                     password: '',
                 },
                 isAuthorized: false,
