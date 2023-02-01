@@ -28,5 +28,8 @@ https://react-burger-fmkpawv7w-burartem.vercel.app/
 
 - Запустить сборку production-билда - npm run start
 
+# Статус:
+
+Рабочая версия. В дальнейшем будут устранены мелкие недочеты.
 ------
 
